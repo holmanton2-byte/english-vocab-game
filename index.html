@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulario en inglés – Juego de parejas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --row:52px; --gap:7px;
+    --ink:#2b1d3a; --cream:#fff8ec; --orange:#f08c00; --orange-l:#ff922b;
+    --purple:#4c3fa0; --red:#b5452a; --green:#2f9e44; --green-l:#d3f9d8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Andika","Trebuchet MS",system-ui,sans-serif; color:var(--ink);
+    background:
+      radial-gradient(ellipse at 50% 120%, rgba(240,140,0,.35), transparent 60%),
+      linear-gradient(180deg,#1b1030,#2d1650 60%,#3a1a4f);
+    min-height:100vh; padding:18px 14px 40px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  header{text-align:center;margin-bottom:12px}
+  h1{
+    font-family:"Fredoka",sans-serif;font-weight:700;margin:0;
+    font-size:clamp(28px,4.5vw,46px);letter-spacing:.5px;
+    background:linear-gradient(90deg,#ffa94d,#ffd43b 45%,#b197fc);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 0 #1b1030);
+  }
+  header p{color:#f3e8ff;margin:6px 0 0;font-size:15px}
+  .bar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;
+    margin:12px 0 14px;
+  }
+  .chip{
+    background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;padding:7px 14px;font-family:"Fredoka",sans-serif;font-weight:500;font-size:15px;
+  }
+  .chip b{color:#ffd43b}
+  .progress{flex:1 1 180px;max-width:260px;height:12px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff922b,#ffd43b);transition:width .4s}
+  .seg{display:inline-flex;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:3px}
+  .seg span{color:#e5dbff;font-family:"Fredoka",sans-serif;font-size:14px;padding:6px 8px 6px 10px;align-self:center}
+  .seg button{
+    border:0;background:transparent;color:#fff;font:600 14px "Fredoka",sans-serif;
+    padding:6px 14px;border-radius:999px;cursor:pointer;
+  }
+  .seg button.on{background:#ffd43b;color:var(--ink)}
+  .btn{
+    border:0;cursor:pointer;border-radius:999px;padding:8px 16px;
+    font:600 15px "Fredoka",sans-serif;background:var(--orange);color:#fff;
+    box-shadow:0 3px 0 #a14d00;
+  }
+  .btn:active{transform:translateY(2px);box-shadow:0 1px 0 #a14d00}
+
+  .board[hidden]{display:none!important}
+  .board{
+    display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,.85fr) minmax(0,1.05fr);
+    gap:12px;align-items:start;
+  }
+  .col{background:var(--cream);border-radius:18px;padding:10px;border:3px solid #e8c98f;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .col h2{
+    margin:-2px auto 10px;width:max-content;max-width:100%;padding:4px 18px;border-radius:999px;
+    font:700 18px "Fredoka",sans-serif;color:#fff;
+  }
+  .c-desc h2{background:linear-gradient(#f59f00,#e8590c)}
+  .c-word h2{background:linear-gradient(#7950f2,#5f3dc4)}
+  .c-pic h2{background:linear-gradient(#fcc419,#94d82d);color:var(--ink)}
+  .list{display:flex;flex-direction:column;gap:var(--gap)}
+  .pics{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+
+  .item{
+    font:inherit;color:inherit;text-align:left;cursor:pointer;
+    background:#fff;border:2px solid #ead7b5;border-radius:12px;
+    transition:background .15s,border-color .15s,transform .1s,box-shadow .15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .item:hover:not(.done){border-color:#ffc078}
+  .item.sel{border-color:var(--orange-l);background:#fff0d9;box-shadow:0 0 0 3px rgba(255,146,43,.45);transform:translateY(-1px)}
+  .item.bad{border-color:#e03131;background:#ffe3e3;animation:shake .45s}
+  .item.paired{background:hsl(var(--h) 90% 92%);border-color:hsl(var(--h) 65% 55%);border-style:dashed;position:relative}
+  .item.paired::after{content:"🔗";position:absolute;top:-8px;right:-6px;font-size:14px;background:hsl(var(--h) 65% 55%);border-radius:50%;width:22px;height:22px;display:grid;place-items:center}
+  .item.paired.sel{border-style:solid;border-color:var(--orange-l)}
+  .item.done{border-color:#8ce99a;background:var(--green-l);cursor:default}
+  .item.pop{animation:pop .45s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+  .desc{display:grid;grid-template-columns:30px 1fr 32px;gap:8px;align-items:center;min-height:var(--row);padding:5px 8px;font-size:15.5px;line-height:1.2}
+  .num{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font:700 14px "Fredoka",sans-serif}
+  .circ{
+    width:30px;height:30px;border-radius:50%;border:2px solid #b8a27e;background:#fff;
+    display:grid;place-items:center;font:700 15px "Fredoka",sans-serif;color:#fff;
+  }
+  .done .circ{background:var(--green);border-color:var(--green)}
+
+  .word{display:flex;gap:9px;align-items:center;min-height:var(--row);padding:5px 9px;font-weight:700;font-size:16.5px}
+  .let{flex:none;width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;font:700 14px "Fredoka",sans-serif}
+  .word.done .let{background:var(--green)}
+  .word.done .wtxt::after{content:" ✓";color:var(--green)}
+
+  .pic{position:relative;min-height:calc(var(--row)*2 + var(--gap));display:grid;place-items:center;padding:6px}
+  .pic .circ{position:absolute;top:6px;left:6px;width:26px;height:26px;font-size:13px}
+  .art{width:70px;height:70px;display:grid;place-items:center;font-size:52px;line-height:1;pointer-events:none}
+  .art svg{width:100%;height:100%}
+
+  footer{text-align:center;color:#d0bfff;font-size:13px;margin-top:16px}
+
+  .win{position:fixed;inset:0;background:rgba(20,8,40,.75);display:none;place-items:center;z-index:5;padding:20px}
+  .win.show{display:grid}
+  .card{background:var(--cream);border-radius:22px;padding:26px 30px;text-align:center;max-width:420px;border:4px solid #ffd43b;animation:pop .5s}
+  .card h3{font:700 24px "Fredoka",sans-serif;margin:0 0 6px;color:var(--orange)}
+  .card .big{font-size:56px;margin-bottom:4px}
+  .card p{font-size:17px;margin:6px 0 16px}
+
+  @media (max-width:860px){
+    :root{--row:48px;--gap:6px}
+    body{padding:12px 8px 30px}
+    .board{gap:8px}
+    .col{padding:7px;border-radius:14px}
+    .desc{font-size:14px;grid-template-columns:24px 1fr 26px;gap:6px;padding:4px 6px}
+    .num{width:24px;height:24px;font-size:12px}
+    .desc .circ{width:26px;height:26px;font-size:13px}
+    .word{font-size:14.5px;gap:6px;padding:4px 6px}
+    .let{width:24px;height:24px;font-size:12px}
+    .art{width:56px;height:56px;font-size:42px}
+    .col h2{font-size:15px;padding:3px 12px}
+  }
+
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;margin:10px 0 4px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .tab{flex:none;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#f3e8ff;border-radius:14px;padding:7px 12px;font:600 15px "Fredoka",system-ui,sans-serif;cursor:pointer;display:flex;gap:6px;align-items:center}
+  .tab.on{background:#ffd43b;color:var(--ink);border-color:#ffd43b}
+  .tab.finished::after{content:"✓";color:#69db7c;font-weight:700}
+  .tab.on.finished::after{color:var(--green)}
+  .wbox{display:flex;flex-direction:column;line-height:1.1}
+  .es{display:none;font:italic 400 12.5px "Andika",system-ui,sans-serif;color:#7a5c3a;margin-top:2px}
+  body.show-es .es{display:block}
+  .done .es{color:#2b8a3e}
+  .emo{font-size:52px;line-height:1}
+  .card .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .btn.alt{background:#7950f2;box-shadow:0 3px 0 #4c2fa0}
+  @media (max-width:600px){
+    :root{--row:auto;--gap:5px}
+    body{padding:10px 5px 24px}
+    header p{font-size:12.5px}
+    .bar{gap:6px}
+    .chip,.seg button,.btn{font-size:12.5px;padding:5px 9px}
+    .seg span{font-size:11px;padding:4px 2px 4px 6px}
+    .progress{flex-basis:100%;max-width:none;order:-1}
+    .board{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) minmax(0,.62fr);gap:4px}
+    .col{padding:4px;border-width:2px;border-radius:10px}
+    .col h2{font-size:11.5px;padding:2px 7px;margin-bottom:6px}
+    .desc{grid-template-columns:1fr;font-size:12px;padding:10px 6px 8px 7px;gap:3px;position:relative;min-height:58px;align-content:center}
+    .desc .num{position:absolute;top:-5px;left:-4px;width:17px;height:17px;font-size:9.5px}
+    .desc .circ{position:absolute;bottom:-5px;right:-4px;width:18px;height:18px;font-size:10px}
+    .word{font-size:12.5px;gap:4px;padding:3px 4px;min-height:58px}
+    .let{width:18px;height:18px;font-size:10px}
+    .es{font-size:10.5px}
+    .pics{grid-template-columns:1fr}
+    .pic{min-height:58px;padding:3px}
+    .pic .circ{width:16px;height:16px;font-size:9px;top:2px;left:2px}
+    .art{width:42px;height:42px;font-size:32px}
+    .emo{font-size:32px}
+    .item.paired::after{width:16px;height:16px;font-size:10px;top:-6px;right:-4px}
+    .tab{font-size:13px;padding:6px 9px}
+  }
+  .gl{border-bottom:2px dotted #d08a3a;cursor:help;border-radius:3px}
+  .gl.on{background:#ffe8cc}
+  .gl-demo{border-bottom:2px dotted #ffa94d}
+  .done .gl{border-bottom-color:#69db7c}
+  #tip{position:fixed;z-index:10;display:none;max-width:240px;background:#2b1d3a;color:#fff;border-radius:10px;padding:7px 11px;font:15px "Andika",system-ui,sans-serif;box-shadow:0 6px 16px rgba(0,0,0,.35);pointer-events:none}
+  #tip.show{display:block}
+  #tip b{color:#ffd43b}
+
+  #menu .intro{color:#f3e8ff;text-align:center;margin:0 0 12px;font-size:15px}
+  .mbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:6px 0 4px}
+  .mbar .progress{max-width:320px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px}
+  .chips button{border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:6px 14px;font:600 14px "Fredoka",system-ui,sans-serif;cursor:pointer}
+  .chips button.on{background:#ffd43b;color:var(--ink);border-color:#ffd43b}
+  .cat h3{color:#fff;font:700 20px "Fredoka",system-ui,sans-serif;margin:18px 4px 8px}
+  .cat h3 small{color:#d0bfff;font-weight:500;font-size:14px;margin-left:6px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  .lcard{position:relative;display:flex;gap:10px;align-items:center;text-align:left;cursor:pointer;background:var(--cream);border:3px solid #e8c98f;border-radius:16px;padding:10px 12px;font:inherit;color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.3);transition:transform .1s}
+  .lcard:hover{transform:translateY(-2px)}
+  .lcard.done{background:#d3f9d8;border-color:#40c057}
+  .lemo{font-size:32px;line-height:1}
+  .ltxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .ltxt b{font:700 17px "Fredoka",system-ui,sans-serif}
+  .lv{font-size:12.5px;color:var(--lv);font-weight:700;letter-spacing:.3px}
+  .st{font-size:12.5px;color:#7a5c3a}
+  .st.ok{color:#2b8a3e;font-weight:700}
+  .st.prog{color:#e67700;font-weight:700}
+  .tick{position:absolute;top:-9px;right:-9px;width:28px;height:28px;border-radius:50%;background:#2f9e44;color:#fff;display:grid;place-items:center;font-weight:700;border:3px solid #fff}
+  .status{color:#d0bfff;text-align:center;font-size:13.5px;margin:10px 0 0}
+  .reset{text-align:center;margin:22px 0 4px}
+  .reset .btn{background:#495057;box-shadow:0 3px 0 #212529;font-size:13px}
+  .reset span{color:#fff;margin-right:8px}
+  .gtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin:4px 0 8px}
+  .gtop h2{color:#fff;font:700 24px "Fredoka",system-ui,sans-serif;margin:0}
+  .lvl{color:#fff;border-radius:999px;padding:3px 10px;font:600 13px "Fredoka",system-ui,sans-serif}
+  .btn.ghost{background:rgba(255,255,255,.12);box-shadow:none;border:2px solid rgba(255,255,255,.3)}
+  .howto{color:#e5dbff;text-align:center;font-size:13.5px;margin:0 0 10px}
+  .spk{cursor:pointer;font-size:.85em;margin-left:4px;padding:0 2px;border-radius:6px;opacity:.8;user-select:none;-webkit-user-select:none}
+  .spk:hover{opacity:1;background:#ffe8cc}
+  body.no-tts .spk, body.no-tts #autoSeg{display:none}
+  .wtxt{display:inline-flex;align-items:center}
+  @media (max-width:600px){
+    .cards{grid-template-columns:1fr 1fr;gap:8px}
+    .lcard{flex-direction:column;align-items:flex-start;gap:4px;padding:8px}
+    .lemo{font-size:26px}
+    .ltxt b{font-size:15px}
+    .lv,.st{font-size:11px}
+    .cat h3{font-size:17px}
+    .gtop h2{font-size:19px}
+    .spk{font-size:.8em;margin-left:2px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Vocabulario en inglés</h1></header>
+
+  <section id="menu">
+    <p class="intro">Elige una lección. Las lecciones completadas se ponen en <b style="color:#69db7c">verde ✓</b>.</p>
+    <div class="mbar"><span class="chip" id="doneCount"></span><div class="progress"><i id="menuProg"></i></div></div>
+    <div class="chips" id="levelChips"><button data-lv="0">Todas</button><button data-lv="1">●○○ Básico</button><button data-lv="2">●●○ Intermedio</button><button data-lv="3">●●● Avanzado</button></div>
+    <div id="cats"></div>
+    <p class="status" id="saveStatus"></p>
+    <div class="reset"><button class="btn" id="resetBtn">Borrar el progreso</button>
+      <span id="resetConfirm" hidden><span>¿Seguro? Se borra el progreso de este dispositivo.</span><button class="btn" id="resetYes">Sí, borrar</button> <button class="btn alt" id="resetNo">No</button></span></div>
+  </section>
+
+  <section id="game" hidden>
+    <div class="gtop"><button class="btn ghost" id="back">← Lecciones</button><h2 id="lessonTitle"></h2><span class="lvl" id="lessonLevel"></span></div>
+    <p class="howto">Toca dos elementos que van juntos para enlazarlos 🔗; después toca la pareja y su tercer elemento. Toca las palabras <span class="gl-demo">subrayadas</span> para ver la traducción y 🔊 para escuchar.</p>
+    <div class="bar">
+      <span class="chip">Aciertos <b id="score">0</b>/<span id="total">10</span></span>
+      <div class="progress"><i id="prog"></i></div>
+      <span class="chip">Errores <b id="miss">0</b></span>
+      <span class="chip">⏱ <b id="time">0:00</b></span>
+      <div class="seg" id="modeSeg"><span>Imágenes:</span><button data-mode="emoji">Emoji</button><button data-mode="drawn">Dibujos</button></div>
+      <div class="seg" id="esSeg"><span>Traducción:</span><button data-es="0">No</button><button data-es="1">🇪🇸 Sí</button></div>
+      <div class="seg" id="autoSeg"><span>Leer al tocar:</span><button data-auto="0">No</button><button data-auto="1">🔊 Sí</button></div>
+      <button class="btn" id="restart">Reiniciar</button>
+    </div>
+    <div id="boards"></div>
+    <footer id="credit">Tema de Halloween basado en la ficha de «English with Olena Kravchyshyn»</footer>
+  </section>
+</div>
+<div class="win" id="win"><div class="card">
+  <div class="big">🎉⭐🎉</div><h3 id="winTitle"></h3><p id="winText"></p>
+  <div class="btns"><button class="btn" id="again">Otra vez</button><button class="btn alt" id="next">Siguiente →</button><button class="btn ghost" id="toMenu" style="color:var(--ink);border-color:#ccc">Menú</button></div>
+</div></div>
+
+<script>
+
+const DESCS = [
+  ["A large orange fruit we carve at Halloween.","G"],
+  ["A white spirit that can't be seen but is often in stories.","K"],
+  ["A woman with magic powers, often with a pointed hat.","O"],
+  ["A small flying animal that is active at night.","L"],
+  ["A creature with eight legs that spins a web.","E"],
+  ["A set of bones inside a body.","N"],
+  ["A person or body wrapped in bandages.","I"],
+  ["A creature that lives in a coffin and drinks blood.","A"],
+  ["A black animal that is often considered lucky or mysterious.","S"],
+  ["A long stick used for cleaning, but witches also fly on it.","D"],
+  ["A big pot used to cook magical mixtures.","T"],
+  ["Special clothes worn for a party or to look like someone else.","H"],
+  ["A sweet food that children get during trick-or-treat.","P"],
+  ["A scary building where ghosts might live.","F"],
+  ["A light that you put on a cake or hold in your hand.","B"],
+  ["The bright round object we see at night in the sky.","M"],
+  ["A hole in the ground where a dead person is buried.","R"],
+  ["A dark liquid, often connected with injury or vampires.","J"],
+  ["A word for a very scary and ugly creature.","C"],
+  ["A feeling of great fear.","Q"]
+];
+
+const S = 'stroke-linecap="round" stroke-linejoin="round"';
+const WORDS = {
+ A:{w:"vampire", e:"🧛", s:`<path d="M8 60 L16 30 L32 44 L48 30 L56 60Z" fill="#8b0d1f" stroke="#3a0008" stroke-width="2" ${S}/><path d="M26 46 L32 57 L38 46Z" fill="#fff"/><ellipse cx="32" cy="30" rx="13" ry="16" fill="#dfe7d8" stroke="#4a5a48" stroke-width="2"/><path d="M19 27 Q18 12 32 12 Q46 12 45 27 Q40 20 32 25 Q24 20 19 27Z" fill="#1b1b2b"/><path d="M23 27 L30 29 M41 27 L34 29" stroke="#1b1b2b" stroke-width="2" ${S}/><ellipse cx="27" cy="32" rx="2" ry="2.3" fill="#c92a2a"/><ellipse cx="37" cy="32" rx="2" ry="2.3" fill="#c92a2a"/><path d="M26 39 Q32 43 38 39" fill="none" stroke="#4a5a48" stroke-width="1.8" ${S}/><path d="M28.5 40 L30 44.5 L31.4 41.2Z M32.6 41.2 L34 44.5 L35.5 40Z" fill="#fff" stroke="#4a5a48" stroke-width="1"/>`},
+ B:{w:"candle", e:"🕯️", s:`<circle cx="32" cy="15" r="13" fill="#ffe066" opacity=".3"/><ellipse cx="32" cy="57" rx="17" ry="4.5" fill="#adb5bd" stroke="#495057" stroke-width="1.5"/><rect x="24" y="25" width="16" height="31" rx="2" fill="#fff3bf" stroke="#c9a227" stroke-width="2"/><path d="M24 29 Q27 29 27 35 Q27 38 29 36 Q30 30 33 29" fill="#fff9db" stroke="#c9a227" stroke-width="1.2"/><path d="M32 25 V20" stroke="#333" stroke-width="2" ${S}/><path d="M32 5 Q41 15 32 21 Q23 15 32 5Z" fill="#ff922b"/><path d="M32 10 Q36 16 32 19 Q28 16 32 10Z" fill="#ffe066"/>`},
+ C:{w:"monster", e:"👹", s:`<path d="M20 24 L15 7 L27 19Z M44 24 L49 7 L37 19Z" fill="#f1f3f5" stroke="#868e96" stroke-width="1.8" ${S}/><path d="M11 57 Q7 22 32 17 Q57 22 53 57Z" fill="#69db7c" stroke="#2b8a3e" stroke-width="2.5" ${S}/><circle cx="32" cy="32" r="9" fill="#fff" stroke="#2b8a3e" stroke-width="2"/><circle cx="33" cy="33" r="4" fill="#2b1d3a"/><path d="M19 44 Q32 56 45 44Z" fill="#2b1d3a" stroke="#2b1d3a" stroke-width="2" ${S}/><path d="M23 45 L26 50 L29 46.3Z M35 46.3 L38 50 L41 45Z" fill="#fff"/><circle cx="18" cy="38" r="2" fill="#40c057"/><circle cx="47" cy="27" r="1.6" fill="#40c057"/>`},
+ D:{w:"broom", e:"🧹", s:`<g transform="rotate(28 32 32)"><rect x="30" y="2" width="4.5" height="36" rx="2" fill="#8b5a2b"/><rect x="25.5" y="36" width="13.5" height="6" rx="1.5" fill="#c92a2a"/><path d="M26 42 L38.5 42 L47 61 L17 61Z" fill="#e8b04a" stroke="#9c6b14" stroke-width="2" ${S}/><path d="M28 45 L23 59 M32.2 45 L32.2 59 M36.5 45 L41 59" stroke="#9c6b14" stroke-width="1.3" ${S}/></g>`},
+ E:{w:"spider", e:"🕷️", s:`<path d="M32 1 V22" stroke="#999" stroke-width="1.2"/><g fill="none" stroke="#1a1a1a" stroke-width="2.5" ${S}><path d="M28 32 Q18 22 10 26"/><path d="M27 35 Q16 31 8 36"/><path d="M27 39 Q16 41 10 49"/><path d="M28 42 Q20 49 16 57"/><path d="M36 32 Q46 22 54 26"/><path d="M37 35 Q48 31 56 36"/><path d="M37 39 Q48 41 54 49"/><path d="M36 42 Q44 49 48 57"/></g><ellipse cx="32" cy="41" rx="8.5" ry="10" fill="#1a1a1a"/><circle cx="32" cy="28" r="6.5" fill="#1a1a1a"/><circle cx="29.5" cy="27" r="1.8" fill="#fff"/><circle cx="34.5" cy="27" r="1.8" fill="#fff"/><path d="M29 40 L35 40 M32 37 L32 45" stroke="#c92a2a" stroke-width="1.5" ${S}/>`},
+ F:{w:"haunted house", e:"🏚️", s:`<path d="M4 59 H60" stroke="#2f9e44" stroke-width="3" ${S}/><rect x="40" y="12" width="6" height="14" fill="#2b1d3a"/><rect x="13" y="30" width="38" height="29" fill="#5f4b8b" stroke="#1d1230" stroke-width="2"/><path d="M8 33 L32 11 L56 33Z" fill="#2b1d3a" stroke="#1d1230" stroke-width="2" ${S}/><rect x="18" y="36" width="9" height="9" fill="#ffd43b" stroke="#1d1230" stroke-width="1.5"/><rect x="37" y="36" width="9" height="9" fill="#ffd43b" stroke="#1d1230" stroke-width="1.5"/><path d="M22.5 36 V45 M18 40.5 H27 M41.5 36 V45 M37 40.5 H46" stroke="#1d1230" stroke-width="1.2"/><path d="M28 59 V50 a4 4 0 0 1 8 0 V59Z" fill="#1d1230"/><path d="M46 36 L50 47" stroke="#8b5a2b" stroke-width="2.5" ${S}/><circle cx="32" cy="24" r="3" fill="#ffd43b"/><path d="M14 30 L10 26 M50 30 L54 27" stroke="#1d1230" stroke-width="1"/>`},
+ G:{w:"pumpkin", e:"🎃", s:`<ellipse cx="20" cy="37" rx="14" ry="19" fill="#f08c00" stroke="#7a3a05" stroke-width="2"/><ellipse cx="44" cy="37" rx="14" ry="19" fill="#f08c00" stroke="#7a3a05" stroke-width="2"/><ellipse cx="32" cy="37" rx="13" ry="20" fill="#ff922b" stroke="#7a3a05" stroke-width="2"/><path d="M32 18 C32 12 34 9 38 7" fill="none" stroke="#3a7d2c" stroke-width="4" ${S}/><path d="M20 32 L25 25 L30 32Z M34 32 L39 25 L44 32Z" fill="#3b1d00"/><path d="M18 41 Q32 55 46 41 Q41 44 38 43 L36 47 L32 44 L28 47 L26 43 Q23 44 18 41Z" fill="#3b1d00"/>`},
+ H:{w:"costume", e:"🎭", s:`<path d="M51 43 L57 62" stroke="#8b5a2b" stroke-width="3" ${S}/><path d="M6 26 Q32 13 58 26 Q59 45 44 45 Q36 45 32 37 Q28 45 20 45 Q5 45 6 26Z" fill="#9c36b5" stroke="#4a1260" stroke-width="2" ${S}/><path d="M10 27 Q32 17 54 27" fill="none" stroke="#f08c00" stroke-width="3" ${S}/><ellipse cx="21" cy="33" rx="6.5" ry="4.5" fill="#2b1d3a"/><ellipse cx="43" cy="33" rx="6.5" ry="4.5" fill="#2b1d3a"/><circle cx="32" cy="29" r="2.3" fill="#ffd43b"/><path d="M6 27 L2 37 M58 27 L62 37" stroke="#4a1260" stroke-width="1.6" ${S}/>`},
+ I:{w:"mummy", e:"🤕", s:`<defs><clipPath id="mclip"><rect x="15" y="7" width="34" height="51" rx="17"/></clipPath></defs><rect x="15" y="7" width="34" height="51" rx="17" fill="#efe6cf" stroke="#8a7b5c" stroke-width="2"/><g clip-path="url(#mclip)" stroke="#c9b98f" stroke-width="2.2" fill="none"><path d="M10 18 L54 13"/><path d="M10 25 L54 22"/><path d="M10 44 L54 40"/><path d="M10 51 L54 48"/><path d="M10 57 L54 55"/></g><rect x="15" y="29" width="34" height="11" fill="#3b2f20"/><circle cx="25" cy="34.5" r="3.6" fill="#fff"/><circle cx="39" cy="34.5" r="3.6" fill="#fff"/><circle cx="25.6" cy="35" r="1.6" fill="#2b1d3a"/><circle cx="38.4" cy="35" r="1.6" fill="#2b1d3a"/><path d="M44 50 L54 56" stroke="#efe6cf" stroke-width="3" ${S}/>`},
+ J:{w:"blood", e:"🩸", s:`<path d="M30 8 Q43 26 43 35 a13 13 0 0 1 -26 0 Q17 26 30 8Z" fill="#c92a2a" stroke="#7d1010" stroke-width="1.5"/><ellipse cx="24" cy="35" rx="2.3" ry="4.5" fill="#fff" opacity=".45"/><path d="M50 32 Q56 42 56 46 a6 6 0 0 1 -12 0 Q44 42 50 32Z" fill="#c92a2a" stroke="#7d1010" stroke-width="1.2"/><path d="M14 44 Q18 50 18 53 a4 4 0 0 1 -8 0 Q10 50 14 44Z" fill="#c92a2a" stroke="#7d1010" stroke-width="1"/>`},
+ K:{w:"ghost", e:"👻", s:`<path d="M14 28 a18 18 0 0 1 36 0 V56 l-6 -5 l-6 5 l-6 -5 l-6 5 l-6 -5 l-6 5 Z" fill="#fff" stroke="#5b4b78" stroke-width="2.5" ${S}/><ellipse cx="25" cy="29" rx="3.2" ry="4.3" fill="#2b1d3a"/><ellipse cx="39" cy="29" rx="3.2" ry="4.3" fill="#2b1d3a"/><ellipse cx="32" cy="41" rx="4" ry="5" fill="#2b1d3a"/><ellipse cx="20" cy="36" rx="2.5" ry="1.5" fill="#ffc9c9"/><ellipse cx="44" cy="36" rx="2.5" ry="1.5" fill="#ffc9c9"/>`},
+ L:{w:"bat", e:"🦇", s:`<path d="M28 30 Q18 19 3 23 Q10 28 9 35 Q14 32 16 38 Q20 33 23 40 Q26 35 28 37Z" fill="#2b1d3a" stroke="#2b1d3a" stroke-width="1.5" ${S}/><path d="M36 30 Q46 19 61 23 Q54 28 55 35 Q50 32 48 38 Q44 33 41 40 Q38 35 36 37Z" fill="#2b1d3a" stroke="#2b1d3a" stroke-width="1.5" ${S}/><ellipse cx="32" cy="35" rx="5.5" ry="9" fill="#2b1d3a"/><circle cx="32" cy="25" r="5.5" fill="#2b1d3a"/><path d="M27.5 23 L27 15 L31 20.5Z M36.5 23 L37 15 L33 20.5Z" fill="#2b1d3a"/><circle cx="30" cy="25" r="1.3" fill="#ffd43b"/><circle cx="34" cy="25" r="1.3" fill="#ffd43b"/>`},
+ M:{w:"moon", e:"🌕", s:`<circle cx="32" cy="32" r="25" fill="#ffd43b" stroke="#e0a800" stroke-width="2"/><circle cx="24" cy="24" r="5" fill="#f5c518"/><circle cx="41" cy="38" r="6.5" fill="#f5c518"/><circle cx="25" cy="43" r="3" fill="#f5c518"/><circle cx="42" cy="21" r="2.5" fill="#f5c518"/>`},
+ N:{w:"skeleton", e:"💀", s:`<g fill="none" ${S}><g stroke="#4a4a4a" stroke-width="6.5"><path d="M32 36 V59"/><path d="M32 42 Q21 41 19 48"/><path d="M32 42 Q43 41 45 48"/><path d="M32 49 Q22 49 21 55"/><path d="M32 49 Q42 49 43 55"/></g><g stroke="#f8f4e8" stroke-width="3.8"><path d="M32 36 V59"/><path d="M32 42 Q21 41 19 48"/><path d="M32 42 Q43 41 45 48"/><path d="M32 49 Q22 49 21 55"/><path d="M32 49 Q42 49 43 55"/></g></g><path d="M19 20 a13 13 0 0 1 26 0 v7 q0 4 -4 5 v5 h-18 v-5 q-4 -1 -4 -5z" fill="#f8f4e8" stroke="#4a4a4a" stroke-width="2" ${S}/><circle cx="26.5" cy="21" r="3.6" fill="#2b2b2b"/><circle cx="37.5" cy="21" r="3.6" fill="#2b2b2b"/><path d="M32 25 l-1.8 3.5 h3.6z" fill="#2b2b2b"/><path d="M27.5 32.5 V36.5 M32 32.5 V36.5 M36.5 32.5 V36.5" stroke="#4a4a4a" stroke-width="1.3"/>`},
+ O:{w:"witch", e:"🧙‍♀️", s:`<ellipse cx="32" cy="50" rx="27" ry="7" fill="#3d2466" stroke="#1d0f33" stroke-width="2"/><path d="M18 49 L28 14 Q30 5 39 5 Q34 10 36 16 L46 49Z" fill="#5a338f" stroke="#1d0f33" stroke-width="2" ${S}/><path d="M20 42 L43.9 42 L45.6 48 L18.3 48Z" fill="#f59f00"/><rect x="28" y="41" width="8" height="8" rx="1" fill="none" stroke="#ffd43b" stroke-width="2"/>`},
+ P:{w:"candy", e:"🍬", s:`<defs><clipPath id="cclip"><ellipse cx="32" cy="32" rx="13" ry="11"/></clipPath></defs><path d="M21 32 L6 21 L9 32 L6 43Z" fill="#f783ac" stroke="#a61e4d" stroke-width="2" ${S}/><path d="M43 32 L58 21 L55 32 L58 43Z" fill="#f783ac" stroke="#a61e4d" stroke-width="2" ${S}/><ellipse cx="32" cy="32" rx="13" ry="11" fill="#e64980"/><g clip-path="url(#cclip)" stroke="#fff" stroke-width="3"><path d="M27 18 L20 46"/><path d="M35 18 L28 46"/><path d="M43 18 L36 46"/></g><ellipse cx="32" cy="32" rx="13" ry="11" fill="none" stroke="#a61e4d" stroke-width="2"/>`},
+ Q:{w:"horror", e:"😱", s:`<circle cx="32" cy="35" r="22" fill="#a5d8ff" stroke="#1864ab" stroke-width="2"/><path d="M18 20 Q23 15 28 19 M36 19 Q41 15 46 20" fill="none" stroke="#1864ab" stroke-width="2.2" ${S}/><ellipse cx="24" cy="30" rx="5" ry="7" fill="#fff" stroke="#1864ab" stroke-width="1.5"/><ellipse cx="40" cy="30" rx="5" ry="7" fill="#fff" stroke="#1864ab" stroke-width="1.5"/><circle cx="24" cy="31" r="2" fill="#2b1d3a"/><circle cx="40" cy="31" r="2" fill="#2b1d3a"/><ellipse cx="32" cy="46" rx="5.5" ry="7.5" fill="#2b1d3a"/><path d="M53 9 Q57 15 57 18 a4 4 0 0 1 -8 0 Q49 15 53 9Z" fill="#74c0fc" stroke="#1864ab" stroke-width="1"/>`},
+ R:{w:"tomb", e:"🪦", s:`<path d="M15 58 V27 a17 17 0 0 1 34 0 V58Z" fill="#adb5bd" stroke="#495057" stroke-width="2.2" ${S}/><text x="32" y="35" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="11" fill="#495057">RIP</text><path d="M24 42 H40 M26 47 H38" stroke="#868e96" stroke-width="1.6" ${S}/><path d="M41 20 l-3 5 l3 3" fill="none" stroke="#495057" stroke-width="1.4" ${S}/><path d="M5 59 H59" stroke="#2f9e44" stroke-width="3.5" ${S}/><path d="M10 59 l2 -5 l2 5 M50 59 l2 -6 l2 6 M18 59 l1.5 -4 l1.5 4" stroke="#2f9e44" stroke-width="1.8" fill="none" ${S}/>`},
+ S:{w:"black cat", e:"🐈‍⬛", s:`<path d="M44 54 Q58 54 56 40 Q55 33 50 34" fill="none" stroke="#1e1b24" stroke-width="4.5" ${S}/><path d="M20 58 Q13 41 24 32 L40 32 Q51 41 44 58Z" fill="#1e1b24"/><circle cx="32" cy="24" r="11" fill="#1e1b24"/><path d="M23 18 L22 6 L30 13Z M41 18 L42 6 L34 13Z" fill="#1e1b24"/><ellipse cx="27.5" cy="23.5" rx="2.7" ry="3.5" fill="#ffd43b"/><ellipse cx="36.5" cy="23.5" rx="2.7" ry="3.5" fill="#ffd43b"/><ellipse cx="27.5" cy="23.5" rx=".9" ry="2.7" fill="#1e1b24"/><ellipse cx="36.5" cy="23.5" rx=".9" ry="2.7" fill="#1e1b24"/><path d="M30.6 28 h2.8 l-1.4 1.6z" fill="#f783ac"/><path d="M26 28.5 L16 27.5 M26 30 L16 32 M38 28.5 L48 27.5 M38 30 L48 32" stroke="#adb5bd" stroke-width=".9" ${S}/>`},
+ T:{w:"cauldron", e:"🫕", s:`<path d="M18 58 l4 -7 l4 7Z M38 58 l4 -7 l4 7Z" fill="#ff922b"/><path d="M10 30 H54 Q56 52 40 55 H24 Q8 52 10 30Z" fill="#2b2b33" stroke="#111" stroke-width="2" ${S}/><ellipse cx="32" cy="30" rx="24" ry="5.5" fill="#3d3d48" stroke="#111" stroke-width="2"/><ellipse cx="32" cy="30" rx="20" ry="3.6" fill="#69db7c"/><circle cx="25" cy="21" r="4" fill="#8ce99a" stroke="#2f9e44" stroke-width="1.5"/><circle cx="36" cy="16" r="3" fill="#8ce99a" stroke="#2f9e44" stroke-width="1.5"/><circle cx="41" cy="24" r="2.4" fill="#8ce99a" stroke="#2f9e44" stroke-width="1.5"/><circle cx="31" cy="8" r="1.8" fill="#8ce99a" stroke="#2f9e44" stroke-width="1.2"/><path d="M18 40 Q20 36 24 36" fill="none" stroke="#5c5c6a" stroke-width="2" ${S}/>`}
+};
+
+
+
+const HW_ES = {A:"vampiro",B:"vela",C:"monstruo",D:"escoba",E:"araña",F:"casa embrujada",G:"calabaza",H:"disfraz",I:"momia",J:"sangre",K:"fantasma",L:"murciélago",M:"luna",N:"esqueleto",O:"bruja",P:"caramelo",Q:"terror",R:"tumba",S:"gato negro",T:"caldero"};
+const TOPICS = {};
+function mkSet(id,title,emoji,items){ TOPICS[id] = {id,title,emoji,items}; }
+mkSet("halloween","Halloween","🎃", DESCS.map(([t,L])=>[WORDS[L].w, HW_ES[L], WORDS[L].e, t, WORDS[L].s]));
+
+// ---------- drawing helpers ----------
+const K = '#2b1d3a';
+const LJ = 'stroke-linecap="round" stroke-linejoin="round"';
+const Fp = (d,f,c=K,w=2)=>`<path d="${d}" fill="${f}" stroke="${c}" stroke-width="${w}" ${LJ}/>`;
+const Lp = (d,c=K,w=2)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" ${LJ}/>`;
+const Ci = (x,y,r,f,c=K,w=2)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${c}" stroke-width="${w}"/>`;
+const El = (x,y,rx,ry,f,c=K,w=2)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${f}" stroke="${c}" stroke-width="${w}"/>`;
+const Re = (x,y,w,h,f,rx=2,c=K,sw=2)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${f}" stroke="${c}" stroke-width="${sw}"/>`;
+const G = (t,inner)=>`<g transform="${t}">${inner}</g>`;
+const dot = (x,y,r=1.8,f=K)=>Ci(x,y,r,f,'none',0);
+const SK = '#f4c7a1', SKL = '#b5774c';
+const cloud = (f='#e9ecef',c='#868e96')=>Fp('M14 36 Q4 36 6 26 Q8 18 18 20 Q20 8 32 8 Q44 8 46 18 Q58 16 58 28 Q58 36 50 36Z',f,c);
+// person for jobs
+const P = (skin,shirt,top='',extra='',hair='#5c3b1e',face=true)=>
+  Fp('M10 62 Q10 46 32 46 Q54 46 54 62Z',shirt) + Ci(32,28,13,skin) +
+  (hair ? Fp('M19 27 Q18 14 32 14 Q46 14 45 27 Q39 20 32 22 Q25 20 19 27Z',hair,'none',0) : '') +
+  (face ? dot(27,29)+dot(37,29)+Lp('M28 34 Q32 37 36 34',K,1.5) : '') + top + extra;
+
+// ---------- sets: [word, spanish, emoji, sentence, svg] ----------
+mkSet("travel","Viajes","✈️",[
+ ["passport","pasaporte","🛂","A small book with your photo that you need to travel to other countries.",
+  Re(16,8,32,48,'#1c4e80',3)+Ci(32,28,8,'none','#ffd43b',2)+Lp('M24 28 H40 M32 20 Q27 28 32 36 Q37 28 32 20','#ffd43b',1.5)+Lp('M24 46 H40 M26 50 H38','#ffd43b',1.5)],
+ ["airport","aeropuerto","🛫","A place where planes take off and land.",
+  Lp('M2 58 H62','#495057',3)+Re(40,24,8,34,'#ced4da',1)+Fp('M34 24 H54 L51 12 H37Z','#74c0fc')+Fp('M4 36 L22 33 L30 24 L33 25 L30 32 L40 31 L43 27 L45 28 L43 34 L26 38 L21 45 L18 44 L20 38 L6 39Z','#fff','#1864ab',1.5)],
+ ["suitcase","maleta","🧳","A big bag for your clothes when you go on a trip.",
+  Lp('M24 20 V12 H40 V20',K,3)+Re(10,20,44,34,'#e8590c',4)+Lp('M20 22 V52 M44 22 V52','#a33f00',3)+Ci(17,57,3,'#333')+Ci(47,57,3,'#333')],
+ ["taxi","taxi","🚕","A car that you pay to take you somewhere.",
+  Re(26,16,12,7,'#fff',1.5,K,1.5)+Fp('M6 44 V36 L14 34 L20 24 H44 L50 34 L58 36 V44Z','#fcc419')+Fp('M22 27 H31 V34 H17Z M34 27 H42 L47 34 H34Z','#a5d8ff',K,1.5)+Lp('M8 39 H56',K,1.5)+Ci(18,45,5,'#333')+Ci(46,45,5,'#333')],
+ ["bus","autobús","🚌","A long vehicle with many seats that stops to pick up people in the city.",
+  Re(6,14,52,36,'#f03e3e',5)+[10,22,34,46].map(x=>Re(x,19,9,11,'#a5d8ff',1,K,1.5)).join('')+Lp('M6 38 H58','#fff',2)+Ci(16,51,5,'#333')+Ci(48,51,5,'#333')],
+ ["train","tren","🚆","It travels on long metal rails.",
+  Lp('M18 52 L10 62 M46 52 L54 62','#495057',3)+Lp('M15 57 H49','#8b5a2b',2)+Re(16,6,32,46,'#1971c2',7)+Re(21,12,22,15,'#a5d8ff',2)+Ci(24,41,3,'#ffe066')+Ci(40,41,3,'#ffe066')],
+ ["ship","barco","🚢","A very big boat that carries people across the sea.",
+  Re(36,14,8,14,'#ffd43b',1)+Re(16,28,34,12,'#fff',1)+[22,30,38].map(x=>Ci(x,34,2,'#74c0fc',K,1)).join('')+Fp('M4 40 H60 L52 54 H12Z','#c92a2a')+Lp('M2 59 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0 t10 0','#1c7ed6',2.5)],
+ ["ticket","billete","🎫","A small piece of paper you buy to get on a bus or train.",
+  Fp('M6 20 H58 V28 a4 4 0 0 0 0 8 V44 H6 V36 a4 4 0 0 0 0 -8Z','#ffd43b','#e67700')+`<path d="M44 21 V43" stroke="#e67700" stroke-width="1.5" stroke-dasharray="3 3"/>`+Lp('M14 28 H36 M14 34 H32 M14 40 H28','#e67700',2)+Fp('M51 29 l1.5 3 3 .5 -2.2 2 .6 3 -2.9 -1.5 -2.9 1.5 .6 -3 -2.2 -2 3 -.5z','#e67700','none',0)],
+ ["map","mapa","🗺️","A drawing that shows you where places and roads are.",
+  Fp('M6 14 L22 8 L42 14 L58 8 V50 L42 56 L22 50 L6 56Z','#d8f5a2','#5c940d')+Lp('M22 8 V50 M42 14 V56','#5c940d',1.5)+`<path d="M12 44 Q20 30 30 34 T48 20" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="3 3"/>`+Lp('M47 15 l6 6 M53 15 l-6 6','#e03131',2.5)],
+ ["hotel","hotel","🏨","A building where you pay to sleep when you travel.",
+  Re(14,12,36,46,'#748ffc')+[18,30,42].map(y=>[19,29.5,40].map(x=>Re(x,y,5,6,'#ffe066',1,'none')).join('')).join('')+Re(27,48,10,10,'#364fc7',1,K,1.5)+Re(18,4,28,8,'#e64980',2,K,1.5)+Lp('M23 8 H41','#fff',2)],
+ ["camera","cámara","📷","You use it to take photos.",
+  Fp('M22 20 L26 13 H38 L42 20','#343a40')+Re(8,20,48,32,'#495057',5)+Ci(32,36,11,'#adb5bd')+Ci(32,36,6,'#1c7ed6')+Ci(48,26,2.5,'#ffd43b','none',0)],
+ ["backpack","mochila","🎒","A bag you carry on your back.",
+  Lp('M26 12 Q32 4 38 12',K,2.5)+Fp('M16 26 Q16 11 32 11 Q48 11 48 26 V56 H16Z','#2f9e44')+Re(22,38,20,14,'#40c057',3)+Lp('M22 43 H42',K,1.5)],
+ ["tent","tienda de campaña","⛺","A small house made of cloth for camping.",
+  Fp('M4 54 L32 12 L60 54Z','#fd7e14')+Fp('M32 12 L24 54 H40Z','#e8590c')+Fp('M32 30 L27 54 H37Z','#5c2b00')+Lp('M2 55 H62','#2f9e44',3)],
+ ["bicycle","bicicleta","🚲","It has two wheels and you move it with your feet.",
+  Ci(16,42,11,'none',K,3)+Ci(48,42,11,'none',K,3)+Lp('M16 42 L26 26 H44 L48 42 M26 26 L32 42 L44 26 M32 42 H16 M22 22 H30 M44 26 L42 18 H49','#e03131',3)],
+ ["beach","playa","🏖️","A place with sand next to the sea.",
+  Re(0,36,64,14,'#4dabf7',0,'none',0)+Fp('M0 48 Q32 38 64 48 V64 H0Z','#ffe066','none',0)+Ci(50,14,7,'#ffd43b','none',0)+Lp('M22 22 V54','#495057',2)+Fp('M8 28 Q22 10 36 28Z','#f03e3e')],
+ ["sunglasses","gafas de sol","🕶️","Dark glasses that protect your eyes from the sun.",
+  Lp('M8 26 H56 M8 26 L4 21 M56 26 L60 21',K,3)+Fp('M8 26 H28 Q28 41 18 41 Q8 41 8 26Z','#212529')+Fp('M36 26 H56 Q56 41 46 41 Q36 41 36 26Z','#212529')+Lp('M13 30 L17 34 M41 30 L45 34','#fff',1.5)],
+ ["compass","brújula","🧭","A tool that shows you where north is.",
+  Ci(32,32,24,'#f1f3f5','#495057',3)+Ci(32,32,18,'none','#ced4da',1.5)+Fp('M32 14 L37 32 L27 32Z','#e03131','none',0)+Fp('M32 50 L37 32 L27 32Z','#495057','none',0)+Ci(32,32,2.5,'#fff')],
+ ["helicopter","helicóptero","🚁","An aircraft with spinning blades on top.",
+  Lp('M8 18 H54',K,3)+Lp('M31 18 V25',K,2.5)+Re(2,31,18,5,'#fab005',2)+El(32,36,16,11,'#fab005')+Fp('M34 28 Q46 28 47 36 H34Z','#a5d8ff',K,1.5)+Lp('M18 54 H46 M23 47 V54 M41 47 V54',K,2)],
+ ["money","dinero","💶","You use it to pay for things.",
+  Re(6,14,44,26,'#8ce99a',3,'#2b8a3e')+Ci(28,27,7,'none','#2b8a3e',1.5)+Ci(48,46,11,'#ffd43b','#e67700')+Ci(48,46,7,'none','#e67700',1.5)+Ci(38,52,8,'#fcc419','#e67700')],
+ ["motorbike","moto","🏍️","It has two wheels and an engine.",
+  Ci(14,46,9,'none',K,3.5)+Ci(50,46,9,'none',K,3.5)+Lp('M14 46 L24 36 M50 46 L42 26 H48',K,3)+Fp('M20 36 H42 L46 44 H26Z','#e03131')+Fp('M20 31 H34 V36 H18Z',K)+Ci(46,30,3,'#ffe066')]
+]);
+
+mkSet("house","La casa","🏠",[
+ ["bed","cama","🛏️","You sleep in it at night.",
+  Lp('M10 46 V55 M56 46 V55','#8b5a2b',3)+Re(6,20,7,34,'#8b5a2b',2)+Re(10,36,48,10,'#fff')+Fp('M26 34 H58 V46 H26Z','#4dabf7')+El(19,32,7,4,'#fff')],
+ ["sofa","sofá","🛋️","A soft seat for two or three people in the living room.",
+  Lp('M11 50 V56 M53 50 V56',K,3)+Re(10,22,44,18,'#cc5de8',6)+Re(8,36,48,13,'#be4bdb',4)+Re(3,30,11,20,'#ae3ec9',4)+Re(50,30,11,20,'#ae3ec9',4)],
+ ["chair","silla","🪑","You sit on it at the table.",
+  Lp('M20 38 V58 M44 38 V58 M20 48 H44','#8b5a2b',3)+Re(17,6,7,30,'#b85c1d',2)+Lp('M20 12 H40 M20 20 H40','#b85c1d',0)+Re(16,32,30,7,'#d9822b',2)],
+ ["door","puerta","🚪","You open it to go into a room.",
+  Lp('M6 58 H58',K,2.5)+Re(16,6,32,52,'#a05a2c',3)+Re(21,11,22,18,'none',2,'#6d3b17',1.5)+Re(21,33,22,20,'none',2,'#6d3b17',1.5)+Ci(42,33,2.5,'#ffd43b')],
+ ["window","ventana","🪟","Glass in the wall that lets light into a room.",
+  Re(10,8,44,48,'#a5d8ff',2,'#495057',3)+Lp('M32 8 V56 M10 32 H54','#495057',3)+Lp('M15 14 L21 20 M37 14 L43 20','#fff',2)+Fp('M5 5 H15 Q11 30 17 59 H5Z','#ff8787','#c92a2a',1.5)+Fp('M59 5 H49 Q53 30 47 59 H59Z','#ff8787','#c92a2a',1.5)],
+ ["light bulb","bombilla","💡","A small glass object that gives light when you turn it on.",
+  Ci(32,24,20,'#fff3bf','none',0)+Fp('M23 36 Q14 28 17 17 Q22 6 32 6 Q42 6 47 17 Q50 28 41 36 L40 43 H24Z','#ffe066','#e67700')+Lp('M28 38 L29 26 L32 31 L35 26 L36 38','#e67700',1.5)+Re(24,43,16,10,'#adb5bd',2)+Lp('M24 47 H40 M24 50 H40','#495057',1)],
+ ["mirror","espejo","🪞","You look into it to see yourself.",
+  Lp('M32 50 V58 M22 58 H42','#a0522d',3)+El(32,28,16,22,'#d0ebff','#a0522d',4)+Lp('M23 20 L30 13 M23 29 L37 15','#fff',2.5)],
+ ["toilet","inodoro","🚽","A seat in the bathroom with water that you flush.",
+  Re(14,6,22,18,'#f8f9fa',3)+Lp('M18 12 H24','#868e96',2)+Fp('M10 26 H50 Q50 42 36 44 L38 57 H22 L24 44 Q10 42 10 26Z','#f8f9fa')+El(30,26,20,4,'#dee2e6')],
+ ["bathtub","bañera","🛁","You fill it with water and sit in it to wash.",
+  Lp('M54 30 V14 H46','#868e96',3)+Ci(18,26,5,'#d0ebff','#74c0fc',1.5)+Ci(29,22,6,'#d0ebff','#74c0fc',1.5)+Ci(41,26,5,'#d0ebff','#74c0fc',1.5)+Lp('M14 50 L12 57 M50 50 L52 57','#868e96',3)+Fp('M4 30 H60 V38 Q60 50 48 50 H16 Q4 50 4 38Z','#fff')],
+ ["shower","ducha","🚿","Water falls on you from above to wash your body.",
+  Lp('M50 60 V10 H30 V16','#868e96',3)+Fp('M21 16 H39 L35 22 H25Z','#adb5bd')+Lp('M25 28 L23 34 M30 28 L29 36 M35 28 L36 34 M27 40 L26 46 M33 40 L34 48','#4dabf7',2.5)],
+ ["key","llave","🔑","You use it to lock and open the door.",
+  Fp('M28 29 H58 V35 H54 V41 H49 V35 H44 V39 H40 V35 H28Z','#ffd43b','#e67700')+Ci(18,32,11,'#ffd43b','#e67700',2.5)+Ci(18,32,4,'#fff','#e67700')],
+ ["clock","reloj","🕰️","It shows you the time on the wall.",
+  Ci(32,32,25,'#fff','#8b5a2b',4)+Lp('M32 10 V14 M32 50 V54 M10 32 H14 M50 32 H54',K,2)+Lp('M32 32 V17 M32 32 L42 38',K,3)+dot(32,32,2.5)],
+ ["television","televisión","📺","You watch films and the news on it.",
+  Lp('M24 10 L18 2 M40 10 L46 2 M24 55 L32 47 L40 55 M20 55 H44','#343a40',2.5)+Re(6,10,52,37,'#343a40',4)+Re(10,14,44,29,'#74c0fc',2,'none',0)+Ci(22,24,4,'#ffd43b','none',0)+Fp('M10 43 L24 30 L34 38 L42 32 L54 43Z','#40c057','none',0)],
+ ["toothbrush","cepillo de dientes","🪥","You use it with toothpaste to clean your teeth.",
+  G('rotate(35 32 32)', Re(29,22,7,38,'#4dabf7',3,'#1864ab')+Re(28,6,9,18,'#4dabf7',3,'#1864ab')+Re(37,7,6,15,'#fff',1,'#868e96',1.5)+Lp('M38 10 H43 M38 14 H43 M38 18 H43','#adb5bd',1)+Fp('M43 7 Q50 6 49 12 Q49 17 43 17Z','#63e6be','#12b886',1.5))],
+ ["soap","jabón","🧼","You use it with water to wash your hands.",
+  Fp('M10 36 Q10 26 20 26 H46 Q56 26 56 36 V42 Q56 50 46 50 H20 Q10 50 10 42Z','#f783ac','#c2255c')+Lp('M18 32 H28','#fff',2.5)+Ci(22,16,5,'#e7f5ff','#74c0fc',1.5)+Ci(34,11,4,'#e7f5ff','#74c0fc',1.5)+Ci(44,18,3,'#e7f5ff','#74c0fc',1.5)],
+ ["basket","cesta","🧺","You put your dirty clothes in it.",
+  Fp('M16 23 Q22 12 30 23Z','#4dabf7')+Fp('M30 23 Q40 10 48 23Z','#ff8787')+Fp('M8 26 H56 L50 56 H14Z','#d9a066','#8b5a2b')+Lp('M12 34 H52 M13 42 H51 M14 50 H50 M22 26 L24 56 M32 26 V56 M42 26 L40 56','#8b5a2b',1.5)+Re(6,22,52,6,'#b07a3f',3,'#8b5a2b')],
+ ["plant","planta","🪴","A green living thing that grows in a pot.",
+  Fp('M32 40 Q14 34 16 16 Q30 22 32 40Z','#40c057','#2b8a3e')+Fp('M32 40 Q50 34 48 14 Q34 22 32 40Z','#40c057','#2b8a3e')+Fp('M32 40 Q26 20 32 6 Q38 20 32 40Z','#51cf66','#2b8a3e')+Fp('M18 40 H46 L42 58 H22Z','#e8590c')],
+ ["bucket","cubo","🪣","You carry water in it when you clean the floor.",
+  Lp('M14 22 Q32 0 50 22','#495057',2.5)+Fp('M14 22 H50 L46 56 H18Z','#4dabf7','#1864ab')+El(32,22,18,4,'#d0ebff','#1864ab')],
+ ["ladder","escalera","🪜","You climb it to reach high places.",
+  Lp('M20 12 H44 M20 24 H44 M20 36 H44 M20 48 H44','#b07a3f',3.5)+Lp('M20 4 V60 M44 4 V60','#8b5a2b',4)],
+ ["sponge","esponja","🧽","A soft yellow thing for washing the dishes.",
+  Re(10,24,44,24,'#ffd43b',5,'#e67700')+Re(10,18,44,8,'#40c057',3,'#2b8a3e')+[[18,34],[28,40],[38,33],[46,41],[22,44]].map(([x,y])=>dot(x,y,2,'#f59f00')).join('')+Ci(52,10,4,'#e7f5ff','#74c0fc',1.5)]
+]);
+
+mkSet("food","Comida","🍎",[
+ ["apple","manzana","🍎","A round red or green fruit that grows on trees.",
+  Fp('M32 18 Q20 8 12 22 Q6 40 18 54 Q26 60 32 54 Q38 60 46 54 Q58 40 52 22 Q44 8 32 18Z','#f03e3e','#a61e1e')+Lp('M32 18 Q32 10 36 5','#5c3b1e',3)+Fp('M35 11 Q44 3 49 9 Q41 15 35 11Z','#40c057','#2b8a3e',1.5)+El(21,28,3,6,'#ffa8a8','none',0)],
+ ["banana","plátano","🍌","A long yellow fruit that monkeys love.",
+  Fp('M10 16 Q14 46 40 52 Q54 54 58 46 Q40 48 28 36 Q18 26 16 14Z','#ffd43b','#e67700')+Lp('M16 22 Q22 40 42 49','#f59f00',1.5)+Lp('M10 16 L13 11 M58 46 L61 48','#5c3b1e',3)],
+ ["bread","pan","🍞","A basic food made from flour that you buy at a bakery.",
+  Fp('M8 36 Q8 18 32 18 Q56 18 56 36 V50 Q56 54 52 54 H12 Q8 54 8 50Z','#e8a85a','#8b5a2b')+Lp('M20 24 L26 32 M30 22 L36 30 M40 24 L46 32','#8b5a2b',2)],
+ ["cheese","queso","🧀","A yellow food made from milk, often with holes.",
+  Fp('M6 38 L40 18 L58 30Z','#ffe066','#e67700')+Fp('M6 38 L58 30 V48 L6 56Z','#fcc419','#e67700')+El(20,46,3,4,'#f59f00','none',0)+El(36,42,4,3,'#f59f00','none',0)+El(49,40,2.5,2.5,'#f59f00','none',0)+El(36,26,3,2,'#f59f00','none',0)],
+ ["egg","huevo","🥚","Chickens lay it; inside, it has a yellow middle.",
+  El(32,34,17,22,'#fff','#adb5bd')+El(25,26,3,6,'#f1f3f5','none',0)],
+ ["milk","leche","🥛","A white drink that comes from cows.",
+  Fp('M24 10 H40 V4 H24Z','#fff','#1c7ed6')+Fp('M18 20 L24 10 H40 L46 20 V58 H18Z','#fff','#1c7ed6')+Re(22,30,20,18,'#4dabf7',2,'none',0)+El(28,36,3,2,'#fff','none',0)+El(36,42,4,2.5,'#fff','none',0)],
+ ["carrot","zanahoria","🥕","A long orange vegetable that rabbits like.",
+  Lp('M44 18 Q54 8 60 10 M44 18 Q48 5 43 2 M44 18 Q58 18 62 23','#40c057',3)+Fp('M40 14 Q50 18 46 28 L14 58 Q10 60 10 56 Z','#fd7e14','#d9480f')+Lp('M31 26 L36 29 M25 36 L30 39 M19 46 L23 48','#d9480f',1.5)],
+ ["tomato","tomate","🍅","A round red vegetable we use in salads and sauces.",
+  Ci(32,36,22,'#f03e3e','#a61e1e')+Fp('M32 14 L36 20 L44 18 L38 23 L42 28 L32 24 L22 28 L26 23 L20 18 L28 20Z','#40c057','#2b8a3e',1.5)+El(22,32,3,6,'#ffa8a8','none',0)],
+ ["potato","patata","🥔","A brown vegetable that grows under the ground; we make fries from it.",
+  Fp('M10 34 Q8 18 30 16 Q54 14 56 32 Q58 50 34 52 Q12 54 10 34Z','#d9a066','#8b5a2b')+dot(22,28,1.5,'#8b5a2b')+dot(38,24,1.5,'#8b5a2b')+dot(44,40,1.5,'#8b5a2b')+dot(26,42,1.5,'#8b5a2b')],
+ ["rice","arroz","🍚","Small white grains that we cook in water; we use it to make paella.",
+  Lp('M40 8 L58 30 M46 5 L61 25','#8b5a2b',2.5)+Fp('M10 33 Q14 16 32 14 Q50 16 54 33Z','#fff','#adb5bd')+Fp('M6 32 H58 Q56 54 32 56 Q8 54 6 32Z','#4dabf7','#1864ab')+Lp('M14 42 Q32 48 50 42','#fff',2)],
+ ["pizza","pizza","🍕","A round flat food from Italy with cheese and tomato on top.",
+  Fp('M8 12 Q32 2 56 12 L32 60Z','#ffd43b','#e67700')+Fp('M8 12 Q32 2 56 12 L54 17 Q32 8 10 17Z','#e8a85a','#8b5a2b')+Ci(25,23,4,'#e03131','none',0)+Ci(39,24,4,'#e03131','none',0)+Ci(32,36,3.5,'#e03131','none',0)+Ci(32,47,2.5,'#e03131','none',0)],
+ ["ice cream","helado","🍦","A cold sweet food we eat in summer.",
+  Fp('M20 30 L32 60 L44 30Z','#e8a85a','#8b5a2b')+Lp('M24 36 L38 48 M40 36 L28 50 M30 34 L42 40 M34 34 L22 40','#8b5a2b',1)+Ci(32,22,13,'#fcc2d7','#c2255c')+Fp('M22 30 Q24 38 27 31 Q30 36 33 31','#fcc2d7','#c2255c',1.5)+Ci(34,8,3.5,'#e03131','#a61e1e',1.5)],
+ ["grapes","uvas","🍇","Small round fruits that grow in bunches; we make wine from them.",
+  Lp('M32 15 V5','#5c3b1e',3)+Fp('M33 9 Q42 2 48 8 Q40 13 33 9Z','#40c057','#2b8a3e',1.5)+[[20,22],[32,22],[44,22],[26,33],[38,33],[32,44],[20,33],[44,33],[26,44],[38,44],[32,54]].filter((p,i)=>i<6||i===10).map(([x,y])=>Ci(x,y,7,'#9c36b5','#5f1a7a')).join('')],
+ ["lemon","limón","🍋","A sour yellow fruit.",
+  Fp('M4 32 Q8 28 12 22 Q20 12 32 12 Q44 12 52 22 Q56 28 60 32 Q56 36 52 42 Q44 52 32 52 Q20 52 12 42 Q8 36 4 32Z','#ffe066','#e67700')+Fp('M40 13 Q50 3 58 7 Q50 15 40 13Z','#40c057','#2b8a3e',1.5)+El(22,26,4,2,'#fff9db','none',0)],
+ ["strawberry","fresa","🍓","A small red fruit with tiny seeds on the outside.",
+  Fp('M32 58 Q10 44 12 24 Q14 16 24 16 H40 Q50 16 52 24 Q54 44 32 58Z','#f03e3e','#a61e1e')+[[22,26],[32,28],[42,26],[26,36],[38,36],[32,45],[18,33],[46,33]].map(([x,y])=>El(x,y,1.2,2,'#ffe066','none',0)).join('')+Fp('M20 18 L26 8 L32 16 L38 8 L44 18 L32 22Z','#40c057','#2b8a3e')],
+ ["cake","tarta","🎂","A sweet food we eat at birthday parties.",
+  El(32,56,27,4,'#dee2e6','#868e96')+[20,30,40].map(x=>Re(x,18,4,12,'#74c0fc',1,'#1864ab',1)+Fp(`M${x+2} 10 Q${x+6} 15 ${x+2} 17 Q${x-2} 15 ${x+2} 10Z`,'#ff922b','none',0)).join('')+Re(10,30,44,24,'#fcc2d7',3,'#c2255c')+Fp('M10 30 H54 V34 Q50 40 46 34 Q40 40 34 34 Q28 40 22 34 Q16 40 10 34Z','#fff','#c2255c',1.5)],
+ ["coffee","café","☕","A hot brown drink that many people have in the morning.",
+  Lp('M22 17 q-4 -5 0 -10 M30 17 q-4 -5 0 -10 M38 17 q-4 -5 0 -10','#adb5bd',2)+El(30,56,25,4,'#dee2e6','#868e96')+Lp('M46 30 Q56 30 56 38 Q56 46 46 46','#5c3b1e',3)+Fp('M12 24 H46 V44 Q46 54 36 54 H22 Q12 54 12 44Z','#fff','#5c3b1e')+El(29,24,17,3,'#8b5a2b','#5c3b1e')],
+ ["honey","miel","🍯","A sweet golden food made by bees.",
+  Re(16,14,32,8,'#8b5a2b',2)+Fp('M14 22 H50 V52 Q50 58 44 58 H20 Q14 58 14 52Z','#fcc419','#e67700')+Fp('M14 24 H50 V28 Q46 34 44 28 Q40 33 36 28 H14Z','#f59f00','none',0)+El(32,42,5,4,'#ffd43b',K,1.5)+Lp('M30 39 V45 M34 39 V45',K,1.5)+El(28,37,3,2,'#fff','#adb5bd',1)+El(36,37,3,2,'#fff','#adb5bd',1)],
+ ["soup","sopa","🍲","A hot liquid food you eat with a spoon.",
+  Lp('M20 20 q-4 -5 0 -10 M30 20 q-4 -5 0 -10','#adb5bd',2)+Lp('M44 30 L56 8','#868e96',3)+Fp('M6 32 H58 Q56 54 32 56 Q8 54 6 32Z','#fff','#868e96')+El(32,32,26,5,'#f76707','#868e96')+dot(24,32,1.8,'#40c057')+dot(38,31,1.8,'#ffd43b')],
+ ["sandwich","sándwich","🥪","Two pieces of bread with food in the middle.",
+  Re(8,44,48,8,'#f4c27a',3,'#8b5a2b')+Re(8,39,48,5,'#ffd43b',1,'#e67700',1.5)+Re(8,34,48,5,'#f03e3e',1,'#a61e1e',1.5)+Fp('M8 30 Q14 36 20 30 Q26 36 32 30 Q38 36 44 30 Q50 36 56 30 V34 H8Z','#69db7c','#2b8a3e',1.5)+Fp('M8 30 L32 12 L56 30Z','#f4c27a','#8b5a2b')]
+]);
+
+mkSet("animals","Animales","🐾",[
+ ["dog","perro","🐕","A pet that barks and likes to play with a ball.",
+  Ci(32,34,18,'#d9a066','#8b5a2b')+Fp('M17 22 Q5 28 9 46 Q18 44 19 30Z','#8b5a2b')+Fp('M47 22 Q59 28 55 46 Q46 44 45 30Z','#8b5a2b')+dot(26,30,2.5)+dot(38,30,2.5)+El(32,43,8,6,'#f1e0c5','none',0)+El(32,39,3.5,2.5,K)+Lp('M32 42 V44 M28 45 Q32 48 36 45',K,1.5)+Fp('M30 47 Q32 54 34 47Z','#ff8787','none',0)],
+ ["cat","gato","🐈","A pet that says \"meow\".",
+  Fp('M18 26 L16 8 L30 20Z','#ff922b','#d9480f')+Fp('M46 26 L48 8 L34 20Z','#ff922b','#d9480f')+Ci(32,36,18,'#ff922b','#d9480f')+El(25,34,2.5,3.5,'#2f9e44','none',0)+El(39,34,2.5,3.5,'#2f9e44','none',0)+Fp('M30 41 H34 L32 43Z','#f783ac','none',0)+Lp('M32 43 Q29 47 27 45 M32 43 Q35 47 37 45',K,1.5)+Lp('M24 42 L12 40 M24 45 L12 47 M40 42 L52 40 M40 45 L52 47','#5c2b00',1)],
+ ["horse","caballo","🐎","A big animal that people can ride.",
+  Fp('M30 12 L32 2 L38 10Z','#a0522d','#5c2b00')+Fp('M20 60 L22 34 Q20 14 34 10 Q42 8 52 26 Q56 34 50 38 Q44 40 40 34 L38 60Z','#a0522d','#5c2b00')+Fp('M31 11 Q18 20 16 44 L22 36 Q22 22 34 12Z','#3b1d00','none',0)+dot(39,21,2.2)+dot(50,33,1.5)],
+ ["cow","vaca","🐄","A farm animal that gives us milk.",
+  Fp('M18 20 Q9 12 13 6 Q18 13 23 18Z','#fff3bf','#868e96',1.5)+Fp('M46 20 Q55 12 51 6 Q46 13 41 18Z','#fff3bf','#868e96',1.5)+El(11,26,6,3.5,'#fff')+El(53,26,6,3.5,'#fff')+Re(16,16,32,32,'#fff',13)+Fp('M36 17 Q46 17 47 26 Q41 29 37 24Z',K,'none',0)+dot(25,29,2.5)+dot(39,29,2.5)+El(32,46,14,8,'#ffc9c9')+dot(27,46,1.8)+dot(37,46,1.8)],
+ ["pig","cerdo","🐖","A pink farm animal that says \"oink\".",
+  Fp('M16 22 L14 8 L27 16Z','#faa2c1','#e64980')+Fp('M48 22 L50 8 L37 16Z','#faa2c1','#e64980')+Ci(32,34,20,'#ffc9c9','#e64980')+El(32,40,9,6.5,'#faa2c1','#e64980')+El(29,40,1.5,2.5,'#c2255c','none',0)+El(35,40,1.5,2.5,'#c2255c','none',0)+dot(24,28,2.5)+dot(40,28,2.5)],
+ ["sheep","oveja","🐑","A farm animal with wool.",
+  [[20,24],[32,18],[44,24],[15,36],[49,36],[22,48],[42,48],[32,50]].map(([x,y])=>Ci(x,y,9,'#fff','#adb5bd')).join('')+El(20,34,6,2.5,'#495057')+El(44,34,6,2.5,'#495057')+El(32,36,10,13,'#495057')+dot(28,33,2,'#fff')+dot(36,33,2,'#fff')],
+ ["chicken","gallina","🐔","A farm bird that lays eggs.",
+  Lp('M28 55 V62 M36 55 V62','#fd7e14',2.5)+Fp('M36 12 Q36 4 40 6 Q42 2 45 6 Q49 6 46 12Z','#f03e3e','none',0)+Fp('M14 36 Q14 20 28 20 Q33 10 41 13 Q48 17 46 28 Q56 30 54 42 Q50 56 32 56 Q14 54 14 36Z','#fff','#868e96')+Fp('M46 20 L54 22 L46 25Z','#fd7e14','none',0)+El(46,28,2,3,'#f03e3e','none',0)+dot(41,18,2)+Lp('M22 38 Q30 46 40 40','#868e96',2)],
+ ["fish","pez","🐟","It lives in water and swims.",
+  Fp('M8 32 Q24 14 44 24 L58 14 V50 L44 40 Q24 50 8 32Z','#4dabf7','#1864ab')+Ci(18,29,3,'#fff',K,1)+dot(18,29,1.4)+Lp('M26 24 Q30 32 26 40','#1864ab',1.5)+Ci(6,14,2,'none','#74c0fc',1.5)+Ci(10,8,1.5,'none','#74c0fc',1.2)],
+ ["elephant","elefante","🐘","A very big grey animal with a long nose.",
+  El(12,30,10,14,'#ced4da','#495057')+El(52,30,10,14,'#ced4da','#495057')+Ci(32,28,16,'#adb5bd','#495057')+Fp('M28 38 Q26 52 34 58 Q40 60 42 56 Q34 52 36 38Z','#adb5bd','#495057')+dot(25,25,2)+dot(39,25,2)],
+ ["giraffe","jirafa","🦒","A tall animal with a very long neck.",
+  Fp('M22 62 L28 24 H38 L42 62Z','#ffd43b','#e67700')+El(24,15,5,2.5,'#ffd43b','#e67700')+Lp('M30 12 V4 M38 12 V4','#8b5a2b',2.5)+dot(30,4,2.2,'#8b5a2b')+dot(38,4,2.2,'#8b5a2b')+El(36,20,12,9,'#ffd43b','#e67700')+[[31,34,3],[37,44,3.5],[30,52,3],[38,56,2.5]].map(([x,y,r])=>Ci(x,y,r,'#d9822b','none',0)).join('')+dot(34,18,2)+dot(45,22,1.2)],
+ ["lion","león","🦁","A big wild cat with a lot of hair around its face.",
+  Ci(32,32,24,'#e8590c','#a33f00')+Ci(20,20,5,'#ffd43b','#e67700')+Ci(44,20,5,'#ffd43b','#e67700')+Ci(32,34,15,'#ffd43b','#e67700')+dot(27,31,2)+dot(37,31,2)+Fp('M29 37 H35 L32 40Z','#5c2b00','none',0)+Lp('M32 40 Q28 44 26 42 M32 40 Q36 44 38 42','#5c2b00',1.5)],
+ ["monkey","mono","🐒","It lives in trees, eats bananas and is very clever.",
+  Ci(13,31,7,'#a0522d','#5c2b00')+Ci(51,31,7,'#a0522d','#5c2b00')+Ci(13,31,3.5,'#f4c27a','none',0)+Ci(51,31,3.5,'#f4c27a','none',0)+Ci(32,30,18,'#a0522d','#5c2b00')+Fp('M32 24 Q24 16 20 24 Q16 34 24 41 Q32 48 40 41 Q48 34 44 24 Q40 16 32 24Z','#f4c27a','none',0)+dot(26,28,2.5)+dot(38,28,2.5)+dot(30,35,1)+dot(34,35,1)+Lp('M26 39 Q32 44 38 39',K,1.5)],
+ ["snake","serpiente","🐍","A long animal with no legs.",
+  Lp('M8 54 Q20 40 32 50 Q44 60 52 46 Q58 34 46 30 Q34 26 34 18','#2b8a3e',10)+Lp('M8 54 Q20 40 32 50 Q44 60 52 46 Q58 34 46 30 Q34 26 34 18','#69db7c',6)+Lp('M34 19 V25 L32 27 M34 25 L36 27','#e03131',1.2)+El(34,14,7,5.5,'#69db7c','#2b8a3e')+dot(31,12,1.3)+dot(37,12,1.3)],
+ ["rabbit","conejo","🐇","A small animal with long ears that jumps.",
+  Fp('M22 28 Q15 3 22 3 Q29 3 28 28Z','#f1f3f5','#868e96')+Fp('M36 28 Q35 3 42 3 Q49 3 42 28Z','#f1f3f5','#868e96')+El(23,14,2,7,'#ffc9c9','none',0)+El(41,14,2,7,'#ffc9c9','none',0)+Ci(32,38,16,'#f1f3f5','#868e96')+dot(26,36,2.2)+dot(38,36,2.2)+Fp('M30 42 H34 L32 44Z','#f783ac','none',0)+Re(30,45,4,4,'#fff',.5,'#868e96',1)],
+ ["mouse","ratón","🐁","A very small grey animal that likes cheese.",
+  Ci(16,22,10,'#adb5bd','#495057')+Ci(48,22,10,'#adb5bd','#495057')+Ci(16,22,6,'#ffc9c9','none',0)+Ci(48,22,6,'#ffc9c9','none',0)+Fp('M14 34 Q14 20 32 20 Q50 20 50 34 Q50 44 32 54 Q14 44 14 34Z','#adb5bd','#495057')+dot(26,34,2)+dot(38,34,2)+Ci(32,52,2.5,'#f783ac','none',0)+Lp('M26 46 L14 44 M38 46 L50 44','#495057',1)],
+ ["bird","pájaro","🐦","It has feathers and can fly.",
+  Lp('M28 49 V58 M34 49 V58','#fd7e14',2)+Fp('M15 36 L4 30 L6 42Z','#1c7ed6','#1864ab',1.5)+El(30,37,16,13,'#4dabf7','#1864ab')+Ci(42,24,9,'#4dabf7','#1864ab')+Fp('M50 22 L58 25 L50 28Z','#fd7e14','none',0)+dot(44,22,1.8)+Fp('M18 35 Q28 27 36 37 Q28 45 18 35Z','#1c7ed6','#1864ab',1.5)],
+ ["duck","pato","🦆","A bird that swims on lakes and says \"quack\".",
+  Lp('M4 58 q6 -4 12 0 t12 0 t12 0 t12 0 t12 0','#4dabf7',2.5)+Fp('M10 38 Q10 30 22 30 H36 Q34 14 44 12 Q54 12 54 22 Q54 28 48 30 Q58 34 54 46 Q50 54 32 54 Q12 54 10 38Z','#ffd43b','#e67700')+Fp('M53 19 L62 21 L53 25Z','#fd7e14','#d9480f',1.5)+dot(47,18,2)+Lp('M22 40 Q32 46 42 40','#e67700',2)],
+ ["bear","oso","🐻","A big strong animal that sleeps all winter.",
+  Ci(16,18,7,'#8b5a2b','#5c2b00')+Ci(48,18,7,'#8b5a2b','#5c2b00')+Ci(32,34,20,'#a0522d','#5c2b00')+El(32,42,9,7,'#e8c69b','none',0)+El(32,39,4,3,K)+dot(25,30,2.3)+dot(39,30,2.3)+Lp('M32 42 V45 M28 46 Q32 49 36 46',K,1.5)],
+ ["frog","rana","🐸","A small green animal that jumps and lives near water.",
+  Ci(20,20,8,'#69db7c','#2b8a3e')+Ci(44,20,8,'#69db7c','#2b8a3e')+El(32,38,24,16,'#69db7c','#2b8a3e')+Ci(20,20,4,'#fff','none',0)+Ci(44,20,4,'#fff','none',0)+dot(20,20,2)+dot(44,20,2)+Lp('M16 40 Q32 52 48 40','#2b8a3e',2)+El(14,36,3,2,'#ff8787','none',0)+El(50,36,3,2,'#ff8787','none',0)],
+ ["turtle","tortuga","🐢","A slow animal with a hard shell on its back.",
+  El(14,48,5,4,'#a9e34b','#5c940d')+El(42,48,5,4,'#a9e34b','#5c940d')+Ci(56,38,6,'#a9e34b','#5c940d')+dot(58,36,1.3)+Fp('M4 44 Q6 18 28 18 Q50 18 52 44Z','#40c057','#2b8a3e')+Lp('M4 44 H52 M20 22 L16 44 M36 22 L40 44 M10 32 H46','#2b8a3e',1.5)]
+]);
+
+mkSet("clothes","Ropa","👕",[
+ ["shirt","camisa","👔","You wear it on top; it has buttons and a collar.",
+  Fp('M22 8 L32 14 L42 8 L56 18 L50 28 L46 25 V58 H18 V25 L14 28 L8 18Z','#fff','#495057')+Fp('M22 8 L32 18 L42 8 L38 6 L32 12 L26 6Z','#e9ecef','#495057',1.5)+Fp('M30 17 H34 L36 40 L32 46 L28 40Z','#e03131','#a61e1e',1.5)],
+ ["T-shirt","camiseta","👕","A simple top with short sleeves.",
+  Fp('M22 8 Q32 16 42 8 L58 18 L52 30 L46 26 V58 H18 V26 L12 30 L6 18Z','#4dabf7','#1864ab')+Lp('M24 9 Q32 14 40 9','#1864ab',1.5)+Fp('M32 28 l2.4 5 5.4 .6 -4 3.6 1.2 5.3 -5 -2.8 -5 2.8 1.2 -5.3 -4 -3.6 5.4 -.6z','#ffd43b','none',0)],
+ ["jeans","vaqueros","👖","Blue trousers made of strong cotton.",
+  Fp('M16 6 H48 L52 60 H36 L32 26 L28 60 H12Z','#3b5bdb','#1c2f8a')+Lp('M16 12 H48','#1c2f8a',1.5)+Lp('M20 12 Q22 20 28 18 M44 12 Q42 20 36 18','#ffd43b',1.2)+dot(32,9,1.5,'#ffd43b')],
+ ["dress","vestido","👗","Clothing for girls or women that covers the body and part of the legs.",
+  Fp('M24 6 L28 6 Q32 12 36 6 L40 6 L40 22 L37 26 L54 58 H10 L27 26 L24 22Z','#e64980','#a61e4d')+Re(26,22,12,4,'#fff',1,'#a61e4d',1)],
+ ["shorts","pantalones cortos","🩳","Short trousers for hot days.",
+  Fp('M14 12 H50 L54 48 H36 L32 28 L28 48 H10Z','#fd7e14','#d9480f')+Lp('M14 18 H50','#d9480f',1.5)+Lp('M30 13 Q28 20 26 22 M34 13 Q36 20 38 22','#fff',1.2)],
+ ["shoes","zapatos","👞","You wear them on your feet when you go outside.",
+  Fp('M6 46 V30 Q6 26 10 26 H26 Q30 36 42 38 Q58 40 58 48 V50 H6Z','#8b5a2b','#4a2a0a')+Re(6,48,52,6,'#343a40',3,'#212529')+Lp('M22 30 L30 28 M24 34 L32 32','#f8f9fa',1.5)],
+ ["boots","botas","👢","Tall shoes that cover part of your leg.",
+  Fp('M16 6 H36 V38 Q52 40 56 48 V55 H16Z','#a0522d','#5c2b00')+Re(14,54,44,6,'#343a40',2,'#212529')+Re(14,6,24,6,'#8b5a2b',2,'#5c2b00')],
+ ["socks","calcetines","🧦","You wear them on your feet, inside your shoes.",
+  Fp('M18 6 H34 V36 Q34 40 38 44 L46 50 Q52 56 46 60 Q42 62 36 58 L22 46 Q18 42 18 36Z','#ff8787','#c92a2a')+Lp('M19 14 H33 M19 20 H33','#fff',3)],
+ ["hat","sombrero","👒","You wear it on your head to protect it from the sun.",
+  El(32,38,28,8,'#ffe066','#e67700')+Fp('M20 36 Q20 14 32 14 Q44 14 44 36Z','#ffe066','#e67700')+Re(20,29,24,5,'#f03e3e',1,'none',0)+Ci(41,31,3,'#fff','#e64980',1)],
+ ["cap","gorra","🧢","A hat with a hard part at the front, often for sport.",
+  Fp('M44 38 Q60 36 62 44 Q54 47 30 40Z','#1864ab','#0b4a8a')+Fp('M10 39 Q10 16 32 16 Q50 16 50 39Z','#1c7ed6','#0b4a8a')+Lp('M30 17 Q24 26 24 39','#0b4a8a',1.2)+Ci(31,16,2.5,'#1864ab','#0b4a8a',1.5)],
+ ["scarf","bufanda","🧣","You wear it around your neck when it is cold.",
+  Fp('M14 16 Q32 26 50 16 L52 26 Q32 36 12 26Z','#e03131','#a61e1e')+Fp('M38 26 L44 58 H34 L30 30Z','#e03131','#a61e1e')+Lp('M33 40 H42 M34 48 H43','#fff',2.5)+Lp('M35 58 V62 M38 58 V62 M41 58 V62','#a61e1e',1.5)],
+ ["gloves","guantes","🧤","They keep your hands warm in winter.",
+  G('translate(18 4)',Fp('M14 34 Q4 30 6 22 Q10 18 14 24Z','#9775fa','#4c2fa0')+Fp('M14 58 V26 Q14 10 26 10 Q38 10 38 26 V58Z','#9775fa','#4c2fa0')+Re(12,48,28,10,'#fff',2,'#4c2fa0'))+Fp('M14 34 Q4 30 6 22 Q10 18 14 24Z','#7950f2','#4c2fa0')+Fp('M14 58 V26 Q14 10 26 10 Q38 10 38 26 V58Z','#7950f2','#4c2fa0')+Re(12,48,28,10,'#fff',2,'#4c2fa0')],
+ ["coat","abrigo","🧥","A long warm jacket for cold weather.",
+  Fp('M22 6 L32 12 L42 6 L54 12 L60 50 L52 52 L48 26 L48 58 H16 L16 26 L12 52 L4 50 L10 12Z','#5c940d','#2b5a07')+Lp('M32 12 V58','#2b5a07',1.5)+Fp('M22 6 L32 22 L27 26 L20 9Z','#74b816','#2b5a07',1.5)+Fp('M42 6 L32 22 L37 26 L44 9Z','#74b816','#2b5a07',1.5)+[30,38,46].map(y=>dot(35,y,1.8,'#ffd43b')).join('')],
+ ["swimsuit","bañador","🩱","You wear it to swim at the pool or the beach.",
+  Fp('M20 6 L24 6 Q32 20 40 6 L44 6 L44 26 Q48 40 50 54 Q40 48 32 52 Q24 48 14 54 Q16 40 20 26Z','#15aabf','#0b7285')+dot(26,32,2.2,'#fff')+dot(38,30,2.2,'#fff')+dot(32,40,2.2,'#fff')+dot(24,44,2.2,'#fff')+dot(40,44,2.2,'#fff')],
+ ["sneakers","zapatillas","👟","Sports shoes for running.",
+  Fp('M6 46 V36 Q8 30 14 30 L22 26 Q30 32 40 34 Q56 36 58 44 V48 H6Z','#fff','#495057')+Re(6,46,52,7,'#4dabf7',3,'#1864ab')+Lp('M24 40 L38 36 M27 44 L44 40','#4dabf7',2.5)+Lp('M24 29 L28 33 M28 30 L32 34','#495057',1.2)],
+ ["flip-flops","chanclas","🩴","Summer shoes with a thin strap between your toes.",
+  [0,26].map(dx=>G(`translate(${dx} 0)`,Fp('M18 8 Q28 8 28 22 Q28 40 26 56 Q20 62 14 56 Q10 40 10 22 Q10 8 18 8Z','#fab005','#e67700')+Lp('M19 14 L12 27 M19 14 L26 27','#e64980',3))).join('')],
+ ["glasses","gafas","👓","You wear them to see better.",
+  Lp('M10 30 L4 25 M54 30 L60 25 M30 30 Q32 27 34 30',K,3)+Ci(20,32,10,'#e7f5ff',K,3)+Ci(44,32,10,'#e7f5ff',K,3)+Lp('M15 28 L19 24 M39 28 L43 24','#fff',2)],
+ ["watch","reloj de pulsera","⌚","You wear it on your wrist to know the time.",
+  Re(24,4,16,56,'#495057',4,'#212529')+Re(45,30,3,4,'#adb5bd',1,'none',0)+Ci(32,32,13,'#fff','#adb5bd',3)+Lp('M32 32 V24 M32 32 L37 35',K,2)],
+ ["ring","anillo","💍","A small circle of gold or silver you wear on your finger.",
+  Ci(32,40,16,'none','#fab005',5)+Fp('M24 22 L28 16 H36 L40 22 L32 30Z','#a5d8ff','#1c7ed6')+Lp('M48 10 V16 M45 13 H51','#74c0fc',1.5)],
+ ["handbag","bolso","👜","A small bag to carry your phone, keys and money.",
+  Lp('M22 26 Q22 10 32 10 Q42 10 42 26','#7d1240',3)+Fp('M10 26 H54 L50 56 H14Z','#c2255c','#7d1240')+Lp('M10 30 Q32 40 54 30','#7d1240',1.5)+Re(28,32,8,5,'#ffd43b',1,'#e67700',1)]
+]);
+
+mkSet("body","El cuerpo","🧍",[
+ ["eye","ojo","👁️","You use it to see; you have two of them.",
+  Lp('M14 22 L11 17 M24 16 L23 11 M32 14 V9 M40 16 L41 11 M50 22 L53 17',K,2)+Fp('M4 32 Q32 8 60 32 Q32 56 4 32Z','#fff')+Ci(32,32,11,'#4dabf7','#1864ab')+dot(32,32,5)+dot(35,29,2,'#fff')],
+ ["ear","oreja","👂","You hear with it.",
+  Fp('M24 58 Q22 50 26 46 Q18 40 18 24 Q18 6 34 6 Q50 6 50 24 Q50 36 42 42 Q36 46 36 54 Q36 60 28 60 Q24 60 24 58Z',SK,SKL)+Lp('M28 40 Q24 30 28 20 Q34 14 40 20 Q44 28 36 34 Q32 36 34 42',SKL,2)],
+ ["nose","nariz","👃","You smell with it; it is in the middle of your face.",
+  Fp('M30 6 Q28 30 18 44 Q14 52 22 54 Q26 50 32 52 Q38 50 42 54 Q50 52 46 44 Q36 30 34 6Z',SK,SKL)+El(26,50,3,2,SKL,'none',0)+El(38,50,3,2,SKL,'none',0)],
+ ["mouth","boca","👄","You eat and speak with it.",
+  Fp('M6 32 Q32 54 58 32Z','#f03e3e','#a61e1e')+Fp('M6 32 Q16 18 26 22 Q32 26 38 22 Q48 18 58 32Z','#e03131','#a61e1e')+Lp('M8 32 H56','#a61e1e',1.5)],
+ ["tooth","diente","🦷","It is white and hard; you use it to bite food.",
+  Fp('M14 14 Q14 4 24 6 Q32 10 40 6 Q50 4 50 14 Q50 30 44 40 L42 56 Q40 60 38 56 L34 42 H30 L26 56 Q24 60 22 56 L20 40 Q14 30 14 14Z','#fff','#868e96')+Lp('M20 14 Q20 22 24 26','#dee2e6',2.5)],
+ ["tongue","lengua","👅","It is pink and helps you taste food.",
+  Fp('M14 14 H50 V34 Q50 56 32 56 Q14 56 14 34Z','#ff8787','#c92a2a')+Lp('M32 18 V40','#c92a2a',2)+Fp('M8 14 Q32 4 56 14 Q32 20 8 14Z','#e03131','#a61e1e')],
+ ["hand","mano","✋","It is at the end of your arm and has five fingers.",
+  Fp('M18 60 V36 L11 25 Q9 20 13 18 Q17 17 20 22 L23 27 V10 Q23 6 27 6 Q31 6 31 10 V26 V6 Q31 2 35 2 Q39 2 39 6 V26 V8 Q39 4 43 4 Q47 4 47 8 V28 V15 Q47 11 51 11 Q55 11 55 15 V40 Q55 54 46 60Z',SK,SKL)],
+ ["foot","pie","🦶","It is at the end of your leg; you stand on it.",
+  Fp('M20 4 H34 V36 Q46 38 56 44 Q61 48 58 53 Q56 56 50 56 H20 Q14 56 14 48 V40 Q16 36 20 34Z',SK,SKL)+Lp('M50 44 V50 M44 42 V48',SKL,1.2)],
+ ["leg","pierna","🦵","You use it to walk and run.",
+  Fp('M24 6 H40 L42 30 Q44 34 40 38 L38 50 Q40 52 52 54 Q58 56 56 60 H30 L26 38 Q22 34 24 30Z',SK,SKL)+Re(22,2,20,10,'#4dabf7',2,'#1864ab')+Lp('M29 34 Q34 36 39 34',SKL,1.5)],
+ ["arm","brazo","💪","It is between your shoulder and your hand.",
+  Fp('M6 58 V44 Q6 38 14 38 H28 L33 18 Q35 12 41 12 Q47 12 47 18 L44 30 Q56 34 54 46 Q50 58 34 58Z',SK,SKL)+Ci(42,12,7,SK,SKL)+Lp('M30 44 Q38 40 46 44',SKL,1.5)],
+ ["brain","cerebro","🧠","It is inside your head; you think with it.",
+  El(32,32,25,19,'#fcc2d7','#c2255c')+Lp('M32 14 V50 M14 26 Q20 22 24 28 Q28 22 32 26 M32 26 Q38 20 42 26 Q46 22 50 28 M12 38 Q18 34 22 40 Q26 36 30 40 M34 40 Q40 34 44 40 Q48 36 54 40','#c2255c',2)],
+ ["heart","corazón","🫀","It pumps blood around your body.",
+  Fp('M32 56 Q8 40 8 22 Q8 10 20 10 Q28 10 32 18 Q36 10 44 10 Q56 10 56 22 Q56 40 32 56Z','#f03e3e','#a61e1e')+Lp('M15 21 Q15 15 21 14','#fff',2.5)],
+ ["lungs","pulmones","🫁","You use them to breathe air.",
+  Fp('M28 22 Q16 14 10 30 Q6 50 14 56 Q24 58 28 50Z','#faa2c1','#c2255c')+Fp('M36 22 Q48 14 54 30 Q58 50 50 56 Q40 58 36 50Z','#faa2c1','#c2255c')+Lp('M32 4 V24 M32 24 L25 31 M32 24 L39 31','#c2255c',3)],
+ ["bone","hueso","🦴","A hard white part inside your body.",
+  G('rotate(-30 32 32)',[[14,26],[14,38],[50,26],[50,38]].map(([x,y])=>Ci(x,y,6,'#f8f4e8','#868e96')).join('')+Re(14,28,36,8,'#f8f4e8',0,'none',0)+Lp('M16 28 H48 M16 36 H48','#868e96',2))],
+ ["finger","dedo","☝️","You have ten of them on your hands.",
+  Fp('M24 60 V40 Q20 38 20 34 V30 Q20 26 24 26 H26 V8 Q26 2 32 2 Q38 2 38 8 V26 Q46 26 46 32 V48 Q46 60 38 60Z',SK,SKL)+Re(28,4,8,7,'#ffe3e3',3,SKL,1)+Lp('M26 36 H44 M26 44 H44',SKL,1.5)],
+ ["thumb","pulgar","👍","The short, thick finger; we show it to say \"OK!\".",
+  Re(8,30,10,28,'#4dabf7',1,'#1864ab')+Fp('M18 30 Q26 26 28 18 Q30 6 36 6 Q42 8 40 18 L38 26 H52 Q58 26 56 32 Q58 36 54 38 Q58 42 54 44 Q56 50 50 52 Q50 58 44 58 H18Z',SK,SKL)+Lp('M40 38 H54 M42 44 H54 M40 51 H50',SKL,1.5)],
+ ["nail","uña","💅","The hard part at the end of your finger; some people paint it.",
+  Fp('M20 62 V22 Q20 6 32 6 Q44 6 44 22 V62Z',SK,SKL)+Fp('M24 26 V16 Q24 10 32 10 Q40 10 40 16 V26 Q32 30 24 26Z','#e64980','#a61e4d')+Lp('M28 14 V20','#fff',1.5)],
+ ["hair","pelo","💇","It grows on your head; you cut it at the hairdresser's.",
+  Fp('M10 42 Q8 8 32 8 Q56 8 54 42 Q54 56 46 58 V30 H18 V58 Q10 56 10 42Z','#e8590c','#a33f00')+El(32,36,13,16,SK,SKL)+Fp('M18 30 Q20 14 32 14 Q44 14 46 30 Q38 22 32 26 Q26 22 18 30Z','#e8590c','#a33f00')+dot(27,36,1.6)+dot(37,36,1.6)+Lp('M28 44 Q32 47 36 44',SKL,1.5)],
+ ["beard","barba","🧔","Hair that grows on a man's chin and face.",
+  El(32,30,15,18,SK,SKL)+Fp('M17 26 Q16 10 32 10 Q48 10 47 26 Q40 18 32 18 Q24 18 17 26Z','#5c3b1e','#3b2510')+Fp('M17 30 Q18 58 32 60 Q46 58 47 30 Q44 42 38 40 Q32 38 26 40 Q20 42 17 30Z','#5c3b1e','#3b2510')+Lp('M28 45 Q32 47 36 45',SK,2)+dot(26,28,1.8)+dot(38,28,1.8)],
+ ["face","cara","🙂","The front of your head, with your eyes, nose and mouth.",
+  Ci(32,32,24,'#ffd43b','#e67700')+El(24,28,2.5,4,K)+El(40,28,2.5,4,K)+Lp('M20 38 Q32 50 44 38',K,2.5)]
+]);
+
+mkSet("weather","Tiempo y naturaleza","🌦️",[
+ ["sun","sol","☀️","It shines in the sky during the day and keeps us warm.",
+  Lp('M32 4 V12 M32 52 V60 M4 32 H12 M52 32 H60 M12 12 L18 18 M46 46 L52 52 M12 52 L18 46 M46 18 L52 12','#f59f00',3)+Ci(32,32,13,'#ffd43b','#f59f00')],
+ ["rain","lluvia","🌧️","Water that falls from the clouds.",
+  cloud('#ced4da','#868e96')+Lp('M18 43 L14 52 M30 43 L26 52 M42 43 L38 52 M24 54 L22 59 M36 54 L34 59','#1c7ed6',3)],
+ ["snow","nieve","❄️","Cold white flakes that fall in winter.",
+  [0,60,120].map(a=>G(`rotate(${a} 32 32)`,Lp('M32 6 V58 M26 11 L32 17 L38 11 M26 53 L32 47 L38 53','#4dabf7',3))).join('')],
+ ["snowman","muñeco de nieve","⛄","A man made of snow that children build.",
+  Lp('M18 42 L6 34 M46 42 L58 34','#8b5a2b',2)+Ci(32,46,14,'#fff','#868e96')+Ci(32,22,10,'#fff','#868e96')+Re(24,6,16,8,K,1,'none',0)+Lp('M20 14 H44',K,3)+dot(28,20,1.5)+dot(36,20,1.5)+Fp('M32 23 L41 25 L32 26.5Z','#fd7e14','none',0)+Re(23,30,18,4,'#e03131',2,'none',0)+dot(32,42,1.8)+dot(32,50,1.8)],
+ ["cloud","nube","☁️","A white or grey thing in the sky that can bring rain.",
+  Fp('M14 46 Q2 46 4 34 Q6 24 18 26 Q20 12 34 12 Q48 12 50 24 Q62 22 62 36 Q62 46 52 46Z','#fff','#74c0fc',2.5)],
+ ["rainbow","arcoíris","🌈","An arc of seven colours in the sky after the rain.",
+  [[26,'#f03e3e'],[21,'#fd7e14'],[16,'#ffd43b'],[11,'#40c057'],[6,'#4dabf7']].map(([r,c])=>Lp(`M${32-r} 52 A${r} ${r} 0 0 1 ${32+r} 52`,c,5)).join('')+El(9,52,9,5,'#fff','#adb5bd')+El(55,52,9,5,'#fff','#adb5bd')],
+ ["lightning","rayo","⚡","A bright flash of light in the sky during a storm.",
+  cloud('#868e96','#495057')+Fp('M34 30 L22 46 H32 L26 62 L44 40 H34 L40 30Z','#ffd43b','#e67700')],
+ ["wind","viento","🌬️","Moving air that blows the leaves.",
+  Lp('M6 22 H40 Q50 22 50 14 Q50 8 44 8 Q38 8 38 14 M6 34 H50 Q58 34 58 42 Q58 50 50 50 Q44 50 44 44 M6 46 H30','#74c0fc',4)+Fp('M14 54 Q20 48 26 54 Q20 60 14 54Z','#40c057','#2b8a3e',1.5)],
+ ["tree","árbol","🌳","A tall plant with a trunk, branches and leaves.",
+  Re(28,36,8,24,'#8b5a2b',2,'#5c3b1e')+Ci(20,30,11,'#40c057','#2b8a3e')+Ci(44,30,11,'#40c057','#2b8a3e')+Ci(32,22,15,'#51cf66','#2b8a3e')],
+ ["flower","flor","🌷","A colourful part of a plant that smells nice.",
+  Lp('M32 34 V60','#2f9e44',3)+Fp('M32 50 Q22 44 18 50 Q24 56 32 50Z','#40c057','#2b8a3e',1.5)+[[32,14],[42,22],[38,34],[26,34],[22,22]].map(([x,y])=>Ci(x,y,8,'#f783ac','#c2255c')).join('')+Ci(32,25,6,'#ffd43b','#e67700')],
+ ["mountain","montaña","⛰️","A very high hill, sometimes with snow on top.",
+  Fp('M2 58 L24 16 L36 36 L44 26 L62 58Z','#868e96','#495057')+Fp('M24 16 L17.7 28 L22 25 L26 29 L31.2 28Z','#fff','none',0)+Fp('M44 26 L40 32 L44 30 L48 32Z','#fff','none',0)],
+ ["river","río","🏞️","Water that flows across the land to the sea.",
+  Re(2,2,60,60,'#d3f9d8',8,'none',0)+Fp('M22 2 Q36 16 22 30 Q10 44 30 62 H46 Q28 44 40 30 Q52 16 36 2Z','#4dabf7','#1864ab',1.5)+Lp('M30 20 Q33 24 30 28 M34 44 Q31 48 35 52','#fff',1.5)+Ci(52,46,5,'#40c057','none',0)+Ci(10,14,5,'#40c057','none',0)+Ci(12,48,4,'#40c057','none',0)],
+ ["wave","ola","🌊","Water that moves up and down in the sea.",
+  Re(0,48,64,14,'#1c7ed6',0,'none',0)+Fp('M2 50 Q10 18 36 16 Q56 16 58 30 Q50 22 42 28 Q36 34 46 40 Q36 46 28 38 Q20 44 18 58 H2Z','#4dabf7','#1864ab')+Lp('M42 28 Q48 24 56 28','#fff',2)],
+ ["volcano","volcán","🌋","A mountain that can throw out fire and hot rock.",
+  Fp('M26 22 Q20 10 26 4 Q30 12 32 6 Q36 12 40 4 Q44 12 38 22Z','#fd7e14','#e8590c',1.5)+Fp('M4 60 L24 22 H40 L60 60Z','#8b5a2b','#5c3b1e')+Fp('M24 22 H40 L36 32 L32 28 L28 36 L26 26Z','#f03e3e','none',0)],
+ ["star","estrella","⭐","It shines in the sky at night; there are millions of them.",
+  Fp('M32 4 L39 23 L59 24 L43 36 L49 56 L32 44 L15 56 L21 36 L5 24 L25 23Z','#ffd43b','#e67700')+Lp('M54 6 V12 M51 9 H57','#ffd43b',1.5)],
+ ["leaf","hoja","🍂","It grows on a tree; in autumn it turns brown and falls.",
+  Fp('M10 54 Q8 20 50 10 Q56 40 24 52 Q16 56 10 54Z','#e8590c','#a33f00')+Lp('M10 54 Q28 34 48 14 M22 42 L20 30 M30 34 L42 34 M36 27 L34 18','#a33f00',1.5)],
+ ["umbrella","paraguas","☂️","You hold it over your head when it rains.",
+  Lp('M32 32 V54 Q32 60 26 60 Q22 60 22 56 M32 8 V4','#495057',3)+Fp('M4 32 Q8 8 32 8 Q56 8 60 32 Q54 28 46 32 Q40 28 32 32 Q24 28 18 32 Q10 28 4 32Z','#7950f2','#4c2fa0')],
+ ["desert","desierto","🏜️","A very dry, hot place with lots of sand.",
+  Ci(52,14,7,'#fcc419','none',0)+Lp('M28 36 H22 V27 M36 32 H42 V23','#2f9e44',5)+Re(28,14,8,38,'#40c057',4,'#2b8a3e')+Fp('M0 50 Q20 36 40 46 Q52 40 64 46 V64 H0Z','#ffd8a8','#e8590c',1.5)],
+ ["island","isla","🏝️","Land with water all around it.",
+  Re(0,40,64,24,'#4dabf7',0,'none',0)+El(30,44,22,7,'#ffe066','#e67700')+Lp('M30 44 Q28 30 34 18','#8b5a2b',3)+Fp('M34 18 Q22 10 12 20 Q24 16 34 20Z','#40c057','#2b8a3e',1.5)+Fp('M34 18 Q46 10 56 20 Q44 16 34 20Z','#40c057','#2b8a3e',1.5)+Fp('M34 18 Q30 6 38 2 Q36 10 35 18Z','#40c057','#2b8a3e',1.5)],
+ ["fog","niebla","🌫️","A thick cloud near the ground; it is hard to see through it.",
+  Ci(46,26,9,'#e9ecef','none',0)+Re(42,30,8,20,'#e9ecef',2,'none',0)+Lp('M6 20 H40 M14 30 H58 M6 40 H50 M16 50 H56','#adb5bd',5)]
+]);
+
+mkSet("town","La ciudad","🏙️",[
+ ["hospital","hospital","🏥","A place where doctors help sick people.",
+  Re(10,16,44,42,'#fff',2,'#495057')+Re(28,21,8,20,'#e03131',1,'none',0)+Re(22,27,20,8,'#e03131',1,'none',0)+Re(26,46,12,12,'#74c0fc',1,'#495057',1.5)+Re(14,22,6,6,'#a5d8ff',1,'#495057',1)+Re(44,22,6,6,'#a5d8ff',1,'#495057',1)+Re(14,34,6,6,'#a5d8ff',1,'#495057',1)+Re(44,34,6,6,'#a5d8ff',1,'#495057',1)],
+ ["school","colegio","🏫","Children go there to learn.",
+  Lp('M32 10 V2','#495057',1.5)+Fp('M32 2 H40 L38 4.5 L40 7 H32Z','#4dabf7','none',0)+Re(8,26,48,32,'#ffa94d',1,'#d9480f')+Fp('M4 28 L32 10 L60 28Z','#c92a2a','#7d1010')+Ci(32,20,4,'#fff','#495057',1.5)+Re(27,44,10,14,'#8b5a2b',1,'#5c3b1e',1.5)+Re(13,34,8,8,'#a5d8ff',1,'#495057',1.5)+Re(43,34,8,8,'#a5d8ff',1,'#495057',1.5)],
+ ["bank","banco","🏦","You keep your money there.",
+  Re(10,24,44,34,'#e9ecef',2,'#495057')+[14,24,34,44].map(x=>Re(x,30,6,22,'#fff',1,'#adb5bd',1.5)).join('')+Re(8,52,48,6,'#adb5bd',1,'#495057')+Ci(32,13,10,'#ffd43b','#e67700')+Ci(32,13,6,'none','#e67700',1.5)],
+ ["library","biblioteca","📚","A place where you can borrow books. (Careful: it is not a shop!)",
+  Re(8,22,48,36,'#d0bfff',2,'#5f3dc4')+Fp('M4 24 L32 8 L60 24Z','#7950f2','#5f3dc4')+Re(18,30,6,22,'#f03e3e',1,K,1.2)+Re(25,33,6,19,'#40c057',1,K,1.2)+Re(32,29,6,23,'#ffd43b',1,K,1.2)+G('rotate(12 44 52)',Re(39,34,6,18,'#4dabf7',1,K,1.2))+Lp('M14 52 H50','#5f3dc4',2)],
+ ["pharmacy","farmacia","💊","A shop where you buy medicine.",
+  Re(10,22,44,36,'#fff',2,'#495057')+Ci(32,13,9,'#fff','#2f9e44')+Re(29,6,6,14,'#2f9e44',1,'none',0)+Re(25,10,14,6,'#2f9e44',1,'none',0)+Re(14,30,22,14,'#d3f9d8',2,'#495057',1.5)+G('rotate(-25 25 37)',Re(18,34,14,6,'#ff8787',3,'#c92a2a',1.2))+Re(40,36,10,22,'#74c0fc',1,'#495057',1.5)],
+ ["bakery","panadería","🥐","A shop that sells bread and cakes.",
+  Re(8,22,48,36,'#fff3bf',2,'#e67700')+Fp('M6 22 H58 L54 30 H10Z','#ff922b','#d9480f')+Lp('M18 22 L17 30 M30 22 V30 M42 22 L43 30','#fff',2)+Re(14,34,22,16,'#a5d8ff',2,'#495057',1.5)+El(25,44,7,4,'#e8a85a','#8b5a2b',1.5)+Re(40,38,10,20,'#8b5a2b',1,'#5c3b1e',1.5)+Fp('M20 16 Q32 2 44 16 Q38 12 32 17 Q26 12 20 16Z','#e8a85a','#8b5a2b',1.5)],
+ ["supermarket","supermercado","🛒","A big shop where you buy food and many other things.",
+  Re(22,12,8,10,'#ff922b',1,'none',0)+Ci(38,16,5,'#40c057','none',0)+Re(44,9,6,13,'#f03e3e',1,'none',0)+Fp('M15 20 H56 L50 42 H18Z','#d0ebff','none',0)+Lp('M4 12 H12 L18 42 H50 L56 20 H14 M17 31 H53','#495057',3)+Ci(22,50,4,'#495057')+Ci(46,50,4,'#495057')],
+ ["fountain","fuente","⛲","Water comes up from it in the middle of a square.",
+  Lp('M32 24 V6 M32 10 Q22 8 18 24 M32 10 Q42 8 46 24','#4dabf7',2.5)+Fp('M6 44 H58 L54 56 H10Z','#adb5bd','#495057')+El(32,44,26,4,'#74c0fc','#495057',1.5)+Re(28,26,8,18,'#ced4da',1,'#495057',1.5)+Fp('M20 26 H44 Q42 32 32 32 Q22 32 20 26Z','#ced4da','#495057',1.5)],
+ ["church","iglesia","⛪","A building where Christians go to pray.",
+  Re(10,32,44,26,'#fff3bf',1,'#8b5a2b')+Re(24,16,16,42,'#fff3bf',1,'#8b5a2b')+Fp('M22 17 L32 4 L42 17Z','#c92a2a','#7d1010')+Lp('M32 4 V-2 M29 1 H35','#495057',1.5)+Ci(32,26,3,'#a5d8ff','#8b5a2b',1.5)+Fp('M28 58 V48 Q32 42 36 48 V58Z','#8b5a2b')+Re(14,40,6,8,'#a5d8ff',3,'#8b5a2b',1.2)+Re(44,40,6,8,'#a5d8ff',3,'#8b5a2b',1.2)],
+ ["post office","oficina de correos","🏤","You go there to send letters and parcels.",
+  Re(8,18,48,40,'#ffe066',2,'#e67700')+Re(18,25,28,18,'#fff',1,'#495057',1.5)+Lp('M18 25 L32 35 L46 25','#495057',1.5)+Re(27,47,10,11,'#8b5a2b',1,'#5c3b1e',1.5)+Re(8,12,48,6,'#e03131',1,'#a61e1e')],
+ ["police station","comisaría","🚓","Police officers work there.",
+  Lp('M22 10 L18 6 M42 10 L46 6 M32 6 V2','#f03e3e',1.5)+Re(28,8,8,8,'#f03e3e',2,'#7d1010',1.5)+Re(8,16,48,42,'#4263eb',2,'#1c2f8a')+Fp('M32 22 L34.5 27 L40 27.5 L36 31 L37.5 36.5 L32 33.5 L26.5 36.5 L28 31 L24 27.5 L29.5 27Z','#ffd43b','#e67700',1)+Re(27,44,10,14,'#d0ebff',1,'#1c2f8a',1.5)+Re(13,42,8,7,'#d0ebff',1,'#1c2f8a',1.2)+Re(43,42,8,7,'#d0ebff',1,'#1c2f8a',1.2)],
+ ["fire station","parque de bomberos","🚒","Fire engines are kept there.",
+  Re(6,22,52,36,'#f03e3e',2,'#7d1010')+Fp('M4 24 L32 9 L60 24Z','#c92a2a','#7d1010')+Ci(32,17,3,'#ffd43b','#e67700',1.5)+Re(14,32,36,26,'#fff',2,'#495057')+Lp('M14 38 H50 M14 44 H50 M14 50 H50','#adb5bd',1.5)],
+ ["restaurant","restaurante","🍽️","You go there to eat a meal and a waiter brings it to you.",
+  Ci(32,32,18,'#fff','#adb5bd',2.5)+Ci(32,32,12,'none','#dee2e6',2)+Lp('M8 12 V52 M5 12 V22 Q5 26 8 26 Q11 26 11 22 V12','#495057',2)+Lp('M56 32 V52','#495057',3)+Fp('M56 10 Q50 18 52 32 H56Z','#e9ecef','#495057',1.5)],
+ ["cinema","cine","🎬","You go there to watch a film on a big screen.",
+  Fp('M8 14 L54 8 L56 16 L10 22Z','#343a40','#212529')+Lp('M18 13 L22 20 M28 11.7 L32 18.6 M38 10.4 L42 17.3 M48 9 L51.5 15.3','#fff',2.5)+Re(8,24,48,30,'#343a40',2,'#212529')+Lp('M8 31 H56','#fff',2)+Lp('M16 40 H34 M16 46 H28','#868e96',2)],
+ ["museum","museo","🏛️","A building where you can see old and interesting things.",
+  Fp('M6 22 L32 6 L58 22Z','#e9ecef','#495057')+Re(8,22,48,4,'#dee2e6',1,'#495057',1.5)+[12,23,35,46].map(x=>Re(x,26,6,24,'#fff',0,'#495057',1.5)).join('')+Re(6,50,52,8,'#adb5bd',1,'#495057')+Ci(32,15,2.5,'#ced4da','#495057',1)],
+ ["stadium","estadio","🏟️","A very big place where people watch football matches.",
+  Lp('M8 20 V32 M56 20 V32','#495057',2)+Ci(8,17,3,'#ffe066','#e67700',1)+Ci(56,17,3,'#ffe066','#e67700',1)+El(32,40,28,16,'#adb5bd','#495057')+El(32,40,20,10,'#40c057','#2b8a3e')+Lp('M32 30 V50','#fff',1.5)+Ci(32,40,3,'none','#fff',1.5)],
+ ["zoo","zoo","🦓","A place where you can see wild animals.",
+  Lp('M10 58 V22 M54 58 V22','#8b5a2b',4)+Fp('M4 22 Q32 2 60 22 V28 Q32 10 4 28Z','#40c057','#2b8a3e')+Lp('M18 58 V30 M26 58 V28 M38 58 V28 M46 58 V30','#868e96',2)+El(32,46,6,5,'#5c3b1e','none',0)+[[24,37],[29,33],[35,33],[40,37]].map(([x,y])=>Ci(x,y,2.8,'#5c3b1e','none',0)).join('')],
+ ["castle","castillo","🏰","A big old building with towers where kings lived.",
+  Lp('M12 18 V4 M52 18 V4','#495057',1.5)+Fp('M12 4 L20 7 L12 10Z','#e03131','none',0)+Fp('M52 4 L60 7 L52 10Z','#e03131','none',0)+Re(18,28,28,30,'#dee2e6',1,'#495057')+Re(6,18,12,40,'#ced4da',1,'#495057')+Re(46,18,12,40,'#ced4da',1,'#495057')+[6,13,46,53].map(x=>Re(x,13,5,6,'#ced4da',0,'#495057',1.5)).join('')+[19,27,35].map(x=>Re(x,23,6,6,'#dee2e6',0,'#495057',1.5)).join('')+Fp('M26 58 V46 Q32 38 38 46 V58Z','#8b5a2b','#5c3b1e')],
+ ["bus stop","parada de autobús","🚏","A place where you wait for the bus.",
+  Lp('M4 60 H60','#495057',2)+Lp('M14 8 V60','#495057',3)+Ci(14,14,8,'#1c7ed6','#0b4a8a')+Re(10,10,8,6,'#fff',1,'none',0)+Re(28,24,30,34,'#d0ebff',2,'#495057',1.5)+Re(26,20,34,5,'#495057',1,'none',0)+Lp('M32 46 H54 M34 46 V52 M52 46 V52','#8b5a2b',3)],
+ ["factory","fábrica","🏭","A building where machines make things.",
+  Ci(52,5,4,'#ced4da','none',0)+Ci(58,3,3,'#ced4da','none',0)+Re(48,8,8,16,'#495057',1,'none',0)+Fp('M4 58 V30 L18 38 V30 L32 38 V30 L46 38 V22 H58 V58Z','#868e96','#495057')+Re(10,44,8,6,'#ffe066',1,'none',0)+Re(24,44,8,6,'#ffe066',1,'none',0)+Re(38,44,8,6,'#ffe066',1,'none',0)]
+]);
+
+mkSet("jobs","Profesiones","👷",[
+ ["doctor","médico","🧑‍⚕️","This person helps sick people get better.",
+  P(SK,'#fff','',Lp('M24 48 Q24 57 32 57 Q40 57 40 48','#495057',2)+Ci(32,57,2.5,'#adb5bd','#495057',1.5)+Re(41,52,6,6,'#fff',1,'#e03131',1)+Lp('M44 53 V57 M42 55 H46','#e03131',1.5))],
+ ["teacher","profesor","🧑‍🏫","This person works at a school and helps children learn.",
+  Re(36,2,26,18,'#2b8a3e',1,'#8b5a2b',2)+Lp('M40 8 H54 M40 13 H50','#fff',1.5)+P('#c68642','#7950f2','',Ci(27,29,4,'none',K,1.3)+Ci(37,29,4,'none',K,1.3)+Lp('M31 29 H33',K,1.3)+Lp('M50 62 L58 44','#8b5a2b',2))],
+ ["firefighter","bombero","🧑‍🚒","This person puts out fires.",
+  P(SK,'#343a40',Fp('M17 25 Q17 9 32 9 Q47 9 47 25Z','#f03e3e','#7d1010')+Lp('M13 25 H51','#7d1010',3)+Ci(32,17,3,'#ffd43b','#e67700',1),Lp('M14 56 H50','#ffd43b',3))],
+ ["police officer","policía","👮","This person catches thieves and keeps the town safe.",
+  P('#8d5524','#364fc7',Fp('M18 22 Q18 11 32 11 Q46 11 46 22Z','#1c2f8a','#0b1a5a')+Fp('M17 22 H47 L43 26 H21Z','#212529','none',0)+Ci(32,16,2.5,'#ffd43b','none',0),Fp('M40 50 l1.5 3 3.3 .4 -2.4 2.2 .7 3.2 -3.1 -1.7 -3.1 1.7 .7 -3.2 -2.4 -2.2 3.3 -.4z','#ffd43b','#e67700',.8))],
+ ["chef","cocinero","🧑‍🍳","This person cooks food in a restaurant.",
+  P(SK,'#fff',Fp('M20 20 Q12 18 14 10 Q16 4 24 6 Q28 0 34 2 Q40 0 42 6 Q50 4 50 12 Q50 18 44 20Z','#fff','#adb5bd')+Re(20,15,24,6,'#fff',1,'#adb5bd',1.5),Fp('M24 46 L32 52 L40 46Z','#e03131','none',0)+dot(28,56,1.5,'#495057')+dot(36,56,1.5,'#495057'))],
+ ["farmer","granjero","🧑‍🌾","This person grows food and looks after animals.",
+  P('#e0ac69','#2f9e44',El(32,18,22,4,'#fcc419','#e67700')+Fp('M22 18 Q22 6 32 6 Q42 6 42 18Z','#fcc419','#e67700')+Re(22,13,20,3,'#e03131',1,'none',0),Re(22,52,20,10,'#1c7ed6',1,'#0b4a8a',1.5)+Lp('M24 52 L22 47 M40 52 L42 47','#1c7ed6',2.5))],
+ ["pilot","piloto","🧑‍✈️","This person flies planes.",
+  P(SK,'#fff',Fp('M18 22 Q18 11 32 11 Q46 11 46 22Z','#1c2f8a','#0b1a5a')+Fp('M17 22 H47 L43 26 H21Z','#212529','none',0)+Lp('M26 16 H38','#ffd43b',2),Fp('M30 46 H34 L35 58 L32 61 L29 58Z','#1c2f8a','none',0)+Re(11,50,9,3,'#ffd43b',1,'none',0)+Re(44,50,9,3,'#ffd43b',1,'none',0))],
+ ["astronaut","astronauta","🧑‍🚀","This person travels into space.",
+  Fp('M10 62 Q10 46 32 46 Q54 46 54 62Z','#fff','#495057')+Re(26,50,12,8,'#e03131',1,'#495057',1)+Ci(32,28,18,'#fff','#495057')+El(32,28,11,9,'#1c7ed6','#0b4a8a')+Lp('M26 24 Q28 21 32 21','#a5d8ff',2)+Lp('M52 8 V12 M50 10 H54 M8 40 V44 M6 42 H10','#ffd43b',1.5)],
+ ["mechanic","mecánico","🧑‍🔧","This person repairs cars.",
+  P('#8d5524','#1c7ed6',Fp('M18 22 Q18 12 32 12 Q46 12 46 22Z','#e03131','#a61e1e'),El(38,33,2,1,'#495057','none',0)+Lp('M44 62 L54 42','#868e96',4)+Fp('M51 44 Q50 36 56 36 L54 40 L58 42 L60 38 Q62 44 56 46Z','#868e96','#495057',1.5))],
+ ["builder","albañil","👷","This person builds houses.",
+  P(SK,'#fd7e14',Fp('M17 24 Q17 10 32 10 Q47 10 47 24Z','#fcc419','#e67700')+Lp('M13 24 H51','#e67700',3)+Lp('M32 10 V24','#e67700',1.5),Lp('M12 55 H52','#fff',2.5)+Lp('M26 47 V62 M38 47 V62','#fff',2))],
+ ["artist","artista","🧑‍🎨","This person paints pictures.",
+  P(SK,'#495057',Fp('M18 21 Q16 10 32 10 Q48 10 48 21 Q32 17 18 21Z','#e03131','#7d1010')+Lp('M32 10 V6','#7d1010',2),El(48,54,11,7,'#e8a85a','#8b5a2b')+dot(44,52,1.8,'#e03131')+dot(49,51,1.8,'#4dabf7')+dot(53,54,1.8,'#40c057')+dot(47,57,1.8,'#ffd43b')+Lp('M14 62 L22 48','#8b5a2b',2))],
+ ["singer","cantante","🧑‍🎤","This person sings songs on stage.",
+  P('#c68642','#e64980','',Lp('M44 62 V50','#495057',3)+Ci(44,46,4,'#495057','#212529')+Lp('M52 8 V20 M52 8 L58 6 V18','#7950f2',2)+dot(50,20,2.5,'#7950f2')+dot(56,18,2.5,'#7950f2'),'#1b1b2b')],
+ ["judge","juez","🧑‍⚖️","This person decides who is right in a court.",
+  P(SK,'#212529','',Fp('M26 46 L32 54 L38 46Z','#fff','none',0)+G('rotate(-30 50 52)',Re(42,48,14,6,'#8b5a2b',1,'#5c3b1e',1.5)+Lp('M49 54 V62','#8b5a2b',2.5)),'#ced4da')],
+ ["scientist","científico","🧑‍🔬","This person does experiments in a laboratory.",
+  P(SK,'#fff',Fp('M18 24 Q14 14 20 10 Q26 4 32 8 Q38 4 44 10 Q50 14 46 24 Q42 16 32 18 Q22 16 18 24Z','#dee2e6','#adb5bd',1.5),Ci(27,29,4,'none',K,1.3)+Ci(37,29,4,'none',K,1.3)+Fp('M44 44 V50 L38 60 H54 L48 50 V44Z','#d0ebff','#1864ab',1.5)+Fp('M39.5 58 L41.5 55 H50.5 L52.5 58Z','#69db7c','none',0),'')],
+ ["programmer","programador","🧑‍💻","This person writes code for computers.",
+  P(SK,'#495057','',Fp('M12 52 H52 L56 62 H8Z','#adb5bd','#495057')+Re(16,38,32,16,'#343a40',2,'#212529')+Lp('M21 43 H29 M23 47 H37 M21 51 H31','#69db7c',1.5),'#e8590c')],
+ ["detective","detective","🕵️","This person looks for clues to solve mysteries.",
+  P(SK,'#a0522d',Fp('M14 22 Q16 9 32 9 Q48 9 50 22Z','#8b5a2b','#5c2b00')+Lp('M12 22 H52','#5c2b00',2.5),Lp('M43 53 L36 61','#8b5a2b',3)+Ci(48,48,7,'#d0ebff','#495057',2.5))],
+ ["hairdresser","peluquero","💇","This person cuts your hair.",
+  P(SK,'#be4bdb','',Lp('M47 55 L56 44 M53 55 L44 44','#adb5bd',2)+Ci(46,58,3,'none','#495057',2)+Ci(54,58,3,'none','#495057',2),'#e64980')],
+ ["office worker","oficinista","🧑‍💼","This person works at a desk in an office.",
+  P('#e0ac69','#495057','',Fp('M27 46 L32 52 L37 46Z','#fff','none',0)+Fp('M31 49 H33 L34 58 L32 60 L30 58Z','#1c7ed6','none',0)+Lp('M44 50 V47 H52 V50','#5c3b1e',2)+Re(40,50,16,11,'#8b5a2b',2,'#5c3b1e'))],
+ ["fisherman","pescador","🎣","This person catches fish to sell them.",
+  P(SK,'#15aabf',Fp('M19 20 Q19 10 32 10 Q45 10 45 20 L49 22 H15Z','#fab005','#e67700'),Lp('M46 62 L58 8','#8b5a2b',2)+Lp('M58 8 Q62 20 60 34','#adb5bd',1)+Fp('M54 36 Q60 32 64 36 Q60 40 54 36Z','#4dabf7','#1864ab',1))],
+ ["dentist","dentista","🦷","This person looks after your teeth.",
+  P('#c68642','#d0ebff','',Re(23,32,18,7,'#a5d8ff',2,'#74c0fc',1)+G('translate(40 42) scale(.33)',Fp('M14 14 Q14 4 24 6 Q32 10 40 6 Q50 4 50 14 Q50 30 44 40 L42 56 Q40 60 38 56 L34 42 H30 L26 56 Q24 60 22 56 L20 40 Q14 30 14 14Z','#fff','#868e96',4)),'#1b1b2b')]
+]);
+
+// ---------- new topics (10 words each) ----------
+const STK = (hx,hy,path,col='#495057') => Lp(path,col,3.5) + Ci(hx,hy,6,SK,SKL,1.5);
+const FACE = (fill='#ffd43b',stroke='#e67700',cx=32,cy=34,r=24) => Ci(cx,cy,r,fill,stroke);
+const HRT = (x,y,s,f='#f03e3e') => G(`translate(${x} ${y}) scale(${s})`, Fp('M0 6 Q-10 -2 -6 -7 Q-2 -10 0 -5 Q2 -10 6 -7 Q10 -2 0 6Z',f,'#a61e1e',1.2/s));
+const SPLASH = (f,c) => Fp('M32 8 Q40 3 43 13 Q52 7 55 17 Q63 22 55 30 Q63 39 52 44 Q55 56 43 52 Q37 62 29 54 Q18 60 16 48 Q4 46 10 37 Q2 28 12 22 Q8 10 22 14 Q24 4 32 8Z',f,c,2)+Ci(57,52,3,f,c,1.5)+Ci(8,12,2.5,f,c,1.5);
+const NOTE = (x,y,c='#7950f2') => Lp(`M${x} ${y} V${y-10} L${x+6} ${y-12} V${y-3}`,c,2)+dot(x-2,y,2.5,c)+dot(x+4,y-3,2.5,c);
+const ARROW = (d,c='#2f9e44') => Lp(d,c,3);
+
+mkSet("colours","Colores","🎨",[
+ ["red","rojo","🔴","The colour of a tomato.",SPLASH('#f03e3e','#a61e1e')],
+ ["blue","azul","🔵","The colour of the sky on a sunny day.",SPLASH('#339af0','#1864ab')],
+ ["green","verde","🟢","The colour of grass and leaves in summer.",SPLASH('#40c057','#2b8a3e')],
+ ["yellow","amarillo","🟡","The colour of a banana and of the sun.",SPLASH('#ffd43b','#e67700')],
+ ["orange","naranja","🟠","The colour of a carrot; it is also the name of a fruit.",SPLASH('#ff922b','#d9480f')],
+ ["black","negro","⚫","The colour of the night sky.",SPLASH('#212529','#000')],
+ ["white","blanco","⚪","The colour of snow and milk.",SPLASH('#fff','#adb5bd')],
+ ["pink","rosa","🩷","The colour of a pig; a mix of red and white.",SPLASH('#f783ac','#c2255c')],
+ ["purple","morado","🟣","The colour of grapes; a mix of red and blue.",SPLASH('#9c36b5','#5f1a7a')],
+ ["brown","marrón","🟤","The colour of chocolate and coffee.",SPLASH('#8b5a2b','#4a2a0a')]
+]);
+
+mkSet("feelings","Sentimientos","😊",[
+ ["happy","feliz","😀","How you feel at a birthday party with your friends.",
+  FACE()+Lp('M20 29 Q24 24 28 29 M36 29 Q40 24 44 29',K,2.5)+Fp('M18 38 H46 Q44 53 32 53 Q20 53 18 38Z','#c92a2a',K,2)],
+ ["sad","triste","😢","How you feel when you lose something you love; you might cry.",
+  FACE('#a5d8ff','#1864ab')+dot(25,31,2.5)+dot(39,31,2.5)+Lp('M19 23 L28 26 M45 23 L36 26',K,2)+Lp('M22 49 Q32 40 42 49',K,2.5)+Fp('M23 36 Q27 42 23 45 Q19 42 23 36Z','#4dabf7','#1864ab',1)],
+ ["angry","enfadado","😠","How you feel when someone breaks your phone on purpose.",
+  FACE('#ff8787','#c92a2a')+Lp('M18 23 L29 29 M46 23 L35 29',K,3)+dot(25,33,2.5)+dot(39,33,2.5)+Lp('M22 48 Q32 41 42 48',K,2.5)+Lp('M8 8 L12 14 M56 8 L52 14 M32 2 V7','#c92a2a',2.5)],
+ ["tired","cansado","🥱","How you feel after a long day at work; you want to sleep.",
+  FACE()+Lp('M19 31 Q24 35 29 31 M35 31 Q40 35 45 31',K,2.5)+El(32,45,5,6,'#5c2b00',K,1.5)+Lp('M46 4 H53 L46 11 H53 M55 13 H60 L55 18 H60','#4dabf7',2)],
+ ["scared","asustado","😨","How you feel when you hear a strange noise in the dark.",
+  FACE('#d0ebff','#1864ab')+Ci(25,31,5.5,'#fff',K,1.5)+Ci(39,31,5.5,'#fff',K,1.5)+dot(25,31,1.6)+dot(39,31,1.6)+Lp('M18 21 Q24 16 30 21 M34 21 Q40 16 46 21',K,2)+Lp('M21 47 L25 43 L29 47 L33 43 L37 47 L41 43',K,2)+Fp('M52 10 Q56 16 56 19 a4 4 0 0 1 -8 0 Q48 16 52 10Z','#74c0fc','#1864ab',1)],
+ ["surprised","sorprendido","😲","How you feel when something you did not expect happens.",
+  FACE()+Lp('M18 18 Q24 13 30 18 M34 18 Q40 13 46 18',K,2)+El(25,29,3,4.5,K)+El(39,29,3,4.5,K)+El(32,45,5,7,'#5c2b00',K,1.5)],
+ ["bored","aburrido","😑","How you feel when there is nothing to do and time is very slow.",
+  FACE('#e9ecef','#868e96')+Lp('M19 30 H30 M34 30 H45',K,2.5)+dot(25,32.5,2)+dot(40,32.5,2)+Lp('M24 46 H40',K,2.5)],
+ ["sick","enfermo","🤒","How you feel when you have a cold or a fever.",
+  FACE('#b2f2bb','#2b8a3e')+Lp('M20 30 Q25 33 29 30 M35 30 Q40 33 44 30',K,2)+Lp('M27 46 Q32 43 37 46',K,2)+Lp('M36 45 L56 38','#868e96',3)+Ci(56,38,3,'#e03131','none',0)+Re(14,6,36,8,'#fff',3,'#74c0fc',1.5)],
+ ["hungry","con hambre","🤤","How you feel when you have not eaten for many hours.",
+  FACE('#ffd43b','#e67700',28,34,22)+dot(22,29,2.5)+dot(34,29,2.5)+Fp('M18 39 H38 Q36 50 28 50 Q20 50 18 39Z','#c92a2a',K,2)+Fp('M25 45 Q28 42 31 45 Q28 50 25 45Z','#ff8787','none',0)+Fp('M38 44 Q40 50 38 52 Q36 50 38 44Z','#74c0fc','none',0)+Lp('M56 14 V58 M52 14 V24 Q52 28 56 28 Q60 28 60 24 V14','#868e96',2.5)],
+ ["in love","enamorado","😍","How you feel when you think about someone special all day.",
+  FACE()+HRT(25,30,0.85)+HRT(39,30,0.85)+Fp('M20 40 H44 Q42 52 32 52 Q22 52 20 40Z','#c92a2a',K,2)+El(16,40,3,2,'#ff8787','none',0)+El(48,40,3,2,'#ff8787','none',0)+HRT(54,10,0.6,'#f783ac')]
+]);
+
+mkSet("verbs1","Verbos 1","🏃",[
+ ["run","correr","🏃","You move your legs very fast, faster than walking.",
+  Lp('M2 20 H12 M0 28 H10 M4 36 H12','#adb5bd',2)+STK(40,12,'M37 19 L31 36 M35 23 L45 29 L52 24 M35 23 L25 27 L21 35 M31 36 L41 44 L39 56 M31 36 L23 46 L13 46')+Lp('M8 58 H58','#adb5bd',2)],
+ ["walk","caminar","🚶","You move on your feet at a normal speed.",
+  STK(32,11,'M32 17 V37 M32 23 L25 33 M32 23 L39 33 M32 37 L25 57 M32 37 L40 57')+Lp('M6 59 H58','#adb5bd',2)],
+ ["swim","nadar","🏊","You move your arms and legs to go through water.",
+  Re(0,36,64,28,'#a5d8ff',0,'none',0)+STK(13,30,'M19 32 L44 34 M26 32 Q30 16 42 20 M44 34 L57 29 M44 34 L57 39')+Lp('M2 37 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0','#1c7ed6',2.5)],
+ ["eat","comer","🍽️","You put food in your mouth and chew it.",
+  P(SK,'#74c0fc','',El(32,59,18,4,'#fff','#868e96',1.5)+Lp('M48 58 L40 38 M37 39 L39 35 M40 38 L42 34 M43 37 L44 33','#868e96',2)+dot(40,36,2.5,'#40c057'))],
+ ["drink","beber","🥤","You do this with water, milk or juice when you are thirsty.",
+  P(SK,'#ffa94d','',Fp('M36 30 L48 28 L50 44 L40 46Z','#d0ebff','#1c7ed6',1.5)+Fp('M38.5 36 L48.8 34.5 L49.8 43 L40.3 44.6Z','#74c0fc','none',0)+Lp('M44 56 Q50 52 46 44',SKL,4))],
+ ["sleep","dormir","😴","You do this in bed at night with your eyes closed.",
+  Re(4,40,56,12,'#8b5a2b',2)+Lp('M6 52 V58 M58 52 V58','#8b5a2b',3)+El(14,36,8,5,'#fff')+Ci(18,31,7,SK,SKL)+Lp('M15 31 Q17 33 19 31',K,1.5)+Fp('M22 34 H58 Q60 40 58 42 H22Z','#4dabf7','#1864ab')+Lp('M36 8 H43 L36 15 H43 M46 18 H51 L46 23 H51 M30 22 H34 L30 26 H34','#7950f2',2)],
+ ["read","leer","📖","You do this with a book or a newspaper.",
+  P(SK,'#40c057','',Fp('M12 48 Q22 44 32 50 Q42 44 52 48 V62 Q42 58 32 64 Q22 58 12 62Z','#fff','#495057')+Lp('M32 50 V63 M16 52 Q22 50 28 53 M36 53 Q42 50 48 52','#adb5bd',1.2),'#5c3b1e',false)+Lp('M23 30 Q26 32 29 30 M35 30 Q38 32 41 30',K,1.5)],
+ ["write","escribir","✍️","You do this with a pen on paper.",
+  G('rotate(-8 30 34)',Re(10,10,38,48,'#fff',2,'#868e96')+Lp('M16 20 H40 M16 28 H42 M16 36 H34',K,1.2)+Lp('M16 44 Q20 40 24 44 T32 44','#1c7ed6',2))+G('rotate(35 46 38)',Re(43,16,6,30,'#1c7ed6',2,'#0b4a8a',1.5)+Fp('M43 46 H49 L46 53Z','#ffd8a8','#0b4a8a',1.2))],
+ ["sing","cantar","🎤","You do this with your voice and music.",
+  P(SK,'#e64980','',Lp('M42 62 V49',K,3)+Ci(42,44,5,'#495057','#212529')+NOTE(50,18)+NOTE(10,24,'#e64980'),'#7d1240',false)+dot(27,28,2)+dot(37,28,2)+El(32,36,3,4,'#5c2b00','none',0)],
+ ["dance","bailar","💃","You move your body to music, often at a party.",
+  STK(30,12,'M30 18 L32 38 M31 24 L20 16 L16 6 M31 24 L42 20 L50 12 M32 38 L24 56 M32 38 L44 46 L48 58','#e64980')+Fp('M28 30 L36 30 L42 44 L22 44Z','#f783ac','#c2255c',1.5)+NOTE(52,32)+NOTE(8,40,'#e64980')]
+]);
+
+mkSet("verbs2","Verbos 2","🧗",[
+ ["jump","saltar","🦘","You push your body up into the air with your legs.",
+  El(32,60,12,3,'#dee2e6','none',0)+STK(32,10,'M32 16 V34 M32 20 L22 12 L18 4 M32 20 L42 12 L46 4 M32 34 L24 40 L28 48 M32 34 L40 40 L36 48')+Lp('M18 50 V56 M46 50 V56 M32 52 V57','#adb5bd',2)],
+ ["climb","escalar, trepar","🧗","You go up a mountain, a tree or a wall using your hands and feet.",
+  Fp('M20 64 L34 0 H64 V64Z','#ced4da','#868e96')+[[40,10,'#f03e3e'],[44,26,'#40c057'],[38,40,'#fab005'],[48,52,'#4dabf7']].map(([x,y,c])=>Ci(x,y,3,c,'none',0)).join('')+STK(30,22,'M31 28 L33 44 M31 31 L40 24 L41 11 M31 31 L37 40 L43 27 M33 44 L38 52 L48 53 M33 44 L28 56 L36 60','#e8590c')],
+ ["cry","llorar","😭","Tears come out of your eyes when you are very sad.",
+  FACE('#a5d8ff','#1864ab')+Lp('M18 28 Q24 24 30 28 M34 28 Q40 24 46 28',K,2.5)+El(32,46,6,5,'#5c2b00',K,1.5)+Lp('M21 31 Q19 44 14 56 M43 31 Q45 44 50 56','#4dabf7',4)],
+ ["laugh","reír","😂","You do this when something is very funny: ha ha ha!",
+  FACE()+Lp('M19 29 L24 25 L29 29 M35 29 L40 25 L45 29',K,2.5)+Fp('M17 37 H47 Q45 55 32 55 Q19 55 17 37Z','#c92a2a',K,2)+Re(20,37,24,4,'#fff',1,'none',0)+Fp('M10 30 Q6 36 10 38 Q14 36 10 30Z','#74c0fc','none',0)+Fp('M54 30 Q50 36 54 38 Q58 36 54 30Z','#74c0fc','none',0)],
+ ["cook","cocinar","🍳","You make food hot in a pan or in the oven to prepare a meal.",
+  Lp('M16 14 q-4 -5 0 -10 M26 14 q-4 -5 0 -10 M36 14 q-4 -5 0 -10','#adb5bd',2)+Fp('M12 50 l4 -8 4 8 M24 50 l4 -9 4 9 M36 50 l4 -8 4 8','#ff922b','#e8590c',1.5)+El(26,34,22,8,'#495057','#212529')+Re(46,31,16,5,'#212529',2,'none',0)+Fp('M18 32 Q20 26 28 28 Q34 26 34 32 Q30 38 22 36Z','#fff','#adb5bd',1)+Ci(26,31,3.5,'#fcc419','#e67700',1)+Re(6,50,44,6,'#adb5bd',1,'#495057',1.5)],
+ ["wash","lavar","🧼","You clean something with water and soap.",
+  Lp('M12 14 H26 V20','#868e96',4)+Lp('M26 24 V40','#74c0fc',3)+Fp('M4 34 H60 L54 60 H10Z','#e9ecef','#495057')+El(26,42,12,5,'#fff','#adb5bd',1.5)+[[40,32,5],[48,26,4],[44,18,3],[52,36,3.5],[14,30,3]].map(([x,y,r])=>Ci(x,y,r,'#e7f5ff','#74c0fc',1.5)).join('')],
+ ["listen","escuchar","🎧","You pay attention to music or to a person with your ears.",
+  Ci(30,34,18,SK,SKL)+dot(26,32,2)+Lp('M26 40 Q30 43 34 40',K,1.5)+Lp('M10 34 Q10 10 30 10 Q50 10 50 34','#495057',4)+Re(6,28,9,14,'#e03131',4,'#7d1010',1.5)+Re(45,28,9,14,'#e03131',4,'#7d1010',1.5)+NOTE(56,16)],
+ ["throw","lanzar, tirar","🤾","You send a ball through the air with your hand.",
+  STK(18,14,'M18 20 L20 38 M19 25 L32 20 L38 12 M19 25 L10 32 M20 38 L12 56 M20 38 L28 56','#1c7ed6')+Ci(52,10,6,'#ff922b','#d9480f')+Lp('M40 18 L44 16 M40 24 L46 20 M42 8 L45 9','#adb5bd',2)],
+ ["paint","pintar","🎨","You use a brush and colours to make a picture.",
+  Re(8,6,40,48,'#fff',2,'#8b5a2b',3)+Lp('M14 40 Q22 20 30 34 T44 22','#4dabf7',4)+Ci(22,18,5,'#ffd43b','none',0)+Lp('M14 48 H40','#40c057',4)+G('rotate(35 50 40)',Re(48,26,5,30,'#c92a2a',2,'#7d1010',1.2)+Fp('M47 22 Q50 14 53.5 22 L53 27 H48Z','#e64980','#7d1010',1.2))],
+ ["drive","conducir","🚗","You control a car and take it on the road.",
+  Ci(32,34,24,'none','#343a40',6)+Ci(32,34,6,'#495057','#212529',2)+Lp('M26 34 H8 M38 34 H56 M32 40 V58','#343a40',5)+Ci(32,34,2,'#ffd43b','none',0)]
+]);
+
+mkSet("phrasal","Phrasal verbs","🔁",[
+ ["wake up","despertarse","⏰","You stop sleeping and open your eyes in the morning.",
+  Ci(18,14,7,'#e03131','#7d1010')+Ci(46,14,7,'#e03131','#7d1010')+Lp('M24 56 L20 62 M40 56 L44 62',K,3)+Ci(32,36,20,'#fff','#e03131',4)+Lp('M32 36 V24 M32 36 L40 40',K,2.5)+Lp('M6 30 L2 28 M6 38 L1 40 M58 30 L62 28 M58 38 L63 40','#fab005',2)],
+ ["get up","levantarse","🌅","You leave your bed in the morning to start the day.",
+  Re(38,4,22,18,'#a5d8ff',1,'#495057',1.5)+Ci(49,16,5,'#ffd43b','none',0)+Re(2,36,40,10,'#4dabf7',2,'#1864ab')+Lp('M4 46 V56 M40 46 V56','#8b5a2b',3)+STK(32,16,'M32 22 V38 M32 27 L42 31 L50 26 M32 27 L24 33 M32 38 H44 V58 M32 38 L40 44 V58','#2f9e44')],
+ ["sit down","sentarse","🪑","You put your body on a chair.",
+  Lp('M38 34 V60 M18 46 V60 M38 46 H16','#8b5a2b',3)+Re(36,10,5,26,'#b85c1d',2)+Re(14,40,28,6,'#d9822b',2)+STK(28,12,'M30 18 L32 36 M31 24 L22 32 L20 26 M32 36 H18 V58','#1c7ed6')+ARROW('M50 8 V22 M45 17 L50 22 L55 17','#e8590c')],
+ ["stand up","ponerse de pie","🧍","You get on your feet after sitting on a chair.",
+  Lp('M50 36 V58 M34 46 V58 M50 46 H32','#8b5a2b',3)+Re(48,18,5,30,'#b85c1d',2)+Re(30,40,26,6,'#d9822b',2)+STK(18,10,'M18 16 V36 M18 22 L12 32 M18 22 L24 32 M18 36 L13 58 M18 36 L23 58','#1c7ed6')+ARROW('M4 24 V8 M0 12 L4 8 L8 12')],
+ ["lie down","tumbarse","🛌","You put your body flat on a bed or on the floor to rest.",
+  Re(2,44,60,8,'#e64980',3,'#a61e4d')+STK(10,37,'M16 39 H40 M24 39 L32 31 M40 39 L56 37 M40 39 L56 42','#2f9e44')+dot(9,36,1.5)+ARROW('M32 4 V20 M27 15 L32 20 L37 15','#e8590c')],
+ ["turn on","encender","💡","You press the button so the TV or the light starts working.",
+  Ci(26,24,20,'#fff3bf','none',0)+Lp('M26 2 V0 M8 10 L5 7 M44 10 L47 7 M4 26 H1 M48 26 H51','#fab005',2.5)+Fp('M18 34 Q10 28 12 18 Q16 8 26 8 Q36 8 40 18 Q42 28 34 34 L33 40 H19Z','#ffe066','#e67700')+Re(19,40,14,8,'#adb5bd',2)+Re(46,32,14,24,'#fff',2,'#495057')+Re(50,36,6,8,'#2f9e44',1.5,'#1b5e20',1)],
+ ["turn off","apagar","📴","You press the button so the TV or the light stops working.",
+  Ci(30,30,28,'#343a40','none',0)+Fp('M18 34 Q10 28 12 18 Q16 8 26 8 Q36 8 40 18 Q42 28 34 34 L33 40 H19Z','#868e96','#212529')+Re(19,40,14,8,'#495057',2,'#212529')+Re(46,32,14,24,'#fff',2,'#495057')+Re(50,44,6,8,'#c92a2a',1.5,'#7d1010',1)],
+ ["put on","ponerse (ropa)","🧥","You start wearing clothes, like a coat or a hat.",
+  STK(32,40,'M32 46 V62 M32 50 L22 46 L20 36 M32 50 L42 46 L44 36','#1c7ed6')+El(32,22,16,3.5,'#9c36b5','#4a1260',1.5)+Fp('M22 22 Q22 8 32 8 Q42 8 42 22Z','#9c36b5','#4a1260',1.5)+ARROW('M32 26 V32 M28 29 L32 33 L36 29','#e8590c')],
+ ["take off","despegar","🛫","When a plane leaves the ground and goes up into the sky, it does this.",
+  Lp('M2 58 H62','#495057',3)+`<path d="M4 58 H28" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4"/>`+G('rotate(-25 34 30)',Fp('M8 32 L40 30 L50 22 L54 23 L50 30 L58 30 Q62 32 58 34 L50 34 L54 41 L50 42 L40 34 L8 34Z','#fff','#1864ab',1.5))+Lp('M8 48 L20 44 M12 54 L24 50','#adb5bd',2)],
+ ["look for","buscar","🔎","You try to find something you have lost, like your keys.",
+  Ci(26,26,15,'#e7f5ff','#495057',4)+Lp('M37 37 L56 56','#495057',6)+Fp('M18 20 Q18 14 26 14 Q34 14 34 20 Q34 25 28 27 V31','none','#1c7ed6',3)+dot(28,36,2.5,'#1c7ed6')]
+]);
+
+mkSet("falsefriends","Falsos amigos","⚠️",[
+ ["pie","tarta (¡no «pie»!)","🥧","A sweet food with fruit inside, baked in the oven.",
+  Lp('M22 14 q-4 -5 0 -10 M32 14 q-4 -5 0 -10 M42 14 q-4 -5 0 -10','#adb5bd',2)+Fp('M4 34 H60 L54 50 H10Z','#adb5bd','#495057')+El(32,32,28,10,'#e8a85a','#8b5a2b')+Lp('M14 28 L22 38 M26 24 L36 40 M40 24 L48 38 M12 34 L46 24 M18 40 L52 30','#b07a3f',2)+dot(24,32,2,'#c92a2a')+dot(38,30,2,'#c92a2a')],
+ ["rope","cuerda (¡no «ropa»!)","🪢","A long, thick string that you use to tie or pull things.",
+  Ci(30,30,22,'none','#b07a3f',6)+Ci(30,30,14,'none','#b07a3f',6)+Ci(30,30,6,'#b07a3f','none',0)+Lp('M52 30 Q58 48 48 60','#b07a3f',6)+Lp('M14 16 L18 20 M40 10 L42 15 M46 40 L42 42 M20 46 L22 42','#7a4f1e',1.5)],
+ ["pan","sartén (¡no «pan»!)","🍳","A flat metal pot with a long handle, used for frying eggs.",
+  G('rotate(-20 32 32)',Re(42,30,22,6,'#212529',3,'none',0))+Ci(26,36,20,'#495057','#212529')+Ci(26,36,15,'#343a40','none',0)+Fp('M16 34 Q18 26 26 28 Q34 26 34 34 Q32 44 24 42 Q16 42 16 34Z','#fff','#ced4da',1)+Ci(25,35,4.5,'#fcc419','#e67700',1)],
+ ["fabric","tela (¡no «fábrica»!)","🧵","Material like cotton or wool that clothes are made of.",
+  Re(8,42,48,12,'#4dabf7',3,'#1864ab')+Re(10,30,44,12,'#f783ac',3,'#c2255c')+Re(12,18,40,12,'#ffd43b',3,'#e67700')+[[16,48],[26,48],[36,48],[46,48]].map(([x,y])=>dot(x,y,1.8,'#fff')).join('')+Lp('M14 36 H50','#fff',1.5)+Lp('M16 24 L22 21 L28 24 L34 21 L40 24 L46 21','#e67700',1.5)+Lp('M44 6 L58 16','#868e96',2)],
+ ["tuna","atún (¡no «tuna»!)","🐟","A big sea fish; we often eat it from a tin in salads.",
+  Fp('M4 30 Q22 12 44 22 L60 12 L54 30 L60 48 L44 38 Q22 48 4 30Z','#364fc7','#1c2f8a')+Fp('M8 31 Q24 42 44 36 L44 30 Q24 36 8 31Z','#d0ebff','none',0)+Fp('M28 17 L34 8 L38 19Z','#364fc7','#1c2f8a',1.5)+[30,35,40].map(x=>Fp(`M${x} 41 l2 4 l2 -4Z`,'#fab005','none',0)).join('')+Ci(12,27,2.5,'#fff',K,1)+dot(12,27,1.2)],
+ ["exit","salida (¡no «éxito»!)","🚪","The door you use to leave a building.",
+  Re(4,14,56,36,'#2f9e44',4,'#1b5e20')+Re(40,20,14,24,'#fff',1,'none',0)+Re(43,23,8,21,'#2f9e44',0,'none',0)+STK(24,24,'M24 29 L22 38 M23 31 L30 34 M23 31 L16 35 M22 38 L28 44 M22 38 L16 44','#fff')+ARROW('M8 50 H0','#fff')],
+ ["embarrassed","avergonzado (¡no «embarazada»!)","😳","How you feel when you do something silly in front of other people.",
+  FACE()+El(18,40,6,4,'#ff8787','none',0)+El(46,40,6,4,'#ff8787','none',0)+Ci(25,30,4,'#fff',K,1.5)+Ci(39,30,4,'#fff',K,1.5)+dot(27,31,1.8)+dot(41,31,1.8)+Lp('M26 46 Q29 44 32 46 T38 46',K,2)+Lp('M14 16 L18 20 M50 16 L46 20','#e8590c',2)],
+ ["parents","padres (¡no «parientes»!)","👪","Your mother and your father.",
+  G('translate(-12 4) scale(.8)',P(SK,'#4dabf7','','','#5c3b1e'))+G('translate(25 4) scale(.8)',P('#e0ac69','#e64980','',Fp('M17 27 Q15 46 22 50 L22 30Z M47 27 Q49 46 42 50 L42 30Z','#8b5a2b','none',0),'#8b5a2b'))+HRT(32,12,0.7)],
+ ["card","tarjeta (¡no «carta»!)","💳","A small piece of plastic you use to pay in shops.",
+  Re(4,14,56,36,'#4263eb',5,'#1c2f8a')+Re(4,22,56,6,'#1c2f8a',0,'none',0)+Re(10,32,12,9,'#fcc419',2,'#e67700',1)+Lp('M26 44 H34 M38 44 H46','#d0ebff',2)+Ci(48,38,4,'#f03e3e','none',0)+Ci(53,38,4,'#fab005','none',0)],
+ ["disgusted","asqueado (¡no «disgustado»!)","🤢","How you feel when you smell or taste something horrible.",
+  FACE('#b2f2bb','#2b8a3e')+Lp('M19 28 L28 31 L19 34 M45 28 L36 31 L45 34',K,2.5)+Fp('M22 44 Q32 38 42 44 Q32 46 22 44Z','#5c2b00',K,1.5)+Fp('M28 44 H36 Q37 54 32 55 Q27 54 28 44Z','#ff8787','#c92a2a',1.5)+Lp('M8 10 q4 -3 0 -6 M56 10 q-4 -3 0 -6','#2b8a3e',2)]
+]);
+
+mkSet("food3","Comida 3","🥗",[
+ ["water","agua","💧","A clear liquid with no colour; you drink it when you are thirsty.",
+  Fp('M16 12 H48 L44 58 H20Z','#f1f3f5','#868e96')+Fp('M17.7 26 H46.3 L44 56 H20Z','#74c0fc','none',0)+El(32,26,14.3,2,'#a5d8ff','none',0)+Lp('M22 32 V48','#fff',2)+Fp('M54 4 Q60 13 60 16 a6 6 0 0 1 -12 0 Q48 13 54 4Z','#4dabf7','#1864ab',1)],
+ ["meat","carne","🥩","Food that comes from animals, like a steak.",
+  Fp('M8 30 Q8 12 30 12 Q54 12 56 30 Q58 48 38 52 Q30 54 22 50 Q8 46 8 30Z','#fff','#adb5bd')+Fp('M12 30 Q12 16 30 16 Q50 16 52 30 Q54 44 38 48 Q24 50 18 44 Q12 40 12 30Z','#e03131','#a61e1e',1.5)+Lp('M20 26 Q30 30 40 24 M24 38 Q34 40 44 34','#ffa8a8',2)+Ci(34,32,4,'#fff','#adb5bd',1)],
+ ["salt","sal","🧂","A white powder that makes food taste better; the sea has a lot of it.",
+  Fp('M20 20 H44 L48 58 H16Z','#f8f9fa','#868e96')+Fp('M20 20 Q20 8 32 8 Q44 8 44 20Z','#adb5bd','#495057')+dot(28,13,1.4)+dot(32,11,1.4)+dot(36,13,1.4)+Re(18,32,28,14,'#e9ecef',1,'none',0)+[[52,40],[56,48],[50,54],[58,58]].map(([x,y])=>Re(x,y,2.5,2.5,'#fff',0,'#adb5bd',.8)).join('')],
+ ["orange","naranja","🍊","A round fruit; its name is also a colour.",
+  Ci(32,36,22,'#ff922b','#d9480f')+Fp('M32 14 Q40 4 50 8 Q44 16 32 14Z','#40c057','#2b8a3e',1.5)+[[24,30],[38,28],[30,42],[42,42],[22,44]].map(([x,y])=>dot(x,y,1,'#d9480f')).join('')+El(22,28,3,5,'#ffc078','none',0)],
+ ["onion","cebolla","🧅","A vegetable that can make you cry when you cut it.",
+  Fp('M32 8 Q30 16 26 20 Q8 28 10 44 Q14 58 32 58 Q50 58 54 44 Q56 28 38 20 Q34 16 32 8Z','#e599f7','#862e9c')+Lp('M32 20 Q22 34 26 56 M32 20 Q42 34 38 56 M32 20 V56','#be4bdb',1.5)+Lp('M26 58 L24 62 M32 58 V62 M38 58 L40 62','#d9a066',1.5)],
+ ["chocolate","chocolate","🍫","A sweet brown food made from cocoa.",
+  Re(12,6,40,52,'#6b3e1f',3,'#3b1d00')+Lp('M12 19 H52 M12 32 H52 M12 45 H52 M32 6 V58','#3b1d00',1.5)+Fp('M10 36 H54 V60 H10Z','#ced4da','#868e96')+Fp('M10 36 L18 32 L26 37 L34 31 L42 37 L50 32 L54 36Z','#ced4da','#868e96',1.5)+Re(14,44,36,8,'#e03131',1,'none',0)],
+ ["juice","zumo","🧃","A drink made from fruit, like orange or apple.",
+  Lp('M38 14 L44 2 H52','#f03e3e',2.5)+Fp('M14 14 H44 V58 H14Z','#ffd43b','#e67700')+Fp('M14 14 L20 8 H50 L44 14Z','#fcc419','#e67700')+Fp('M44 14 L50 8 V52 L44 58Z','#fab005','#e67700')+Ci(29,38,9,'#ff922b','#d9480f',1.5)+Fp('M29 29 Q34 24 38 27 Q33 31 29 29Z','#40c057','none',0)],
+ ["butter","mantequilla","🧈","A soft yellow food made from milk; you put it on bread.",
+  El(32,46,28,8,'#e9ecef','#868e96')+Fp('M12 42 V28 L22 20 H54 V34 L44 42Z','#ffe066','#e67700')+Lp('M12 28 H44 V42 M44 28 L54 20',`#e67700`,1.5)+Fp('M44 30 Q50 26 54 28','none','#fff9db',2)],
+ ["pasta","pasta","🍝","Italian food like spaghetti or macaroni.",
+  El(32,42,28,12,'#fff','#adb5bd')+El(32,38,20,8,'#ffe066','#e67700',1.5)+Lp('M16 38 Q22 32 28 38 T40 38 T48 36 M18 42 Q26 36 32 42 T46 40','#e67700',1.5)+Ci(30,34,6,'#f03e3e','#a61e1e',1)+Lp('M48 4 L42 34 M44 4 V12 M48 4 V12 M52 4 V12 M44 12 Q48 16 52 12','#868e96',2)],
+ ["salad","ensalada","🥗","A cold dish of lettuce, tomato and other vegetables.",
+  Fp('M8 34 Q8 24 16 26 Q18 16 28 20 Q34 12 42 20 Q52 18 52 28 Q58 30 56 34Z','#69db7c','#2b8a3e')+Ci(24,28,4,'#f03e3e','#a61e1e',1)+Ci(40,26,4,'#f03e3e','#a61e1e',1)+Ci(32,24,3,'#fcc419','none',0)+Fp('M6 34 H58 Q56 56 32 58 Q8 56 6 34Z','#4dabf7','#1864ab')]
+]);
+
+mkSet("house3","La casa 3","🍴",[
+ ["knife","cuchillo","🔪","You cut food with it; it is very sharp.",
+  G('rotate(-40 32 32)',Re(28,40,8,22,'#343a40',2)+Fp('M28 40 V8 Q36 12 36 24 V40Z','#dee2e6','#495057')+dot(32,46,1.3,'#adb5bd')+dot(32,54,1.3,'#adb5bd'))],
+ ["fork","tenedor","🍴","You use it to eat; it has three or four points.",
+  G('rotate(30 32 32)',Re(29,30,6,30,'#adb5bd',3,'#495057')+Fp('M24 8 V24 Q24 32 32 32 Q40 32 40 24 V8','#dee2e6','#495057')+Lp('M29 8 V24 M35 8 V24','#495057',2))],
+ ["spoon","cuchara","🥄","You use it to eat soup.",
+  G('rotate(30 32 32)',El(32,16,9,12,'#dee2e6','#495057')+Re(29.5,26,5,34,'#adb5bd',2.5,'#495057')+El(29,13,2,5,'#fff','none',0))],
+ ["cup","taza","☕","You drink tea or coffee from it; it has a handle.",
+  El(30,54,24,5,'#e7f5ff','#4dabf7')+Lp('M44 26 Q56 26 56 36 Q56 44 44 44','#e64980',3)+Fp('M10 20 H46 V40 Q46 52 34 52 H22 Q10 52 10 40Z','#f783ac','#c2255c')+El(28,20,18,3.5,'#fcc2d7','#c2255c',1.5)+HRT(28,36,0.8,'#fff')],
+ ["glass","vaso","🥃","You drink water from it; you can see through it.",
+  Fp('M14 10 H50 L46 58 H18Z','#e7f5ff','#74c0fc',2.5)+El(32,10,18,3,'#fff','#74c0fc',2)+Lp('M20 18 L23 50','#fff',3)],
+ ["bottle","botella","🍾","A tall container for water or wine, with a small top.",
+  Fp('M27 4 H37 V16 Q48 22 48 34 V58 Q48 62 44 62 H20 Q16 62 16 58 V34 Q16 22 27 16Z','#2f9e44','#1b5e20')+Re(26,2,12,7,'#c92a2a',1.5,'#7d1010',1.5)+Re(18,36,28,14,'#fff3bf',2,'#e67700',1.5)+Lp('M22 40 V58','#69db7c',2)],
+ ["scissors","tijeras","✂️","You use them to cut paper.",
+  Lp('M24 40 L50 8 M40 40 L14 8','#adb5bd',4.5)+Lp('M24 40 L50 8 M40 40 L14 8','#495057',1)+Ci(20,48,8,'none','#e03131',4)+Ci(44,48,8,'none','#e03131',4)+dot(32,30,2,'#495057')],
+ ["bin","cubo de basura","🗑️","You put your rubbish in it.",
+  Re(14,18,36,42,'#868e96',3,'#495057')+Re(10,12,44,7,'#adb5bd',2,'#495057')+Re(27,6,10,6,'#adb5bd',2,'#495057',1.5)+Lp('M22 26 V52 M32 26 V52 M42 26 V52','#495057',2)],
+ ["phone","móvil","📱","You use it to call people and send messages.",
+  Re(18,4,28,56,'#343a40',5,'#212529')+Re(21,10,22,42,'#74c0fc',2,'none',0)+[[24,14],[32,14],[24,22],[32,22]].map(([x,y])=>Re(x,y,6,6,['#ff922b','#40c057','#fcc419','#e64980'][((x+y)/8)%4|0],1.5,'none',0)).join('')+Ci(32,56,2,'#868e96','none',0)],
+ ["box","caja","📦","A container made of cardboard to keep or send things.",
+  Fp('M8 22 L32 12 L56 22 L32 32Z','#e8b04a','#9c6b14')+Fp('M8 22 V48 L32 58 V32Z','#d9a066','#9c6b14')+Fp('M56 22 V48 L32 58 V32Z','#c58a4a','#9c6b14')+Lp('M20 17 L44 27 V36','#fff3bf',4)]
+]);
+
+// English key words in the sentences -> Spanish (tap to reveal)
+const GLOSS = {
+"apple":"manzana","arms":"brazos","attention":"atención","pay attention":"prestar atención","baked":"horneado","banana":"plátano","bed":"cama","breaks":"rompe","brush":"pincel","button":"botón","call":"llamar","cardboard":"cartón","carrot":"zanahoria","chair":"silla","chew":"masticar","chocolate":"chocolate","clear":"transparente","closed":"cerrado","coat":"abrigo","cocoa":"cacao","coffee":"café","colour":"color","container":"recipiente","control":"controlar","cry":"llorar","dish":"plato","eaten":"comido","expect":"esperar","fast":"rápido","faster":"más rápido","father":"padre","mother":"madre","feel":"sentir(se)","fever":"fiebre","find":"encontrar","four":"cuatro","friends":"amigos","frying":"freír","funny":"gracioso","grapes":"uvas","grass":"hierba","handle":"asa, mango","happens":"pasa, ocurre","horrible":"horrible","hours":"horas","italian":"italiano","juice":"zumo","leave":"salir de","lettuce":"lechuga","lose":"perder","lost":"perdido","love":"querer, amar","macaroni":"macarrones","material":"material","messages":"mensajes","mix":"mezcla","music":"música","name":"nombre","newspaper":"periódico","noise":"ruido","normal":"normal","nothing":"nada","oven":"horno","pan":"sartén","pen":"bolígrafo","picture":"dibujo, cuadro","pig":"cerdo","plane":"avión","plastic":"plástico","points":"puntas","powder":"polvo","prepare":"preparar","press":"pulsar","pull":"tirar de","on purpose":"a propósito","push":"empujar","rest":"descansar","road":"carretera","rubbish":"basura","sad":"triste","sharp":"afilado","shops":"tiendas","silly":"tonto","sitting":"sentado","sleeping":"dormir","soap":"jabón","soup":"sopa","spaghetti":"espaguetis","speed":"velocidad","steak":"filete","strange":"extraño","string":"cuerda, cordel","sunny":"soleado","tea":"té","tears":"lágrimas","thirsty":"con sed","throw":"lanzar","tie":"atar","tin":"lata","try":"intentar","tv":"televisión","vegetables":"verduras","voice":"voz","walking":"caminar","wearing":"llevar puesto","working":"funcionar","in front of":"delante de","dark":"oscuridad; oscuro",
+"above":"encima, arriba","across":"a través de","active":"activo","aircraft":"aeronave","air":"aire","animal":"animal","animals":"animales",
+"arc":"arco","arm":"brazo","around":"alrededor de","autumn":"otoño","back":"espalda","bag":"bolsa","bakery":"panadería","ball":"pelota",
+"bananas":"plátanos","bandages":"vendas","barks":"ladra","basic":"básico","bathroom":"cuarto de baño","beach":"playa","bees":"abejas",
+"better":"mejor","between":"entre","big":"grande","bird":"pájaro","birthday":"cumpleaños","bite":"morder","black":"negro","blades":"aspas",
+"blood":"sangre","blows":"sopla","blue":"azul","boat":"barco","body":"cuerpo","bones":"huesos","book":"libro","books":"libros",
+"borrow":"tomar prestado","branches":"ramas","bread":"pan","breathe":"respirar","bright":"brillante","bring":"traer","brings":"trae",
+"brown":"marrón","build":"construir","building":"edificio","builds":"construye","bunches":"racimos","buried":"enterrado","bus":"autobús",
+"buttons":"botones","buy":"comprar","cake":"tarta","cakes":"pasteles","camping":"acampada","car":"coche","careful":"¡cuidado!",
+"carries":"lleva","carry":"llevar","cars":"coches","carve":"tallar","cat":"gato","catches":"atrapa","cheese":"queso","chickens":"gallinas",
+"children":"niños","chin":"barbilla","christians":"cristianos","circle":"círculo","city":"ciudad","clean":"limpiar","cleaning":"limpiar",
+"clever":"listo","climb":"subir","cloth":"tela","clothes":"ropa","clothing":"ropa","cloud":"nube","clouds":"nubes","clues":"pistas",
+"code":"código","coffin":"ataúd","cold":"frío","collar":"cuello (de camisa)","colourful":"de colores","colours":"colores",
+"computers":"ordenadores","connected":"relacionado","considered":"considerado","cook":"cocinar","cooks":"cocina","cotton":"algodón",
+"countries":"países","court":"tribunal","cover":"cubrir","covers":"cubre","cows":"vacas","creature":"criatura","cut":"cortar",
+"cuts":"corta","day":"día","dead":"muerto","decides":"decide","desk":"escritorio","dirty":"sucio","dishes":"platos",
+"doctors":"médicos","door":"puerta","drawing":"dibujo","drink":"bebida","drinks":"bebe","dry":"seco","during":"durante","ears":"orejas",
+"eat":"comer","eight":"ocho","end":"final","engine":"motor","engines":"camiones","experiments":"experimentos","eyes":"ojos","face":"cara",
+"fall":"caer","falls":"cae","farm":"granja","fear":"miedo","feathers":"plumas","feeling":"sentimiento","feet":"pies","fill":"llenar",
+"film":"película","films":"películas","finger":"dedo","fingers":"dedos","fire":"fuego","fires":"incendios","fish":"peces","five":"cinco",
+"flakes":"copos","flash":"destello","flat":"plano","flies":"vuela","floor":"suelo","flour":"harina","flows":"fluye","flush":"tirar de la cadena",
+"fly":"volar","flying":"volador","food":"comida","football":"fútbol","fries":"patatas fritas","front":"parte delantera","fruit":"fruta",
+"fruits":"frutas","ghosts":"fantasmas","girls":"chicas","gives":"da","glass":"cristal, vidrio","glasses":"gafas","gold":"oro",
+"golden":"dorado","grains":"granos","great":"gran","green":"verde","grey":"gris","ground":"suelo, tierra","grow":"crecer","grows":"crece",
+"hair":"pelo","hairdresser's":"peluquería","hand":"mano","hands":"manos","hard":"duro","hat":"sombrero","head":"cabeza","hear":"oír",
+"help":"ayudar","helps":"ayuda","high":"alto","hill":"colina","hold":"sostener","hole":"agujero","holes":"agujeros","hot":"caliente",
+"house":"casa","houses":"casas","injury":"herida","inside":"dentro","interesting":"interesante","jacket":"chaqueta","jumps":"salta",
+"keep":"guardar, mantener","keeps":"mantiene","kept":"guardado","keys":"llaves","kings":"reyes","laboratory":"laboratorio","lakes":"lagos",
+"land":"tierra; aterrizar","large":"grande","lay":"poner (huevos)","lays":"pone (huevos)","learn":"aprender","leaves":"hojas","leg":"pierna",
+"legs":"piernas","letters":"cartas","light":"luz","liquid":"líquido","live":"vivir","lived":"vivían","lives":"vive","living":"vivo",
+"lock":"cerrar con llave","long":"largo","look":"mirar","looks after":"cuida","lucky":"de buena suerte","machines":"máquinas","magic":"magia",
+"magical":"mágico","man":"hombre","man's":"de un hombre","matches":"partidos","meal":"comida","medicine":"medicina","metal":"metal",
+"middle":"centro, medio","milk":"leche","millions":"millones","mixtures":"mezclas","money":"dinero","monkeys":"monos","morning":"mañana",
+"mountain":"montaña","mouth":"boca","move":"mover","moves":"se mueve","moving":"en movimiento","mysteries":"misterios","mysterious":"misterioso",
+"near":"cerca de","neck":"cuello","news":"noticias","nice":"agradable","night":"noche","north":"norte","nose":"nariz","object":"objeto",
+"office":"oficina","officers":"agentes","often":"a menudo","old":"viejo","open":"abrir","orange":"naranja","outside":"fuera","paint":"pintar",
+"paints":"pinta","paper":"papel","parcels":"paquetes","part":"parte","parties":"fiestas","party":"fiesta","pay":"pagar","people":"gente",
+"person":"persona","pet":"mascota","phone":"móvil","photo":"foto","photos":"fotos","pick up":"recoger","pictures":"cuadros","piece":"trozo",
+"pieces":"trozos","pink":"rosa","place":"lugar","places":"lugares","planes":"aviones","plant":"planta","play":"jugar","pointed":"puntiagudo",
+"police":"policía","pool":"piscina","pot":"olla; maceta","powers":"poderes","pray":"rezar","protect":"proteger","pumps":"bombea",
+"rabbits":"conejos","rails":"vías","rain":"lluvia","reach":"alcanzar","red":"rojo","repairs":"repara","restaurant":"restaurante",
+"ride":"montar","right":"tiene razón","roads":"carreteras","rock":"roca","room":"habitación","round":"redondo","run":"correr",
+"running":"correr","safe":"seguro","salads":"ensaladas","sand":"arena","sauces":"salsas","scary":"que da miedo","school":"colegio",
+"screen":"pantalla","sea":"mar","seat":"asiento","seats":"asientos","seeds":"semillas","seen":"visto","sell":"vender","send":"enviar",
+"set":"conjunto","seven":"siete","shell":"caparazón","shines":"brilla","shoes":"zapatos","shop":"tienda","short":"corto","shoulder":"hombro",
+"sick":"enfermo","silver":"plata","simple":"sencillo","sings":"canta","sit":"sentarse","sky":"cielo","sleep":"dormir","sleeps":"duerme",
+"sleeves":"mangas","slow":"lento","small":"pequeño","smell":"oler","smells":"huele","snow":"nieve","soft":"blando, suave","solve":"resolver",
+"songs":"canciones","sour":"ácido","space":"espacio","speak":"hablar","special":"especial","spinning":"que giran","spins":"teje",
+"spirit":"espíritu","spoon":"cuchara","sport":"deporte","sports":"deportes","square":"plaza","stage":"escenario","stand":"estar de pie",
+"stick":"palo","stops":"para","stories":"cuentos","storm":"tormenta","strap":"tira","strong":"fuerte","summer":"verano","sun":"sol",
+"sweet":"dulce","swim":"nadar","swims":"nada","table":"mesa","take":"llevar","take off":"despegar","tall":"alto","taste":"saborear",
+"teeth":"dientes","ten":"diez","thick":"espeso; grueso","thieves":"ladrones","thin":"fino","thing":"cosa","think":"pensar","tiny":"diminuto",
+"toes":"dedos del pie","tomato":"tomate","tool":"herramienta","toothpaste":"pasta de dientes","top":"parte de arriba","towers":"torres",
+"town":"ciudad, pueblo","train":"tren","travel":"viajar","travels":"viaja","tree":"árbol","trees":"árboles","trick-or-treat":"truco o trato",
+"trip":"viaje","trousers":"pantalones","trunk":"tronco","turn on":"encender","turns":"se vuelve","two":"dos","three":"tres","ugly":"feo",
+"under":"debajo de","vampires":"vampiros","vegetable":"verdura","vehicle":"vehículo","waiter":"camarero","wait":"esperar","walk":"caminar",
+"wall":"pared","warm":"caliente; abrigado","wash":"lavar","washing":"lavar","watch":"ver","water":"agua","wear":"llevar puesto",
+"web":"telaraña","wheels":"ruedas","white":"blanco","wild":"salvaje","wine":"vino","winter":"invierno","witches":"brujas","woman":"mujer",
+"women":"mujeres","wool":"lana","word":"palabra","work":"trabajar","works":"trabaja","worn":"llevado (ropa)","wrapped":"envuelto",
+"wrist":"muñeca","writes":"escribe","yellow":"amarillo","yourself":"a ti mismo","eggs":"huevos","weather":"tiempo","throw out":"expulsar",
+"get better":"curarse","put out":"apagar","looks for":"busca","hard part":"parte dura"
+};
+// phrases (checked first, longest match)
+const GLOSS_PHRASES = Object.keys(GLOSS).filter(k=>k.includes(" ")).sort((a,b)=>b.length-a.length);
+function glossify(text){
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const re = new RegExp("\\b(" + GLOSS_PHRASES.map(esc).join("|") + ")\\b|[A-Za-z][A-Za-z'-]*[A-Za-z]|[A-Za-z]", "gi");
+  return text.replace(/&/g,"&amp;").replace(re, m => {
+    const k = m.toLowerCase(), es = GLOSS[k];
+    return es ? `<span class="gl" data-es="${es}">${m}</span>` : m;
+  });
+}
+
+// ================= lessons =================
+const LEVELS = {1:["Básico","#2f9e44"],2:["Intermedio","#e67700"],3:["Avanzado","#c92a2a"]};
+const CATS = [
+  ["daily","Casa y vida diaria","🏠"],
+  ["people","Personas y sentimientos","🧑"],
+  ["world","El mundo","🌍"],
+  ["verbs","Verbos","🏃"],
+  ["special","Especiales","⭐"]
+];
+const L1 = {
+  travel:["passport","airport","suitcase","taxi","bus","train","ticket","map","hotel","money"],
+  house:["bed","sofa","chair","door","window","key","clock","television","toilet","shower"],
+  food:["apple","banana","bread","cheese","egg","milk","tomato","pizza","ice cream","coffee"],
+  animals:["dog","cat","horse","cow","pig","fish","bird","chicken","rabbit","mouse"],
+  clothes:["shirt","T-shirt","jeans","dress","shoes","socks","hat","coat","glasses","watch"],
+  body:["eye","ear","nose","mouth","tooth","hand","foot","leg","arm","hair"],
+  weather:["sun","rain","snow","cloud","wind","tree","flower","mountain","star","umbrella"],
+  town:["hospital","school","bank","supermarket","restaurant","cinema","pharmacy","bakery","bus stop","police station"],
+  jobs:["doctor","teacher","firefighter","police officer","chef","farmer","pilot","builder","singer","dentist"],
+  halloween:["pumpkin","ghost","witch","bat","spider","skeleton","mummy","vampire","black cat","broom"]
+};
+// [lessonId, topic, part (1|2|0 = whole topic), level, category]
+const PLAN = [
+  ["house-1","house",1,1,"daily"],["house-2","house",2,2,"daily"],["house3","house3",0,1,"daily"],
+  ["food-1","food",1,1,"daily"],["food-2","food",2,2,"daily"],["food3","food3",0,1,"daily"],
+  ["clothes-1","clothes",1,1,"daily"],["clothes-2","clothes",2,2,"daily"],["colours","colours",0,1,"daily"],
+  ["body-1","body",1,1,"people"],["body-2","body",2,2,"people"],["jobs-1","jobs",1,1,"people"],["jobs-2","jobs",2,2,"people"],["feelings","feelings",0,1,"people"],
+  ["travel-1","travel",1,1,"world"],["travel-2","travel",2,2,"world"],["town-1","town",1,1,"world"],["town-2","town",2,2,"world"],
+  ["weather-1","weather",1,1,"world"],["weather-2","weather",2,2,"world"],["animals-1","animals",1,1,"world"],["animals-2","animals",2,2,"world"],
+  ["verbs1","verbs1",0,1,"verbs"],["verbs2","verbs2",0,2,"verbs"],["phrasal","phrasal",0,3,"verbs"],
+  ["halloween-1","halloween",1,2,"special"],["halloween-2","halloween",2,2,"special"],["falsefriends","falsefriends",0,3,"special"]
+];
+function seeded(str){ let h=1779033703^str.length; for(const c of str){h=Math.imul(h^c.charCodeAt(0),3432918353);h=h<<13|h>>>19;} return ()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return ((h^=h>>>16)>>>0)/4294967296;}; }
+const LESSONS = PLAN.map(([id,tp,part,level,cat])=>{
+  const T = TOPICS[tp];
+  let items = T.items;
+  if(part){ const set = new Set(L1[tp]); items = items.filter(it => (part===1) === set.has(it[0])); }
+  const sorted = [...items].sort((a,b)=>a[0].toLowerCase().localeCompare(b[0].toLowerCase()));
+  const words = {}, letterOf = {};
+  sorted.forEach((it,i)=>{ const L=String.fromCharCode(65+i); words[L]={w:it[0],es:it[1],e:it[2],s:it[4]}; letterOf[it[0]]=L; });
+  let order = items.map((_,i)=>i);
+  if(tp !== "halloween"){ const rnd=seeded(id); for(let i=order.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[order[i],order[j]]=[order[j],order[i]];} }
+  return { id, level, cat, emoji:T.emoji, title: part ? `${T.title} ${part}` : T.title, words,
+           descs: order.map(i=>[items[i][3], letterOf[items[i][0]]]) };
+});
+const LBYID = Object.fromEntries(LESSONS.map(l=>[l.id,l]));
+
+// ================= helpers =================
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const fmt = ms => { const s=Math.floor(ms/1000); return `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`; };
+const LS = { get(k,d){ try{ const v=localStorage.getItem(k); return v===null?d:JSON.parse(v); }catch(e){ return d; } },
+             set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+let mode = LS.get("hv-mode2","drawn"), showEs = LS.get("hv-es2",false), autoSay = LS.get("hv-auto",false), levelFilter = LS.get("hv-filter",0);
+const art = w => mode === "emoji" ? `<span class="emo">${w.e}</span>` : `<svg viewBox="0 0 64 64" aria-hidden="true">${w.s}</svg>`;
+
+// ================= sound =================
+const TTS = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let voices = [];
+function loadVoices(){ try{ voices = speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang)); }catch(e){} }
+if(TTS){ loadVoices(); try{ speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} } else document.body.classList.add("no-tts");
+function say(text){
+  if(!TTS) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voices.find(v=>/en[-_]GB/i.test(v.lang)) || voices.find(v=>/en[-_]US/i.test(v.lang)) || voices[0];
+    if(v) u.voice = v; u.lang = v ? v.lang : "en-GB"; u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+// ================= tap-to-translate + speaker buttons =================
+const tip = document.createElement("div"); tip.id = "tip"; document.body.appendChild(tip);
+let tipFor = null;
+function hideTip(){ tip.classList.remove("show"); if(tipFor) tipFor.classList.remove("on"); tipFor = null; }
+document.addEventListener("click", e=>{
+  const spk = e.target.closest(".spk");
+  if(spk){ e.stopPropagation(); e.preventDefault(); hideTip(); say(spk.dataset.say); return; }
+  const s = e.target.closest(".gl");
+  if(!s){ hideTip(); return; }
+  e.stopPropagation(); e.preventDefault();
+  if(tipFor === s){ hideTip(); return; }
+  hideTip(); tipFor = s; s.classList.add("on");
+  tip.innerHTML = `<b>${s.textContent}</b> = ${s.dataset.es}`;
+  tip.classList.add("show"); say(s.textContent);
+  const r = s.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.min(Math.max(6, r.left + r.width/2 - tw/2), innerWidth - tw - 6)+"px";
+  let y = r.top - th - 8; if(y < 6) y = r.bottom + 8; tip.style.top = y+"px";
+}, true);
+addEventListener("scroll", hideTip, {passive:true}); addEventListener("resize", hideTip);
+
+// ================= progress memory (device + shared) =================
+let progress = LS.get("hv-progress", {done:{}, resetAt:0});
+let shared = { ref:null, writable:true, status:"local", writing:false, again:false };
+function better(a,b){ if(!a) return b; if(!b) return a; return (b.m<a.m || (b.m===a.m && b.t<a.t)) ? {...b, at:Math.max(a.at,b.at)} : {...a, at:Math.max(a.at,b.at)}; }
+function mergeIn(other){
+  if(!other || typeof other !== "object") return false;
+  let changed = false;
+  const resetAt = Math.max(progress.resetAt||0, +other.resetAt||0);
+  if(resetAt !== progress.resetAt){ progress.resetAt = resetAt; changed = true;
+    for(const k in progress.done) if((progress.done[k].at||0) < resetAt){ delete progress.done[k]; } }
+  const od = other.done && typeof other.done === "object" ? other.done : {};
+  for(const k in od){
+    const r = od[k]; if(!LBYID[k] || !r || typeof r.m !== "number" || typeof r.t !== "number") continue;
+    if((+r.at||0) < resetAt) continue;
+    const before = JSON.stringify(progress.done[k]);
+    progress.done[k] = better(progress.done[k], {m:r.m, t:r.t, at:+r.at||0});
+    if(JSON.stringify(progress.done[k]) !== before) changed = true;
+  }
+  return changed;
+}
+function sameAs(other){ return JSON.stringify({done:progress.done,resetAt:progress.resetAt}) === JSON.stringify({done:(other&&other.done)||{},resetAt:(other&&+other.resetAt)||0}); }
+async function pushShared(){
+  if(!shared.ref || !shared.writable) return;
+  if(shared.writing){ shared.again = true; return; }
+  shared.writing = true;
+  try{ await shared.ref.set({done:progress.done, resetAt:progress.resetAt||0}); }
+  catch(e){ if(e && e.code === "invalid_argument"){ shared.writable = false; shared.status = "readonly"; renderStatus(); } }
+  shared.writing = false;
+  if(shared.again){ shared.again = false; pushShared(); }
+}
+function saveProgress(push=true){ LS.set("hv-progress", progress); if(push) pushShared(); renderMenu(); }
+function recordDone(id, m, t){ progress.done[id] = better(progress.done[id], {m, t, at:Date.now()}); saveProgress(); }
+(async()=>{
+  try{
+    if(!window.claude || typeof claude.use !== "function") return;
+    const db = await claude.use("db"); if(!db) return;
+    shared.ref = db.doc("progress/shared"); shared.status = "loading"; renderStatus();
+    const timer = setTimeout(()=>{ if(shared.status==="loading"){ shared.status="slow"; renderStatus(); } }, 10000);
+    shared.ref.onSnapshot(snap=>{
+      if(!snap.metadata.fromCache){ clearTimeout(timer); if(shared.status!=="readonly") shared.status = "shared"; renderStatus(); }
+      const d = snap.exists ? snap.data() : null;
+      if(mergeIn(d)) saveProgress(false);
+      if(!snap.metadata.fromCache && !snap.metadata.hasPendingWrites && !sameAs(d)) pushShared();
+    }, err=>{ clearTimeout(timer); shared.ref = null; shared.status = "local"; renderStatus(); });
+  }catch(e){}
+})();
+function renderStatus(){
+  const m = { local:"💾 El progreso se guarda en este dispositivo.",
+              loading:"⏳ Cargando el progreso compartido…",
+              slow:"⚠️ No se puede cargar el progreso compartido; se guarda en este dispositivo.",
+              shared:"☁️ El progreso se guarda para todos los que abren este enlace.",
+              readonly:"👀 Puedes ver el progreso compartido, pero el tuyo se guarda solo en este dispositivo." }[shared.status];
+  $("#saveStatus").textContent = m;
+}
+
+// ================= game =================
+const games = {}; let active = null;
+function makeGame(lesson){
+  const root = document.createElement("div");
+  root.className = "board"; root.hidden = true;
+  root.innerHTML = `<section class="col c-desc"><h2>Descripciones</h2><div class="list descs"></div></section>
+    <section class="col c-word"><h2>Palabras</h2><div class="list words"></div></section>
+    <section class="col c-pic"><h2>Imágenes</h2><div class="pics"></div></section>`;
+  $("#boards").appendChild(root);
+  const N = Object.keys(lesson.words).length;
+  const g = { lesson, root, N };
+  const el = (t,k) => root.querySelector(`.item[data-t="${t}"][data-k="${k}"]`);
+  const group = (t,k) => g.pairs[k] && g.pairs[k].has(t) ? [...g.pairs[k]] : [t];
+  const setSel = (types,k,on) => types.forEach(tt=>{ g.sel[tt] = on ? k : null; el(tt,k).classList.toggle("sel", on); });
+  const clearSel = () => { Object.entries(g.sel).forEach(([tt,v])=>{ if(v) el(tt,v).classList.remove("sel"); }); g.sel={d:null,w:null,p:null}; };
+  const HUES = [200,265,320,35,185,240,290,55,215,340];
+
+  g.build = () => {
+    Object.assign(g, {sel:{d:null,w:null,p:null}, matched:new Set(), pairs:{}, pairCount:0, misses:0, busy:false, elapsed:0, startedAt:null, done:false});
+    root.querySelector(".descs").innerHTML = lesson.descs.map(([t,k],i)=>
+      `<button class="item desc" data-t="d" data-k="${k}"><span class="num">${i+1}</span><span class="dtxt" lang="en">${glossify(t)} <span class="spk" data-say="${esc(t)}" role="button" aria-label="Escuchar">🔊</span></span><span class="circ"></span></button>`).join("");
+    root.querySelector(".words").innerHTML = Object.keys(lesson.words).map(k=>{ const w=lesson.words[k];
+      return `<button class="item word" data-t="w" data-k="${k}"><span class="let">${k}</span><span class="wbox"><span class="wtxt" lang="en">${w.w}<span class="spk" data-say="${esc(w.w)}" role="button" aria-label="Escuchar">🔊</span></span><span class="es">${w.es}</span></span></button>`; }).join("");
+    root.querySelector(".pics").innerHTML = shuffle(Object.keys(lesson.words)).map((k,i)=>
+      `<button class="item pic" data-t="p" data-k="${k}" aria-label="Imagen ${i+1}"><span class="circ"></span><span class="art"></span></button>`).join("");
+    g.renderArt(); stats();
+  };
+  g.renderArt = () => root.querySelectorAll(".pic").forEach(b=> b.querySelector(".art").innerHTML = art(lesson.words[b.dataset.k]));
+  g.time = () => g.elapsed + (g.startedAt ? Date.now()-g.startedAt : 0);
+  g.pause = () => { if(g.startedAt){ g.elapsed += Date.now()-g.startedAt; g.startedAt=null; } };
+  g.resume = () => { if(g.elapsed>0 && !g.done && !g.startedAt) g.startedAt = Date.now(); };
+
+  g.click = b => {
+    if(g.busy || b.classList.contains("done")) return;
+    if(!g.startedAt && !g.done) g.startedAt = Date.now();
+    const t=b.dataset.t, k=b.dataset.k, grp=group(t,k);
+    if(g.sel[t] === k){ setSel(grp,k,false); return; }
+    if(autoSay && t==="w") say(lesson.words[k].w);
+    if(autoSay && t==="d") say(lesson.descs.find(d=>d[1]===k)[0]);
+    grp.forEach(tt=>{ const old=g.sel[tt]; if(old) setSel(group(tt,old),old,false); });
+    setSel(grp,k,true);
+    const picked = Object.entries(g.sel).filter(([,v])=>v);
+    const keys = new Set(picked.map(([,v])=>v));
+    if(keys.size > 1){
+      g.busy = true; g.misses++; stats();
+      const els = picked.map(([tt,v])=>el(tt,v));
+      els.forEach(x=>{x.classList.remove("sel");x.classList.add("bad");});
+      setTimeout(()=>{ els.forEach(x=>x.classList.remove("bad")); g.sel={d:null,w:null,p:null}; g.busy=false; }, 480);
+    } else if(picked.length === 2 && !g.pairs[k]){
+      g.pairs[k] = new Set(picked.map(([tt])=>tt));
+      const h = HUES[g.pairCount++ % HUES.length];
+      clearSel();
+      g.pairs[k].forEach(tt=>{ const x=el(tt,k); x.classList.add("paired","pop"); x.style.setProperty("--h",h); });
+    } else if(picked.length === 3){
+      ["d","w","p"].forEach(tt=>{ const x=el(tt,k); x.classList.remove("sel","paired"); x.classList.add("done","pop"); const c=x.querySelector(".circ"); if(c) c.textContent=k; });
+      g.matched.add(k); g.sel={d:null,w:null,p:null}; stats();
+      if(g.matched.size === g.N){
+        g.pause(); g.done = true; stats();
+        recordDone(lesson.id, g.misses, g.time());
+        $("#winTitle").textContent = `${lesson.emoji} ¡${lesson.title}: completada!`;
+        $("#winText").textContent = `Tiempo: ${fmt(g.time())} · Errores: ${g.misses}` + (g.misses===0 ? " — ¡perfecto! 🌟" : "");
+        setTimeout(()=>$("#win").classList.add("show"), 500);
+      }
+    }
+  };
+  root.addEventListener("click", e=>{ const b=e.target.closest(".item"); if(b) g.click(b); });
+  g.build();
+  return g;
+}
+function stats(){
+  const g = active; if(!g) return;
+  $("#score").textContent = g.matched.size; $("#total").textContent = g.N; $("#miss").textContent = g.misses;
+  $("#prog").style.width = (g.matched.size/g.N*100)+"%"; $("#time").textContent = fmt(g.time());
+}
+setInterval(()=>{ if(active && active.startedAt && !$("#game").hidden) $("#time").textContent = fmt(active.time()); }, 1000);
+
+// ================= menu =================
+function renderMenu(){
+  const total = LESSONS.length, doneN = LESSONS.filter(l=>progress.done[l.id]).length;
+  $("#doneCount").textContent = `${doneN} de ${total} lecciones completadas`;
+  $("#menuProg").style.width = (doneN/total*100)+"%";
+  document.querySelectorAll("#levelChips button").forEach(b=>b.classList.toggle("on", +b.dataset.lv===levelFilter));
+  $("#cats").innerHTML = CATS.map(([cid,cname,cemo])=>{
+    const ls = LESSONS.filter(l=>l.cat===cid && (!levelFilter || l.level===levelFilter));
+    if(!ls.length) return "";
+    const dn = ls.filter(l=>progress.done[l.id]).length;
+    return `<section class="cat"><h3>${cemo} ${cname} <small>${dn}/${ls.length}</small></h3><div class="cards">${ls.map(l=>{
+      const d = progress.done[l.id], g = games[l.id], [lvName,lvCol] = LEVELS[l.level];
+      const inprog = !d && g && g.matched.size>0 ? `<span class="st prog">En curso ${g.matched.size}/${g.N}</span>` : "";
+      const st = d ? `<span class="st ok">✓ ${d.m===0?"¡Perfecta! ":""}${d.m} err. · ${fmt(d.t)}</span>` : inprog || `<span class="st">${Object.keys(l.words).length} palabras</span>`;
+      return `<button class="lcard${d?" done":""}" data-id="${l.id}"><span class="lemo">${l.emoji}</span><span class="ltxt"><b>${l.title}</b><span class="lv" style="--lv:${lvCol}">${"●".repeat(l.level)}${"○".repeat(3-l.level)} ${lvName}</span>${st}</span>${d?'<span class="tick">✓</span>':""}</button>`;
+    }).join("")}</div></section>`;
+  }).join("");
+}
+$("#cats").addEventListener("click", e=>{ const c=e.target.closest(".lcard"); if(c) go(c.dataset.id); });
+$("#levelChips").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return; levelFilter=+b.dataset.lv; LS.set("hv-filter",levelFilter); renderMenu(); });
+$("#resetBtn").addEventListener("click", ()=>{ $("#resetConfirm").hidden = false; $("#resetBtn").hidden = true; });
+$("#resetNo").addEventListener("click", ()=>{ $("#resetConfirm").hidden = true; $("#resetBtn").hidden = false; });
+$("#resetYes").addEventListener("click", ()=>{ progress = {done:{}, resetAt:Date.now()}; saveProgress(); $("#resetConfirm").hidden = true; $("#resetBtn").hidden = false; });
+
+// ================= routing =================
+function route(id){
+  $("#win").classList.remove("show"); hideTip();
+  if(active){ active.pause(); active.root.hidden = true; }
+  const lesson = LBYID[id];
+  if(!lesson){ active = null; $("#game").hidden = true; $("#menu").hidden = false; renderMenu(); return; }
+  $("#menu").hidden = true; $("#game").hidden = false;
+  active = games[id] || (games[id] = makeGame(lesson));
+  active.root.hidden = false; active.resume();
+  $("#lessonTitle").textContent = `${lesson.emoji} ${lesson.title}`;
+  const [lvName,lvCol] = LEVELS[lesson.level]; $("#lessonLevel").textContent = lvName; $("#lessonLevel").style.background = lvCol;
+  $("#credit").hidden = !id.startsWith("halloween");
+  stats(); scrollTo(0,0);
+}
+function go(id){ const h = id || "menu"; if(location.hash.slice(1) !== h){ try{ location.hash = h; }catch(e){} } route(id); }
+addEventListener("hashchange", ()=>{ const h=location.hash.slice(1); const cur = active ? active.lesson.id : "menu"; if(h !== cur) route(h); });
+
+// ================= controls =================
+function syncToggles(){
+  document.querySelectorAll("#modeSeg button").forEach(b=>b.classList.toggle("on", b.dataset.mode===mode));
+  document.querySelectorAll("#esSeg button").forEach(b=>b.classList.toggle("on", (b.dataset.es==="1")===showEs));
+  document.querySelectorAll("#autoSeg button").forEach(b=>b.classList.toggle("on", (b.dataset.auto==="1")===autoSay));
+  document.body.classList.toggle("show-es", showEs);
+}
+document.querySelectorAll("#modeSeg button").forEach(b=>b.addEventListener("click",()=>{ mode=b.dataset.mode; LS.set("hv-mode2",mode); Object.values(games).forEach(g=>g.renderArt()); syncToggles(); }));
+document.querySelectorAll("#esSeg button").forEach(b=>b.addEventListener("click",()=>{ showEs=b.dataset.es==="1"; LS.set("hv-es2",showEs); syncToggles(); }));
+document.querySelectorAll("#autoSeg button").forEach(b=>b.addEventListener("click",()=>{ autoSay=b.dataset.auto==="1"; LS.set("hv-auto",autoSay); syncToggles(); if(autoSay) say("Sound on"); }));
+$("#restart").addEventListener("click", ()=>active && active.build());
+$("#back").addEventListener("click", ()=>go(null));
+$("#again").addEventListener("click", ()=>{ $("#win").classList.remove("show"); active.build(); });
+$("#toMenu").addEventListener("click", ()=>go(null));
+$("#next").addEventListener("click", ()=>{
+  const i = LESSONS.findIndex(l=>l.id===active.lesson.id);
+  const rest = LESSONS.slice(i+1).concat(LESSONS.slice(0,i+1));
+  const nxt = rest.find(l=>!progress.done[l.id]) || rest[0];
+  go(nxt.id);
+});
+
+syncToggles(); renderStatus();
+route(LBYID[location.hash.slice(1)] ? location.hash.slice(1) : null);
+
+</script>
+</body>
+</html>
