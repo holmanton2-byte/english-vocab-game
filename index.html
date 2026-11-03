@@ -175,6 +175,66 @@
   #tip.show{display:block}
   #tip b{color:#ffd43b}
 
+  .me{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:12px 14px;margin:0 auto 10px;max-width:560px}
+  .merow{display:flex;justify-content:space-between;align-items:center;color:#fff;font:600 20px "Fredoka",system-ui,sans-serif}
+  .merow b{color:#ffd43b}
+  .gear{background:none;border:0;font-size:24px;cursor:pointer}
+  .streak{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .streak span{background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:5px 12px;font:600 15px "Fredoka",system-ui,sans-serif}
+  .streak .fire{background:#e8590c}.streak .fire.off{background:rgba(255,255,255,.1)}
+  .streak .today.ok{background:#2f9e44}
+  .streak .pass{font-weight:500;font-size:13px}
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .wd{display:flex;flex-direction:column;align-items:center;gap:2px;background:rgba(255,255,255,.08);border-radius:10px;padding:4px 0;color:#d0bfff;border:2px solid transparent}
+  .wd small{font-size:11px}.wd b{font-size:15px;height:18px;color:#fff}
+  .wd.ok{background:#2f9e44}.wd.pass{background:#1c7ed6}.wd.part{background:#e67700}.wd.miss{opacity:.5}.wd.fut{opacity:.35}
+  .wd.today{border-color:#ffd43b}
+  .jump{display:flex;gap:8px;justify-content:center;margin:8px 0 2px}
+  .big-sec{color:#ffd43b;font:700 26px "Fredoka",system-ui,sans-serif;margin:26px 4px 0;border-bottom:2px solid rgba(255,212,59,.35);padding-bottom:4px;scroll-margin-top:10px}
+  .big-sec small{color:#d0bfff;font-size:14px;font-weight:500;margin-left:6px}
+  .catsub{color:#e5dbff;margin:-4px 4px 8px;font-size:13.5px}
+  .lcard.lis{border-color:#b197fc}.lcard.lis.done{border-color:#40c057}
+  .winmsgs p{margin:6px 0;font-size:16px}
+  .card.set{text-align:left;max-width:440px}
+  .fl{display:block;font-weight:700;margin:10px 0}
+  .fl input{display:block;width:100%;margin-top:4px;font:16px "Andika",system-ui,sans-serif;padding:8px 10px;border:2px solid #e8c98f;border-radius:10px}
+  .seg.goal{background:#eee;border-color:#ddd;margin-top:6px}.seg.goal button{color:var(--ink);padding:6px 18px}
+  .small{font-size:13.5px;color:#6b5b7a}
+  #toast{position:fixed;left:50%;top:12px;transform:translate(-50%,-160%);opacity:0;pointer-events:none;z-index:20;background:#fff8ec;color:var(--ink);border:3px solid #ffd43b;border-radius:16px;padding:10px 16px;max-width:min(92vw,460px);box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:16px;transition:transform .35s,opacity .35s;cursor:pointer}
+  #toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+  #listenView{max-width:620px;margin:0 auto}
+  .ltip{background:#fff8ec;border-radius:14px;padding:10px 14px;margin:0 0 12px;border:2px solid #ffd43b}
+  .lstart{background:var(--cream);border-radius:18px;padding:22px;text-align:center;border:3px solid #e8c98f}
+  .lstart p{margin:4px 0 12px;font-size:17px}.lstart .small{font-size:14px}
+  .btn.big{font-size:20px;padding:12px 28px}
+  .lhead{display:flex;justify-content:center;margin-bottom:8px}
+  .lplay{display:flex;gap:14px;justify-content:center;margin:4px 0 10px}
+  .playbtn{width:84px;height:84px;border-radius:50%;border:4px solid #fff;background:linear-gradient(#7950f2,#5f3dc4);font-size:38px;cursor:pointer;box-shadow:0 5px 0 #3b2690}
+  .playbtn.slow{width:64px;height:64px;font-size:28px;align-self:center;background:linear-gradient(#20c997,#0ca678);box-shadow:0 4px 0 #087f5b}
+  .playbtn:active{transform:translateY(3px);box-shadow:none}
+  .lfb{min-height:30px;text-align:center;color:#fff;font-size:17px;margin-bottom:8px}
+  .lfb.ok b{color:#8ce99a}.lfb.no b{color:#ffa8a8}
+  .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .lopt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;padding:10px}
+  .lopt .art{width:100px;height:100px;font-size:72px}
+  .lopt .emo{font-size:72px}
+  .lname{font:700 17px "Fredoka",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center}
+  .lname small{font:400 13px "Andika",system-ui,sans-serif;color:#7a5c3a}
+  body.listening .seg.mo{display:none}
+  @media (max-width:600px){
+    .merow{font-size:17px}.streak span{font-size:13px;padding:4px 9px}
+    .big-sec{font-size:21px}
+    .lopt{min-height:128px}.lopt .art{width:84px;height:84px}.lopt .emo{font-size:60px}
+    .playbtn{width:60px;height:60px;font-size:26px;border-width:3px}.playbtn.slow{width:50px;height:50px;font-size:22px}
+    .lopt{min-height:104px;padding:6px}.lopt .art{width:66px;height:66px}.lopt .emo{font-size:50px}
+    .lname{font-size:14px}.lgrid{gap:8px}
+    .ltip{font-size:13.5px;padding:7px 10px;margin-bottom:8px}
+    .lfb{font-size:14.5px;min-height:22px;margin-bottom:6px}
+    .lhead{margin-bottom:4px}.lplay{margin:0 0 6px}
+    body.listening .gtop h2{font-size:16px}
+    body.listening #game .bar{gap:5px;margin:6px 0 8px}
+  }
+
   #menu .intro{color:#f3e8ff;text-align:center;margin:0 0 12px;font-size:15px}
   .mbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:6px 0 4px}
   .mbar .progress{max-width:320px}
@@ -225,36 +285,53 @@
   <header><h1>Vocabulario en inglés</h1></header>
 
   <section id="menu">
-    <p class="intro">Elige una lección. Las lecciones completadas se ponen en <b style="color:#69db7c">verde ✓</b>.</p>
+    <div class="me">
+      <div class="merow"><span id="hello"></span><button class="gear" id="gear" aria-label="Ajustes">⚙️</button></div>
+      <div id="streak" class="streak"></div>
+      <div id="week" class="week"></div>
+    </div>
     <div class="mbar"><span class="chip" id="doneCount"></span><div class="progress"><i id="menuProg"></i></div></div>
+    <div class="jump"><button class="btn ghost" id="jumpMatch">🔗 Parejas</button><button class="btn ghost" id="jumpListen">🎧 Escucha</button></div>
     <div class="chips" id="levelChips"><button data-lv="0">Todas</button><button data-lv="1">●○○ Básico</button><button data-lv="2">●●○ Intermedio</button><button data-lv="3">●●● Avanzado</button></div>
+    <h2 class="big-sec" id="matchTop">🔗 Parejas <small>une descripción, palabra e imagen</small></h2>
     <div id="cats"></div>
-    <p class="status" id="saveStatus"></p>
+    <h2 class="big-sec" id="listenTop">🎧 Escucha <small>escucha y elige la imagen</small></h2>
+    <div id="listenCats"></div>
+    <p class="status">💾 El progreso se guarda en este dispositivo. Las lecciones completadas se ponen en <b style="color:#69db7c">verde ✓</b>.</p>
     <div class="reset"><button class="btn" id="resetBtn">Borrar el progreso</button>
-      <span id="resetConfirm" hidden><span>¿Seguro? Se borra el progreso de este dispositivo.</span><button class="btn" id="resetYes">Sí, borrar</button> <button class="btn alt" id="resetNo">No</button></span></div>
+      <span id="resetConfirm" hidden><span>¿Seguro? Se borra el progreso y la racha de este dispositivo.</span><button class="btn" id="resetYes">Sí, borrar</button> <button class="btn alt" id="resetNo">No</button></span></div>
   </section>
 
   <section id="game" hidden>
     <div class="gtop"><button class="btn ghost" id="back">← Lecciones</button><h2 id="lessonTitle"></h2><span class="lvl" id="lessonLevel"></span></div>
-    <p class="howto">Toca dos elementos que van juntos para enlazarlos 🔗; después toca la pareja y su tercer elemento. Toca las palabras <span class="gl-demo">subrayadas</span> para ver la traducción y 🔊 para escuchar.</p>
+    <p class="howto" id="howto">Toca dos elementos que van juntos para enlazarlos 🔗; después toca la pareja y su tercer elemento. Toca las palabras <span class="gl-demo">subrayadas</span> para ver la traducción y 🔊 para escuchar.</p>
     <div class="bar">
       <span class="chip">Aciertos <b id="score">0</b>/<span id="total">10</span></span>
       <div class="progress"><i id="prog"></i></div>
       <span class="chip">Errores <b id="miss">0</b></span>
       <span class="chip">⏱ <b id="time">0:00</b></span>
       <div class="seg" id="modeSeg"><span>Imágenes:</span><button data-mode="emoji">Emoji</button><button data-mode="drawn">Dibujos</button></div>
-      <div class="seg" id="esSeg"><span>Traducción:</span><button data-es="0">No</button><button data-es="1">🇪🇸 Sí</button></div>
-      <div class="seg" id="autoSeg"><span>Leer al tocar:</span><button data-auto="0">No</button><button data-auto="1">🔊 Sí</button></div>
+      <div class="seg mo" id="esSeg"><span>Traducción:</span><button data-es="0">No</button><button data-es="1">🇪🇸 Sí</button></div>
+      <div class="seg mo" id="autoSeg"><span>Leer al tocar:</span><button data-auto="0">No</button><button data-auto="1">🔊 Sí</button></div>
       <button class="btn" id="restart">Reiniciar</button>
     </div>
     <div id="boards"></div>
+    <div id="listenView" hidden></div>
     <footer id="credit">Tema de Halloween basado en la ficha de «English with Olena Kravchyshyn»</footer>
   </section>
 </div>
 <div class="win" id="win"><div class="card">
-  <div class="big">🎉⭐🎉</div><h3 id="winTitle"></h3><p id="winText"></p>
+  <div class="big">🎉⭐🎉</div><h3 id="winTitle"></h3><p id="winText"></p><div id="winMsgs" class="winmsgs"></div>
   <div class="btns"><button class="btn" id="again">Otra vez</button><button class="btn alt" id="next">Siguiente →</button><button class="btn ghost" id="toMenu" style="color:var(--ink);border-color:#ccc">Menú</button></div>
 </div></div>
+<div class="win" id="settings"><div class="card set">
+  <h3 id="setTitle"></h3><p id="setIntro"></p>
+  <label class="fl">Tu nombre<input id="setName" maxlength="30" autocomplete="off"></label>
+  <div class="fl">Meta diaria (actividades)<div class="seg goal" id="goalSeg"><button data-g="1">1</button><button data-g="2">2 ⭐</button><button data-g="3">3</button></div></div>
+  <p class="small">🔥 La racha sube cada día que cumples tu meta. 🛟 Tienes un comodín por semana: si un día no puedes, la racha no se pierde.</p>
+  <div class="btns"><button class="btn" id="setSave">Guardar</button></div>
+</div></div>
+<div id="toast" role="status"></div>
 
 <script>
 
@@ -346,7 +423,7 @@ mkSet("travel","Viajes","✈️",[
   Lp('M18 52 L10 62 M46 52 L54 62','#495057',3)+Lp('M15 57 H49','#8b5a2b',2)+Re(16,6,32,46,'#1971c2',7)+Re(21,12,22,15,'#a5d8ff',2)+Ci(24,41,3,'#ffe066')+Ci(40,41,3,'#ffe066')],
  ["ship","barco","🚢","A very big boat that carries people across the sea.",
   Re(36,14,8,14,'#ffd43b',1)+Re(16,28,34,12,'#fff',1)+[22,30,38].map(x=>Ci(x,34,2,'#74c0fc',K,1)).join('')+Fp('M4 40 H60 L52 54 H12Z','#c92a2a')+Lp('M2 59 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0 t10 0','#1c7ed6',2.5)],
- ["ticket","billete","🎫","A small piece of paper you buy to get on a bus or train.",
+ ["ticket","boleto","🎫","A small piece of paper you buy to get on a bus or train.",
   Fp('M6 20 H58 V28 a4 4 0 0 0 0 8 V44 H6 V36 a4 4 0 0 0 0 -8Z','#ffd43b','#e67700')+`<path d="M44 21 V43" stroke="#e67700" stroke-width="1.5" stroke-dasharray="3 3"/>`+Lp('M14 28 H36 M14 34 H32 M14 40 H28','#e67700',2)+Fp('M51 29 l1.5 3 3 .5 -2.2 2 .6 3 -2.9 -1.5 -2.9 1.5 .6 -3 -2.2 -2 3 -.5z','#e67700','none',0)],
  ["map","mapa","🗺️","A drawing that shows you where places and roads are.",
   Fp('M6 14 L22 8 L42 14 L58 8 V50 L42 56 L22 50 L6 56Z','#d8f5a2','#5c940d')+Lp('M22 8 V50 M42 14 V56','#5c940d',1.5)+`<path d="M12 44 Q20 30 30 34 T48 20" fill="none" stroke="#e03131" stroke-width="2" stroke-dasharray="3 3"/>`+Lp('M47 15 l6 6 M53 15 l-6 6','#e03131',2.5)],
@@ -356,13 +433,13 @@ mkSet("travel","Viajes","✈️",[
   Fp('M22 20 L26 13 H38 L42 20','#343a40')+Re(8,20,48,32,'#495057',5)+Ci(32,36,11,'#adb5bd')+Ci(32,36,6,'#1c7ed6')+Ci(48,26,2.5,'#ffd43b','none',0)],
  ["backpack","mochila","🎒","A bag you carry on your back.",
   Lp('M26 12 Q32 4 38 12',K,2.5)+Fp('M16 26 Q16 11 32 11 Q48 11 48 26 V56 H16Z','#2f9e44')+Re(22,38,20,14,'#40c057',3)+Lp('M22 43 H42',K,1.5)],
- ["tent","tienda de campaña","⛺","A small house made of cloth for camping.",
+ ["tent","carpa","⛺","A small house made of cloth for camping.",
   Fp('M4 54 L32 12 L60 54Z','#fd7e14')+Fp('M32 12 L24 54 H40Z','#e8590c')+Fp('M32 30 L27 54 H37Z','#5c2b00')+Lp('M2 55 H62','#2f9e44',3)],
  ["bicycle","bicicleta","🚲","It has two wheels and you move it with your feet.",
   Ci(16,42,11,'none',K,3)+Ci(48,42,11,'none',K,3)+Lp('M16 42 L26 26 H44 L48 42 M26 26 L32 42 L44 26 M32 42 H16 M22 22 H30 M44 26 L42 18 H49','#e03131',3)],
  ["beach","playa","🏖️","A place with sand next to the sea.",
   Re(0,36,64,14,'#4dabf7',0,'none',0)+Fp('M0 48 Q32 38 64 48 V64 H0Z','#ffe066','none',0)+Ci(50,14,7,'#ffd43b','none',0)+Lp('M22 22 V54','#495057',2)+Fp('M8 28 Q22 10 36 28Z','#f03e3e')],
- ["sunglasses","gafas de sol","🕶️","Dark glasses that protect your eyes from the sun.",
+ ["sunglasses","lentes de sol","🕶️","Dark glasses that protect your eyes from the sun.",
   Lp('M8 26 H56 M8 26 L4 21 M56 26 L60 21',K,3)+Fp('M8 26 H28 Q28 41 18 41 Q8 41 8 26Z','#212529')+Fp('M36 26 H56 Q56 41 46 41 Q36 41 36 26Z','#212529')+Lp('M13 30 L17 34 M41 30 L45 34','#fff',1.5)],
  ["compass","brújula","🧭","A tool that shows you where north is.",
   Ci(32,32,24,'#f1f3f5','#495057',3)+Ci(32,32,18,'none','#ced4da',1.5)+Fp('M32 14 L37 32 L27 32Z','#e03131','none',0)+Fp('M32 50 L37 32 L27 32Z','#495057','none',0)+Ci(32,32,2.5,'#fff')],
@@ -370,7 +447,7 @@ mkSet("travel","Viajes","✈️",[
   Lp('M8 18 H54',K,3)+Lp('M31 18 V25',K,2.5)+Re(2,31,18,5,'#fab005',2)+El(32,36,16,11,'#fab005')+Fp('M34 28 Q46 28 47 36 H34Z','#a5d8ff',K,1.5)+Lp('M18 54 H46 M23 47 V54 M41 47 V54',K,2)],
  ["money","dinero","💶","You use it to pay for things.",
   Re(6,14,44,26,'#8ce99a',3,'#2b8a3e')+Ci(28,27,7,'none','#2b8a3e',1.5)+Ci(48,46,11,'#ffd43b','#e67700')+Ci(48,46,7,'none','#e67700',1.5)+Ci(38,52,8,'#fcc419','#e67700')],
- ["motorbike","moto","🏍️","It has two wheels and an engine.",
+ ["motorcycle","moto","🏍️","It has two wheels and an engine.",
   Ci(14,46,9,'none',K,3.5)+Ci(50,46,9,'none',K,3.5)+Lp('M14 46 L24 36 M50 46 L42 26 H48',K,3)+Fp('M20 36 H42 L46 44 H26Z','#e03131')+Fp('M20 31 H34 V36 H18Z',K)+Ci(46,30,3,'#ffe066')]
 ]);
 
@@ -385,11 +462,11 @@ mkSet("house","La casa","🏠",[
   Lp('M6 58 H58',K,2.5)+Re(16,6,32,52,'#a05a2c',3)+Re(21,11,22,18,'none',2,'#6d3b17',1.5)+Re(21,33,22,20,'none',2,'#6d3b17',1.5)+Ci(42,33,2.5,'#ffd43b')],
  ["window","ventana","🪟","Glass in the wall that lets light into a room.",
   Re(10,8,44,48,'#a5d8ff',2,'#495057',3)+Lp('M32 8 V56 M10 32 H54','#495057',3)+Lp('M15 14 L21 20 M37 14 L43 20','#fff',2)+Fp('M5 5 H15 Q11 30 17 59 H5Z','#ff8787','#c92a2a',1.5)+Fp('M59 5 H49 Q53 30 47 59 H59Z','#ff8787','#c92a2a',1.5)],
- ["light bulb","bombilla","💡","A small glass object that gives light when you turn it on.",
+ ["light bulb","bombillo","💡","A small glass object that gives light when you turn it on.",
   Ci(32,24,20,'#fff3bf','none',0)+Fp('M23 36 Q14 28 17 17 Q22 6 32 6 Q42 6 47 17 Q50 28 41 36 L40 43 H24Z','#ffe066','#e67700')+Lp('M28 38 L29 26 L32 31 L35 26 L36 38','#e67700',1.5)+Re(24,43,16,10,'#adb5bd',2)+Lp('M24 47 H40 M24 50 H40','#495057',1)],
  ["mirror","espejo","🪞","You look into it to see yourself.",
   Lp('M32 50 V58 M22 58 H42','#a0522d',3)+El(32,28,16,22,'#d0ebff','#a0522d',4)+Lp('M23 20 L30 13 M23 29 L37 15','#fff',2.5)],
- ["toilet","inodoro","🚽","A seat in the bathroom with water that you flush.",
+ ["toilet","poceta","🚽","A seat in the bathroom with water that you flush.",
   Re(14,6,22,18,'#f8f9fa',3)+Lp('M18 12 H24','#868e96',2)+Fp('M10 26 H50 Q50 42 36 44 L38 57 H22 L24 44 Q10 42 10 26Z','#f8f9fa')+El(30,26,20,4,'#dee2e6')],
  ["bathtub","bañera","🛁","You fill it with water and sit in it to wash.",
   Lp('M54 30 V14 H46','#868e96',3)+Ci(18,26,5,'#d0ebff','#74c0fc',1.5)+Ci(29,22,6,'#d0ebff','#74c0fc',1.5)+Ci(41,26,5,'#d0ebff','#74c0fc',1.5)+Lp('M14 50 L12 57 M50 50 L52 57','#868e96',3)+Fp('M4 30 H60 V38 Q60 50 48 50 H16 Q4 50 4 38Z','#fff')],
@@ -399,7 +476,7 @@ mkSet("house","La casa","🏠",[
   Fp('M28 29 H58 V35 H54 V41 H49 V35 H44 V39 H40 V35 H28Z','#ffd43b','#e67700')+Ci(18,32,11,'#ffd43b','#e67700',2.5)+Ci(18,32,4,'#fff','#e67700')],
  ["clock","reloj","🕰️","It shows you the time on the wall.",
   Ci(32,32,25,'#fff','#8b5a2b',4)+Lp('M32 10 V14 M32 50 V54 M10 32 H14 M50 32 H54',K,2)+Lp('M32 32 V17 M32 32 L42 38',K,3)+dot(32,32,2.5)],
- ["television","televisión","📺","You watch films and the news on it.",
+ ["television","televisión","📺","You watch movies and the news on it.",
   Lp('M24 10 L18 2 M40 10 L46 2 M24 55 L32 47 L40 55 M20 55 H44','#343a40',2.5)+Re(6,10,52,37,'#343a40',4)+Re(10,14,44,29,'#74c0fc',2,'none',0)+Ci(22,24,4,'#ffd43b','none',0)+Fp('M10 43 L24 30 L34 38 L42 32 L54 43Z','#40c057','none',0)],
  ["toothbrush","cepillo de dientes","🪥","You use it with toothpaste to clean your teeth.",
   G('rotate(35 32 32)', Re(29,22,7,38,'#4dabf7',3,'#1864ab')+Re(28,6,9,18,'#4dabf7',3,'#1864ab')+Re(37,7,6,15,'#fff',1,'#868e96',1.5)+Lp('M38 10 H43 M38 14 H43 M38 18 H43','#adb5bd',1)+Fp('M43 7 Q50 6 49 12 Q49 17 43 17Z','#63e6be','#12b886',1.5))],
@@ -409,7 +486,7 @@ mkSet("house","La casa","🏠",[
   Fp('M16 23 Q22 12 30 23Z','#4dabf7')+Fp('M30 23 Q40 10 48 23Z','#ff8787')+Fp('M8 26 H56 L50 56 H14Z','#d9a066','#8b5a2b')+Lp('M12 34 H52 M13 42 H51 M14 50 H50 M22 26 L24 56 M32 26 V56 M42 26 L40 56','#8b5a2b',1.5)+Re(6,22,52,6,'#b07a3f',3,'#8b5a2b')],
  ["plant","planta","🪴","A green living thing that grows in a pot.",
   Fp('M32 40 Q14 34 16 16 Q30 22 32 40Z','#40c057','#2b8a3e')+Fp('M32 40 Q50 34 48 14 Q34 22 32 40Z','#40c057','#2b8a3e')+Fp('M32 40 Q26 20 32 6 Q38 20 32 40Z','#51cf66','#2b8a3e')+Fp('M18 40 H46 L42 58 H22Z','#e8590c')],
- ["bucket","cubo","🪣","You carry water in it when you clean the floor.",
+ ["bucket","tobo","🪣","You carry water in it when you clean the floor.",
   Lp('M14 22 Q32 0 50 22','#495057',2.5)+Fp('M14 22 H50 L46 56 H18Z','#4dabf7','#1864ab')+El(32,22,18,4,'#d0ebff','#1864ab')],
  ["ladder","escalera","🪜","You climb it to reach high places.",
   Lp('M20 12 H44 M20 24 H44 M20 36 H44 M20 48 H44','#b07a3f',3.5)+Lp('M20 4 V60 M44 4 V60','#8b5a2b',4)],
@@ -420,7 +497,7 @@ mkSet("house","La casa","🏠",[
 mkSet("food","Comida","🍎",[
  ["apple","manzana","🍎","A round red or green fruit that grows on trees.",
   Fp('M32 18 Q20 8 12 22 Q6 40 18 54 Q26 60 32 54 Q38 60 46 54 Q58 40 52 22 Q44 8 32 18Z','#f03e3e','#a61e1e')+Lp('M32 18 Q32 10 36 5','#5c3b1e',3)+Fp('M35 11 Q44 3 49 9 Q41 15 35 11Z','#40c057','#2b8a3e',1.5)+El(21,28,3,6,'#ffa8a8','none',0)],
- ["banana","plátano","🍌","A long yellow fruit that monkeys love.",
+ ["banana","cambur","🍌","A long yellow fruit that monkeys love.",
   Fp('M10 16 Q14 46 40 52 Q54 54 58 46 Q40 48 28 36 Q18 26 16 14Z','#ffd43b','#e67700')+Lp('M16 22 Q22 40 42 49','#f59f00',1.5)+Lp('M10 16 L13 11 M58 46 L61 48','#5c3b1e',3)],
  ["bread","pan","🍞","A basic food made from flour that you buy at a bakery.",
   Fp('M8 36 Q8 18 32 18 Q56 18 56 36 V50 Q56 54 52 54 H12 Q8 54 8 50Z','#e8a85a','#8b5a2b')+Lp('M20 24 L26 32 M30 22 L36 30 M40 24 L46 32','#8b5a2b',2)],
@@ -434,7 +511,7 @@ mkSet("food","Comida","🍎",[
   Lp('M44 18 Q54 8 60 10 M44 18 Q48 5 43 2 M44 18 Q58 18 62 23','#40c057',3)+Fp('M40 14 Q50 18 46 28 L14 58 Q10 60 10 56 Z','#fd7e14','#d9480f')+Lp('M31 26 L36 29 M25 36 L30 39 M19 46 L23 48','#d9480f',1.5)],
  ["tomato","tomate","🍅","A round red vegetable we use in salads and sauces.",
   Ci(32,36,22,'#f03e3e','#a61e1e')+Fp('M32 14 L36 20 L44 18 L38 23 L42 28 L32 24 L22 28 L26 23 L20 18 L28 20Z','#40c057','#2b8a3e',1.5)+El(22,32,3,6,'#ffa8a8','none',0)],
- ["potato","patata","🥔","A brown vegetable that grows under the ground; we make fries from it.",
+ ["potato","papa","🥔","A brown vegetable that grows under the ground; we make fries from it.",
   Fp('M10 34 Q8 18 30 16 Q54 14 56 32 Q58 50 34 52 Q12 54 10 34Z','#d9a066','#8b5a2b')+dot(22,28,1.5,'#8b5a2b')+dot(38,24,1.5,'#8b5a2b')+dot(44,40,1.5,'#8b5a2b')+dot(26,42,1.5,'#8b5a2b')],
  ["rice","arroz","🍚","Small white grains that we cook in water; we use it to make paella.",
   Lp('M40 8 L58 30 M46 5 L61 25','#8b5a2b',2.5)+Fp('M10 33 Q14 16 32 14 Q50 16 54 33Z','#fff','#adb5bd')+Fp('M6 32 H58 Q56 54 32 56 Q8 54 6 32Z','#4dabf7','#1864ab')+Lp('M14 42 Q32 48 50 42','#fff',2)],
@@ -448,7 +525,7 @@ mkSet("food","Comida","🍎",[
   Fp('M4 32 Q8 28 12 22 Q20 12 32 12 Q44 12 52 22 Q56 28 60 32 Q56 36 52 42 Q44 52 32 52 Q20 52 12 42 Q8 36 4 32Z','#ffe066','#e67700')+Fp('M40 13 Q50 3 58 7 Q50 15 40 13Z','#40c057','#2b8a3e',1.5)+El(22,26,4,2,'#fff9db','none',0)],
  ["strawberry","fresa","🍓","A small red fruit with tiny seeds on the outside.",
   Fp('M32 58 Q10 44 12 24 Q14 16 24 16 H40 Q50 16 52 24 Q54 44 32 58Z','#f03e3e','#a61e1e')+[[22,26],[32,28],[42,26],[26,36],[38,36],[32,45],[18,33],[46,33]].map(([x,y])=>El(x,y,1.2,2,'#ffe066','none',0)).join('')+Fp('M20 18 L26 8 L32 16 L38 8 L44 18 L32 22Z','#40c057','#2b8a3e')],
- ["cake","tarta","🎂","A sweet food we eat at birthday parties.",
+ ["cake","torta","🎂","A sweet food we eat at birthday parties.",
   El(32,56,27,4,'#dee2e6','#868e96')+[20,30,40].map(x=>Re(x,18,4,12,'#74c0fc',1,'#1864ab',1)+Fp(`M${x+2} 10 Q${x+6} 15 ${x+2} 17 Q${x-2} 15 ${x+2} 10Z`,'#ff922b','none',0)).join('')+Re(10,30,44,24,'#fcc2d7',3,'#c2255c')+Fp('M10 30 H54 V34 Q50 40 46 34 Q40 40 34 34 Q28 40 22 34 Q16 40 10 34Z','#fff','#c2255c',1.5)],
  ["coffee","café","☕","A hot brown drink that many people have in the morning.",
   Lp('M22 17 q-4 -5 0 -10 M30 17 q-4 -5 0 -10 M38 17 q-4 -5 0 -10','#adb5bd',2)+El(30,56,25,4,'#dee2e6','#868e96')+Lp('M46 30 Q56 30 56 38 Q56 46 46 46','#5c3b1e',3)+Fp('M12 24 H46 V44 Q46 54 36 54 H22 Q12 54 12 44Z','#fff','#5c3b1e')+El(29,24,17,3,'#8b5a2b','#5c3b1e')],
@@ -469,7 +546,7 @@ mkSet("animals","Animales","🐾",[
   Fp('M30 12 L32 2 L38 10Z','#a0522d','#5c2b00')+Fp('M20 60 L22 34 Q20 14 34 10 Q42 8 52 26 Q56 34 50 38 Q44 40 40 34 L38 60Z','#a0522d','#5c2b00')+Fp('M31 11 Q18 20 16 44 L22 36 Q22 22 34 12Z','#3b1d00','none',0)+dot(39,21,2.2)+dot(50,33,1.5)],
  ["cow","vaca","🐄","A farm animal that gives us milk.",
   Fp('M18 20 Q9 12 13 6 Q18 13 23 18Z','#fff3bf','#868e96',1.5)+Fp('M46 20 Q55 12 51 6 Q46 13 41 18Z','#fff3bf','#868e96',1.5)+El(11,26,6,3.5,'#fff')+El(53,26,6,3.5,'#fff')+Re(16,16,32,32,'#fff',13)+Fp('M36 17 Q46 17 47 26 Q41 29 37 24Z',K,'none',0)+dot(25,29,2.5)+dot(39,29,2.5)+El(32,46,14,8,'#ffc9c9')+dot(27,46,1.8)+dot(37,46,1.8)],
- ["pig","cerdo","🐖","A pink farm animal that says \"oink\".",
+ ["pig","cochino","🐖","A pink farm animal that says \"oink\".",
   Fp('M16 22 L14 8 L27 16Z','#faa2c1','#e64980')+Fp('M48 22 L50 8 L37 16Z','#faa2c1','#e64980')+Ci(32,34,20,'#ffc9c9','#e64980')+El(32,40,9,6.5,'#faa2c1','#e64980')+El(29,40,1.5,2.5,'#c2255c','none',0)+El(35,40,1.5,2.5,'#c2255c','none',0)+dot(24,28,2.5)+dot(40,28,2.5)],
  ["sheep","oveja","🐑","A farm animal with wool.",
   [[20,24],[32,18],[44,24],[15,36],[49,36],[22,48],[42,48],[32,50]].map(([x,y])=>Ci(x,y,9,'#fff','#adb5bd')).join('')+El(20,34,6,2.5,'#495057')+El(44,34,6,2.5,'#495057')+El(32,36,10,13,'#495057')+dot(28,33,2,'#fff')+dot(36,33,2,'#fff')],
@@ -477,7 +554,7 @@ mkSet("animals","Animales","🐾",[
   Lp('M28 55 V62 M36 55 V62','#fd7e14',2.5)+Fp('M36 12 Q36 4 40 6 Q42 2 45 6 Q49 6 46 12Z','#f03e3e','none',0)+Fp('M14 36 Q14 20 28 20 Q33 10 41 13 Q48 17 46 28 Q56 30 54 42 Q50 56 32 56 Q14 54 14 36Z','#fff','#868e96')+Fp('M46 20 L54 22 L46 25Z','#fd7e14','none',0)+El(46,28,2,3,'#f03e3e','none',0)+dot(41,18,2)+Lp('M22 38 Q30 46 40 40','#868e96',2)],
  ["fish","pez","🐟","It lives in water and swims.",
   Fp('M8 32 Q24 14 44 24 L58 14 V50 L44 40 Q24 50 8 32Z','#4dabf7','#1864ab')+Ci(18,29,3,'#fff',K,1)+dot(18,29,1.4)+Lp('M26 24 Q30 32 26 40','#1864ab',1.5)+Ci(6,14,2,'none','#74c0fc',1.5)+Ci(10,8,1.5,'none','#74c0fc',1.2)],
- ["elephant","elefante","🐘","A very big grey animal with a long nose.",
+ ["elephant","elefante","🐘","A very big gray animal with a long nose.",
   El(12,30,10,14,'#ced4da','#495057')+El(52,30,10,14,'#ced4da','#495057')+Ci(32,28,16,'#adb5bd','#495057')+Fp('M28 38 Q26 52 34 58 Q40 60 42 56 Q34 52 36 38Z','#adb5bd','#495057')+dot(25,25,2)+dot(39,25,2)],
  ["giraffe","jirafa","🦒","A tall animal with a very long neck.",
   Fp('M22 62 L28 24 H38 L42 62Z','#ffd43b','#e67700')+El(24,15,5,2.5,'#ffd43b','#e67700')+Lp('M30 12 V4 M38 12 V4','#8b5a2b',2.5)+dot(30,4,2.2,'#8b5a2b')+dot(38,4,2.2,'#8b5a2b')+El(36,20,12,9,'#ffd43b','#e67700')+[[31,34,3],[37,44,3.5],[30,52,3],[38,56,2.5]].map(([x,y,r])=>Ci(x,y,r,'#d9822b','none',0)).join('')+dot(34,18,2)+dot(45,22,1.2)],
@@ -489,7 +566,7 @@ mkSet("animals","Animales","🐾",[
   Lp('M8 54 Q20 40 32 50 Q44 60 52 46 Q58 34 46 30 Q34 26 34 18','#2b8a3e',10)+Lp('M8 54 Q20 40 32 50 Q44 60 52 46 Q58 34 46 30 Q34 26 34 18','#69db7c',6)+Lp('M34 19 V25 L32 27 M34 25 L36 27','#e03131',1.2)+El(34,14,7,5.5,'#69db7c','#2b8a3e')+dot(31,12,1.3)+dot(37,12,1.3)],
  ["rabbit","conejo","🐇","A small animal with long ears that jumps.",
   Fp('M22 28 Q15 3 22 3 Q29 3 28 28Z','#f1f3f5','#868e96')+Fp('M36 28 Q35 3 42 3 Q49 3 42 28Z','#f1f3f5','#868e96')+El(23,14,2,7,'#ffc9c9','none',0)+El(41,14,2,7,'#ffc9c9','none',0)+Ci(32,38,16,'#f1f3f5','#868e96')+dot(26,36,2.2)+dot(38,36,2.2)+Fp('M30 42 H34 L32 44Z','#f783ac','none',0)+Re(30,45,4,4,'#fff',.5,'#868e96',1)],
- ["mouse","ratón","🐁","A very small grey animal that likes cheese.",
+ ["mouse","ratón","🐁","A very small gray animal that likes cheese.",
   Ci(16,22,10,'#adb5bd','#495057')+Ci(48,22,10,'#adb5bd','#495057')+Ci(16,22,6,'#ffc9c9','none',0)+Ci(48,22,6,'#ffc9c9','none',0)+Fp('M14 34 Q14 20 32 20 Q50 20 50 34 Q50 44 32 54 Q14 44 14 34Z','#adb5bd','#495057')+dot(26,34,2)+dot(38,34,2)+Ci(32,52,2.5,'#f783ac','none',0)+Lp('M26 46 L14 44 M38 46 L50 44','#495057',1)],
  ["bird","pájaro","🐦","It has feathers and can fly.",
   Lp('M28 49 V58 M34 49 V58','#fd7e14',2)+Fp('M15 36 L4 30 L6 42Z','#1c7ed6','#1864ab',1.5)+El(30,37,16,13,'#4dabf7','#1864ab')+Ci(42,24,9,'#4dabf7','#1864ab')+Fp('M50 22 L58 25 L50 28Z','#fd7e14','none',0)+dot(44,22,1.8)+Fp('M18 35 Q28 27 36 37 Q28 45 18 35Z','#1c7ed6','#1864ab',1.5)],
@@ -506,23 +583,23 @@ mkSet("animals","Animales","🐾",[
 mkSet("clothes","Ropa","👕",[
  ["shirt","camisa","👔","You wear it on top; it has buttons and a collar.",
   Fp('M22 8 L32 14 L42 8 L56 18 L50 28 L46 25 V58 H18 V25 L14 28 L8 18Z','#fff','#495057')+Fp('M22 8 L32 18 L42 8 L38 6 L32 12 L26 6Z','#e9ecef','#495057',1.5)+Fp('M30 17 H34 L36 40 L32 46 L28 40Z','#e03131','#a61e1e',1.5)],
- ["T-shirt","camiseta","👕","A simple top with short sleeves.",
+ ["T-shirt","franela","👕","A simple top with short sleeves.",
   Fp('M22 8 Q32 16 42 8 L58 18 L52 30 L46 26 V58 H18 V26 L12 30 L6 18Z','#4dabf7','#1864ab')+Lp('M24 9 Q32 14 40 9','#1864ab',1.5)+Fp('M32 28 l2.4 5 5.4 .6 -4 3.6 1.2 5.3 -5 -2.8 -5 2.8 1.2 -5.3 -4 -3.6 5.4 -.6z','#ffd43b','none',0)],
- ["jeans","vaqueros","👖","Blue trousers made of strong cotton.",
+ ["jeans","blue jean","👖","Blue pants made of strong cotton.",
   Fp('M16 6 H48 L52 60 H36 L32 26 L28 60 H12Z','#3b5bdb','#1c2f8a')+Lp('M16 12 H48','#1c2f8a',1.5)+Lp('M20 12 Q22 20 28 18 M44 12 Q42 20 36 18','#ffd43b',1.2)+dot(32,9,1.5,'#ffd43b')],
  ["dress","vestido","👗","Clothing for girls or women that covers the body and part of the legs.",
   Fp('M24 6 L28 6 Q32 12 36 6 L40 6 L40 22 L37 26 L54 58 H10 L27 26 L24 22Z','#e64980','#a61e4d')+Re(26,22,12,4,'#fff',1,'#a61e4d',1)],
- ["shorts","pantalones cortos","🩳","Short trousers for hot days.",
+ ["shorts","short","🩳","Short pants for hot days.",
   Fp('M14 12 H50 L54 48 H36 L32 28 L28 48 H10Z','#fd7e14','#d9480f')+Lp('M14 18 H50','#d9480f',1.5)+Lp('M30 13 Q28 20 26 22 M34 13 Q36 20 38 22','#fff',1.2)],
  ["shoes","zapatos","👞","You wear them on your feet when you go outside.",
   Fp('M6 46 V30 Q6 26 10 26 H26 Q30 36 42 38 Q58 40 58 48 V50 H6Z','#8b5a2b','#4a2a0a')+Re(6,48,52,6,'#343a40',3,'#212529')+Lp('M22 30 L30 28 M24 34 L32 32','#f8f9fa',1.5)],
  ["boots","botas","👢","Tall shoes that cover part of your leg.",
   Fp('M16 6 H36 V38 Q52 40 56 48 V55 H16Z','#a0522d','#5c2b00')+Re(14,54,44,6,'#343a40',2,'#212529')+Re(14,6,24,6,'#8b5a2b',2,'#5c2b00')],
- ["socks","calcetines","🧦","You wear them on your feet, inside your shoes.",
+ ["socks","medias","🧦","You wear them on your feet, inside your shoes.",
   Fp('M18 6 H34 V36 Q34 40 38 44 L46 50 Q52 56 46 60 Q42 62 36 58 L22 46 Q18 42 18 36Z','#ff8787','#c92a2a')+Lp('M19 14 H33 M19 20 H33','#fff',3)],
  ["hat","sombrero","👒","You wear it on your head to protect it from the sun.",
   El(32,38,28,8,'#ffe066','#e67700')+Fp('M20 36 Q20 14 32 14 Q44 14 44 36Z','#ffe066','#e67700')+Re(20,29,24,5,'#f03e3e',1,'none',0)+Ci(41,31,3,'#fff','#e64980',1)],
- ["cap","gorra","🧢","A hat with a hard part at the front, often for sport.",
+ ["cap","gorra","🧢","A hat with a hard part at the front, often for sports.",
   Fp('M44 38 Q60 36 62 44 Q54 47 30 40Z','#1864ab','#0b4a8a')+Fp('M10 39 Q10 16 32 16 Q50 16 50 39Z','#1c7ed6','#0b4a8a')+Lp('M30 17 Q24 26 24 39','#0b4a8a',1.2)+Ci(31,16,2.5,'#1864ab','#0b4a8a',1.5)],
  ["scarf","bufanda","🧣","You wear it around your neck when it is cold.",
   Fp('M14 16 Q32 26 50 16 L52 26 Q32 36 12 26Z','#e03131','#a61e1e')+Fp('M38 26 L44 58 H34 L30 30Z','#e03131','#a61e1e')+Lp('M33 40 H42 M34 48 H43','#fff',2.5)+Lp('M35 58 V62 M38 58 V62 M41 58 V62','#a61e1e',1.5)],
@@ -530,19 +607,19 @@ mkSet("clothes","Ropa","👕",[
   G('translate(18 4)',Fp('M14 34 Q4 30 6 22 Q10 18 14 24Z','#9775fa','#4c2fa0')+Fp('M14 58 V26 Q14 10 26 10 Q38 10 38 26 V58Z','#9775fa','#4c2fa0')+Re(12,48,28,10,'#fff',2,'#4c2fa0'))+Fp('M14 34 Q4 30 6 22 Q10 18 14 24Z','#7950f2','#4c2fa0')+Fp('M14 58 V26 Q14 10 26 10 Q38 10 38 26 V58Z','#7950f2','#4c2fa0')+Re(12,48,28,10,'#fff',2,'#4c2fa0')],
  ["coat","abrigo","🧥","A long warm jacket for cold weather.",
   Fp('M22 6 L32 12 L42 6 L54 12 L60 50 L52 52 L48 26 L48 58 H16 L16 26 L12 52 L4 50 L10 12Z','#5c940d','#2b5a07')+Lp('M32 12 V58','#2b5a07',1.5)+Fp('M22 6 L32 22 L27 26 L20 9Z','#74b816','#2b5a07',1.5)+Fp('M42 6 L32 22 L37 26 L44 9Z','#74b816','#2b5a07',1.5)+[30,38,46].map(y=>dot(35,y,1.8,'#ffd43b')).join('')],
- ["swimsuit","bañador","🩱","You wear it to swim at the pool or the beach.",
+ ["swimsuit","traje de baño","🩱","You wear it to swim at the pool or the beach.",
   Fp('M20 6 L24 6 Q32 20 40 6 L44 6 L44 26 Q48 40 50 54 Q40 48 32 52 Q24 48 14 54 Q16 40 20 26Z','#15aabf','#0b7285')+dot(26,32,2.2,'#fff')+dot(38,30,2.2,'#fff')+dot(32,40,2.2,'#fff')+dot(24,44,2.2,'#fff')+dot(40,44,2.2,'#fff')],
- ["sneakers","zapatillas","👟","Sports shoes for running.",
+ ["sneakers","zapatos deportivos","👟","Sports shoes for running.",
   Fp('M6 46 V36 Q8 30 14 30 L22 26 Q30 32 40 34 Q56 36 58 44 V48 H6Z','#fff','#495057')+Re(6,46,52,7,'#4dabf7',3,'#1864ab')+Lp('M24 40 L38 36 M27 44 L44 40','#4dabf7',2.5)+Lp('M24 29 L28 33 M28 30 L32 34','#495057',1.2)],
- ["flip-flops","chanclas","🩴","Summer shoes with a thin strap between your toes.",
+ ["flip-flops","cholas","🩴","Summer shoes with a thin strap between your toes.",
   [0,26].map(dx=>G(`translate(${dx} 0)`,Fp('M18 8 Q28 8 28 22 Q28 40 26 56 Q20 62 14 56 Q10 40 10 22 Q10 8 18 8Z','#fab005','#e67700')+Lp('M19 14 L12 27 M19 14 L26 27','#e64980',3))).join('')],
- ["glasses","gafas","👓","You wear them to see better.",
+ ["glasses","lentes","👓","You wear them to see better.",
   Lp('M10 30 L4 25 M54 30 L60 25 M30 30 Q32 27 34 30',K,3)+Ci(20,32,10,'#e7f5ff',K,3)+Ci(44,32,10,'#e7f5ff',K,3)+Lp('M15 28 L19 24 M39 28 L43 24','#fff',2)],
  ["watch","reloj de pulsera","⌚","You wear it on your wrist to know the time.",
   Re(24,4,16,56,'#495057',4,'#212529')+Re(45,30,3,4,'#adb5bd',1,'none',0)+Ci(32,32,13,'#fff','#adb5bd',3)+Lp('M32 32 V24 M32 32 L37 35',K,2)],
  ["ring","anillo","💍","A small circle of gold or silver you wear on your finger.",
   Ci(32,40,16,'none','#fab005',5)+Fp('M24 22 L28 16 H36 L40 22 L32 30Z','#a5d8ff','#1c7ed6')+Lp('M48 10 V16 M45 13 H51','#74c0fc',1.5)],
- ["handbag","bolso","👜","A small bag to carry your phone, keys and money.",
+ ["handbag","cartera","👜","A small bag to carry your phone, keys and money.",
   Lp('M22 26 Q22 10 32 10 Q42 10 42 26','#7d1240',3)+Fp('M10 26 H54 L50 56 H14Z','#c2255c','#7d1240')+Lp('M10 30 Q32 40 54 30','#7d1240',1.5)+Re(28,32,8,5,'#ffd43b',1,'#e67700',1)]
 ]);
 
@@ -581,7 +658,7 @@ mkSet("body","El cuerpo","🧍",[
   Re(8,30,10,28,'#4dabf7',1,'#1864ab')+Fp('M18 30 Q26 26 28 18 Q30 6 36 6 Q42 8 40 18 L38 26 H52 Q58 26 56 32 Q58 36 54 38 Q58 42 54 44 Q56 50 50 52 Q50 58 44 58 H18Z',SK,SKL)+Lp('M40 38 H54 M42 44 H54 M40 51 H50',SKL,1.5)],
  ["nail","uña","💅","The hard part at the end of your finger; some people paint it.",
   Fp('M20 62 V22 Q20 6 32 6 Q44 6 44 22 V62Z',SK,SKL)+Fp('M24 26 V16 Q24 10 32 10 Q40 10 40 16 V26 Q32 30 24 26Z','#e64980','#a61e4d')+Lp('M28 14 V20','#fff',1.5)],
- ["hair","pelo","💇","It grows on your head; you cut it at the hairdresser's.",
+ ["hair","cabello, pelo","💇","It grows on your head; you cut it at the hair salon.",
   Fp('M10 42 Q8 8 32 8 Q56 8 54 42 Q54 56 46 58 V30 H18 V58 Q10 56 10 42Z','#e8590c','#a33f00')+El(32,36,13,16,SK,SKL)+Fp('M18 30 Q20 14 32 14 Q44 14 46 30 Q38 22 32 26 Q26 22 18 30Z','#e8590c','#a33f00')+dot(27,36,1.6)+dot(37,36,1.6)+Lp('M28 44 Q32 47 36 44',SKL,1.5)],
  ["beard","barba","🧔","Hair that grows on a man's chin and face.",
   El(32,30,15,18,SK,SKL)+Fp('M17 26 Q16 10 32 10 Q48 10 47 26 Q40 18 32 18 Q24 18 17 26Z','#5c3b1e','#3b2510')+Fp('M17 30 Q18 58 32 60 Q46 58 47 30 Q44 42 38 40 Q32 38 26 40 Q20 42 17 30Z','#5c3b1e','#3b2510')+Lp('M28 45 Q32 47 36 45',SK,2)+dot(26,28,1.8)+dot(38,28,1.8)],
@@ -598,9 +675,9 @@ mkSet("weather","Tiempo y naturaleza","🌦️",[
   [0,60,120].map(a=>G(`rotate(${a} 32 32)`,Lp('M32 6 V58 M26 11 L32 17 L38 11 M26 53 L32 47 L38 53','#4dabf7',3))).join('')],
  ["snowman","muñeco de nieve","⛄","A man made of snow that children build.",
   Lp('M18 42 L6 34 M46 42 L58 34','#8b5a2b',2)+Ci(32,46,14,'#fff','#868e96')+Ci(32,22,10,'#fff','#868e96')+Re(24,6,16,8,K,1,'none',0)+Lp('M20 14 H44',K,3)+dot(28,20,1.5)+dot(36,20,1.5)+Fp('M32 23 L41 25 L32 26.5Z','#fd7e14','none',0)+Re(23,30,18,4,'#e03131',2,'none',0)+dot(32,42,1.8)+dot(32,50,1.8)],
- ["cloud","nube","☁️","A white or grey thing in the sky that can bring rain.",
+ ["cloud","nube","☁️","A white or gray thing in the sky that can bring rain.",
   Fp('M14 46 Q2 46 4 34 Q6 24 18 26 Q20 12 34 12 Q48 12 50 24 Q62 22 62 36 Q62 46 52 46Z','#fff','#74c0fc',2.5)],
- ["rainbow","arcoíris","🌈","An arc of seven colours in the sky after the rain.",
+ ["rainbow","arcoíris","🌈","An arc of seven colors in the sky after the rain.",
   [[26,'#f03e3e'],[21,'#fd7e14'],[16,'#ffd43b'],[11,'#40c057'],[6,'#4dabf7']].map(([r,c])=>Lp(`M${32-r} 52 A${r} ${r} 0 0 1 ${32+r} 52`,c,5)).join('')+El(9,52,9,5,'#fff','#adb5bd')+El(55,52,9,5,'#fff','#adb5bd')],
  ["lightning","rayo","⚡","A bright flash of light in the sky during a storm.",
   cloud('#868e96','#495057')+Fp('M34 30 L22 46 H32 L26 62 L44 40 H34 L40 30Z','#ffd43b','#e67700')],
@@ -608,7 +685,7 @@ mkSet("weather","Tiempo y naturaleza","🌦️",[
   Lp('M6 22 H40 Q50 22 50 14 Q50 8 44 8 Q38 8 38 14 M6 34 H50 Q58 34 58 42 Q58 50 50 50 Q44 50 44 44 M6 46 H30','#74c0fc',4)+Fp('M14 54 Q20 48 26 54 Q20 60 14 54Z','#40c057','#2b8a3e',1.5)],
  ["tree","árbol","🌳","A tall plant with a trunk, branches and leaves.",
   Re(28,36,8,24,'#8b5a2b',2,'#5c3b1e')+Ci(20,30,11,'#40c057','#2b8a3e')+Ci(44,30,11,'#40c057','#2b8a3e')+Ci(32,22,15,'#51cf66','#2b8a3e')],
- ["flower","flor","🌷","A colourful part of a plant that smells nice.",
+ ["flower","flor","🌷","A colorful part of a plant that smells nice.",
   Lp('M32 34 V60','#2f9e44',3)+Fp('M32 50 Q22 44 18 50 Q24 56 32 50Z','#40c057','#2b8a3e',1.5)+[[32,14],[42,22],[38,34],[26,34],[22,22]].map(([x,y])=>Ci(x,y,8,'#f783ac','#c2255c')).join('')+Ci(32,25,6,'#ffd43b','#e67700')],
  ["mountain","montaña","⛰️","A very high hill, sometimes with snow on top.",
   Fp('M2 58 L24 16 L36 36 L44 26 L62 58Z','#868e96','#495057')+Fp('M24 16 L17.7 28 L22 25 L26 29 L31.2 28Z','#fff','none',0)+Fp('M44 26 L40 32 L44 30 L48 32Z','#fff','none',0)],
@@ -620,7 +697,7 @@ mkSet("weather","Tiempo y naturaleza","🌦️",[
   Fp('M26 22 Q20 10 26 4 Q30 12 32 6 Q36 12 40 4 Q44 12 38 22Z','#fd7e14','#e8590c',1.5)+Fp('M4 60 L24 22 H40 L60 60Z','#8b5a2b','#5c3b1e')+Fp('M24 22 H40 L36 32 L32 28 L28 36 L26 26Z','#f03e3e','none',0)],
  ["star","estrella","⭐","It shines in the sky at night; there are millions of them.",
   Fp('M32 4 L39 23 L59 24 L43 36 L49 56 L32 44 L15 56 L21 36 L5 24 L25 23Z','#ffd43b','#e67700')+Lp('M54 6 V12 M51 9 H57','#ffd43b',1.5)],
- ["leaf","hoja","🍂","It grows on a tree; in autumn it turns brown and falls.",
+ ["leaf","hoja","🍂","It grows on a tree; in the fall it turns brown and comes down.",
   Fp('M10 54 Q8 20 50 10 Q56 40 24 52 Q16 56 10 54Z','#e8590c','#a33f00')+Lp('M10 54 Q28 34 48 14 M22 42 L20 30 M30 34 L42 34 M36 27 L34 18','#a33f00',1.5)],
  ["umbrella","paraguas","☂️","You hold it over your head when it rains.",
   Lp('M32 32 V54 Q32 60 26 60 Q22 60 22 56 M32 8 V4','#495057',3)+Fp('M4 32 Q8 8 32 8 Q56 8 60 32 Q54 28 46 32 Q40 28 32 32 Q24 28 18 32 Q10 28 4 32Z','#7950f2','#4c2fa0')],
@@ -639,37 +716,37 @@ mkSet("town","La ciudad","🏙️",[
   Lp('M32 10 V2','#495057',1.5)+Fp('M32 2 H40 L38 4.5 L40 7 H32Z','#4dabf7','none',0)+Re(8,26,48,32,'#ffa94d',1,'#d9480f')+Fp('M4 28 L32 10 L60 28Z','#c92a2a','#7d1010')+Ci(32,20,4,'#fff','#495057',1.5)+Re(27,44,10,14,'#8b5a2b',1,'#5c3b1e',1.5)+Re(13,34,8,8,'#a5d8ff',1,'#495057',1.5)+Re(43,34,8,8,'#a5d8ff',1,'#495057',1.5)],
  ["bank","banco","🏦","You keep your money there.",
   Re(10,24,44,34,'#e9ecef',2,'#495057')+[14,24,34,44].map(x=>Re(x,30,6,22,'#fff',1,'#adb5bd',1.5)).join('')+Re(8,52,48,6,'#adb5bd',1,'#495057')+Ci(32,13,10,'#ffd43b','#e67700')+Ci(32,13,6,'none','#e67700',1.5)],
- ["library","biblioteca","📚","A place where you can borrow books. (Careful: it is not a shop!)",
+ ["library","biblioteca","📚","A place where you can borrow books. (Careful: it is not a store!)",
   Re(8,22,48,36,'#d0bfff',2,'#5f3dc4')+Fp('M4 24 L32 8 L60 24Z','#7950f2','#5f3dc4')+Re(18,30,6,22,'#f03e3e',1,K,1.2)+Re(25,33,6,19,'#40c057',1,K,1.2)+Re(32,29,6,23,'#ffd43b',1,K,1.2)+G('rotate(12 44 52)',Re(39,34,6,18,'#4dabf7',1,K,1.2))+Lp('M14 52 H50','#5f3dc4',2)],
- ["pharmacy","farmacia","💊","A shop where you buy medicine.",
+ ["pharmacy","farmacia","💊","A store where you buy medicine.",
   Re(10,22,44,36,'#fff',2,'#495057')+Ci(32,13,9,'#fff','#2f9e44')+Re(29,6,6,14,'#2f9e44',1,'none',0)+Re(25,10,14,6,'#2f9e44',1,'none',0)+Re(14,30,22,14,'#d3f9d8',2,'#495057',1.5)+G('rotate(-25 25 37)',Re(18,34,14,6,'#ff8787',3,'#c92a2a',1.2))+Re(40,36,10,22,'#74c0fc',1,'#495057',1.5)],
- ["bakery","panadería","🥐","A shop that sells bread and cakes.",
+ ["bakery","panadería","🥐","A store that sells bread and cakes.",
   Re(8,22,48,36,'#fff3bf',2,'#e67700')+Fp('M6 22 H58 L54 30 H10Z','#ff922b','#d9480f')+Lp('M18 22 L17 30 M30 22 V30 M42 22 L43 30','#fff',2)+Re(14,34,22,16,'#a5d8ff',2,'#495057',1.5)+El(25,44,7,4,'#e8a85a','#8b5a2b',1.5)+Re(40,38,10,20,'#8b5a2b',1,'#5c3b1e',1.5)+Fp('M20 16 Q32 2 44 16 Q38 12 32 17 Q26 12 20 16Z','#e8a85a','#8b5a2b',1.5)],
- ["supermarket","supermercado","🛒","A big shop where you buy food and many other things.",
+ ["supermarket","supermercado","🛒","A big store where you buy food and many other things.",
   Re(22,12,8,10,'#ff922b',1,'none',0)+Ci(38,16,5,'#40c057','none',0)+Re(44,9,6,13,'#f03e3e',1,'none',0)+Fp('M15 20 H56 L50 42 H18Z','#d0ebff','none',0)+Lp('M4 12 H12 L18 42 H50 L56 20 H14 M17 31 H53','#495057',3)+Ci(22,50,4,'#495057')+Ci(46,50,4,'#495057')],
  ["fountain","fuente","⛲","Water comes up from it in the middle of a square.",
   Lp('M32 24 V6 M32 10 Q22 8 18 24 M32 10 Q42 8 46 24','#4dabf7',2.5)+Fp('M6 44 H58 L54 56 H10Z','#adb5bd','#495057')+El(32,44,26,4,'#74c0fc','#495057',1.5)+Re(28,26,8,18,'#ced4da',1,'#495057',1.5)+Fp('M20 26 H44 Q42 32 32 32 Q22 32 20 26Z','#ced4da','#495057',1.5)],
  ["church","iglesia","⛪","A building where Christians go to pray.",
   Re(10,32,44,26,'#fff3bf',1,'#8b5a2b')+Re(24,16,16,42,'#fff3bf',1,'#8b5a2b')+Fp('M22 17 L32 4 L42 17Z','#c92a2a','#7d1010')+Lp('M32 4 V-2 M29 1 H35','#495057',1.5)+Ci(32,26,3,'#a5d8ff','#8b5a2b',1.5)+Fp('M28 58 V48 Q32 42 36 48 V58Z','#8b5a2b')+Re(14,40,6,8,'#a5d8ff',3,'#8b5a2b',1.2)+Re(44,40,6,8,'#a5d8ff',3,'#8b5a2b',1.2)],
- ["post office","oficina de correos","🏤","You go there to send letters and parcels.",
+ ["post office","oficina de correos","🏤","You go there to send letters and packages.",
   Re(8,18,48,40,'#ffe066',2,'#e67700')+Re(18,25,28,18,'#fff',1,'#495057',1.5)+Lp('M18 25 L32 35 L46 25','#495057',1.5)+Re(27,47,10,11,'#8b5a2b',1,'#5c3b1e',1.5)+Re(8,12,48,6,'#e03131',1,'#a61e1e')],
- ["police station","comisaría","🚓","Police officers work there.",
+ ["police station","comando de policía","🚓","Police officers work there.",
   Lp('M22 10 L18 6 M42 10 L46 6 M32 6 V2','#f03e3e',1.5)+Re(28,8,8,8,'#f03e3e',2,'#7d1010',1.5)+Re(8,16,48,42,'#4263eb',2,'#1c2f8a')+Fp('M32 22 L34.5 27 L40 27.5 L36 31 L37.5 36.5 L32 33.5 L26.5 36.5 L28 31 L24 27.5 L29.5 27Z','#ffd43b','#e67700',1)+Re(27,44,10,14,'#d0ebff',1,'#1c2f8a',1.5)+Re(13,42,8,7,'#d0ebff',1,'#1c2f8a',1.2)+Re(43,42,8,7,'#d0ebff',1,'#1c2f8a',1.2)],
- ["fire station","parque de bomberos","🚒","Fire engines are kept there.",
+ ["fire station","parque de bomberos","🚒","Fire trucks are kept there.",
   Re(6,22,52,36,'#f03e3e',2,'#7d1010')+Fp('M4 24 L32 9 L60 24Z','#c92a2a','#7d1010')+Ci(32,17,3,'#ffd43b','#e67700',1.5)+Re(14,32,36,26,'#fff',2,'#495057')+Lp('M14 38 H50 M14 44 H50 M14 50 H50','#adb5bd',1.5)],
  ["restaurant","restaurante","🍽️","You go there to eat a meal and a waiter brings it to you.",
   Ci(32,32,18,'#fff','#adb5bd',2.5)+Ci(32,32,12,'none','#dee2e6',2)+Lp('M8 12 V52 M5 12 V22 Q5 26 8 26 Q11 26 11 22 V12','#495057',2)+Lp('M56 32 V52','#495057',3)+Fp('M56 10 Q50 18 52 32 H56Z','#e9ecef','#495057',1.5)],
- ["cinema","cine","🎬","You go there to watch a film on a big screen.",
+ ["cinema","cine","🎬","You go there to watch a movie on a big screen.",
   Fp('M8 14 L54 8 L56 16 L10 22Z','#343a40','#212529')+Lp('M18 13 L22 20 M28 11.7 L32 18.6 M38 10.4 L42 17.3 M48 9 L51.5 15.3','#fff',2.5)+Re(8,24,48,30,'#343a40',2,'#212529')+Lp('M8 31 H56','#fff',2)+Lp('M16 40 H34 M16 46 H28','#868e96',2)],
  ["museum","museo","🏛️","A building where you can see old and interesting things.",
   Fp('M6 22 L32 6 L58 22Z','#e9ecef','#495057')+Re(8,22,48,4,'#dee2e6',1,'#495057',1.5)+[12,23,35,46].map(x=>Re(x,26,6,24,'#fff',0,'#495057',1.5)).join('')+Re(6,50,52,8,'#adb5bd',1,'#495057')+Ci(32,15,2.5,'#ced4da','#495057',1)],
- ["stadium","estadio","🏟️","A very big place where people watch football matches.",
+ ["stadium","estadio","🏟️","A very big place where people watch soccer games.",
   Lp('M8 20 V32 M56 20 V32','#495057',2)+Ci(8,17,3,'#ffe066','#e67700',1)+Ci(56,17,3,'#ffe066','#e67700',1)+El(32,40,28,16,'#adb5bd','#495057')+El(32,40,20,10,'#40c057','#2b8a3e')+Lp('M32 30 V50','#fff',1.5)+Ci(32,40,3,'none','#fff',1.5)],
  ["zoo","zoo","🦓","A place where you can see wild animals.",
   Lp('M10 58 V22 M54 58 V22','#8b5a2b',4)+Fp('M4 22 Q32 2 60 22 V28 Q32 10 4 28Z','#40c057','#2b8a3e')+Lp('M18 58 V30 M26 58 V28 M38 58 V28 M46 58 V30','#868e96',2)+El(32,46,6,5,'#5c3b1e','none',0)+[[24,37],[29,33],[35,33],[40,37]].map(([x,y])=>Ci(x,y,2.8,'#5c3b1e','none',0)).join('')],
  ["castle","castillo","🏰","A big old building with towers where kings lived.",
   Lp('M12 18 V4 M52 18 V4','#495057',1.5)+Fp('M12 4 L20 7 L12 10Z','#e03131','none',0)+Fp('M52 4 L60 7 L52 10Z','#e03131','none',0)+Re(18,28,28,30,'#dee2e6',1,'#495057')+Re(6,18,12,40,'#ced4da',1,'#495057')+Re(46,18,12,40,'#ced4da',1,'#495057')+[6,13,46,53].map(x=>Re(x,13,5,6,'#ced4da',0,'#495057',1.5)).join('')+[19,27,35].map(x=>Re(x,23,6,6,'#dee2e6',0,'#495057',1.5)).join('')+Fp('M26 58 V46 Q32 38 38 46 V58Z','#8b5a2b','#5c3b1e')],
- ["bus stop","parada de autobús","🚏","A place where you wait for the bus.",
+ ["bus stop","parada","🚏","A place where you wait for the bus.",
   Lp('M4 60 H60','#495057',2)+Lp('M14 8 V60','#495057',3)+Ci(14,14,8,'#1c7ed6','#0b4a8a')+Re(10,10,8,6,'#fff',1,'none',0)+Re(28,24,30,34,'#d0ebff',2,'#495057',1.5)+Re(26,20,34,5,'#495057',1,'none',0)+Lp('M32 46 H54 M34 46 V52 M52 46 V52','#8b5a2b',3)],
  ["factory","fábrica","🏭","A building where machines make things.",
   Ci(52,5,4,'#ced4da','none',0)+Ci(58,3,3,'#ced4da','none',0)+Re(48,8,8,16,'#495057',1,'none',0)+Fp('M4 58 V30 L18 38 V30 L32 38 V30 L46 38 V22 H58 V58Z','#868e96','#495057')+Re(10,44,8,6,'#ffe066',1,'none',0)+Re(24,44,8,6,'#ffe066',1,'none',0)+Re(38,44,8,6,'#ffe066',1,'none',0)]
@@ -678,7 +755,7 @@ mkSet("town","La ciudad","🏙️",[
 mkSet("jobs","Profesiones","👷",[
  ["doctor","médico","🧑‍⚕️","This person helps sick people get better.",
   P(SK,'#fff','',Lp('M24 48 Q24 57 32 57 Q40 57 40 48','#495057',2)+Ci(32,57,2.5,'#adb5bd','#495057',1.5)+Re(41,52,6,6,'#fff',1,'#e03131',1)+Lp('M44 53 V57 M42 55 H46','#e03131',1.5))],
- ["teacher","profesor","🧑‍🏫","This person works at a school and helps children learn.",
+ ["teacher","maestro","🧑‍🏫","This person works at a school and helps children learn.",
   Re(36,2,26,18,'#2b8a3e',1,'#8b5a2b',2)+Lp('M40 8 H54 M40 13 H50','#fff',1.5)+P('#c68642','#7950f2','',Ci(27,29,4,'none',K,1.3)+Ci(37,29,4,'none',K,1.3)+Lp('M31 29 H33',K,1.3)+Lp('M50 62 L58 44','#8b5a2b',2))],
  ["firefighter","bombero","🧑‍🚒","This person puts out fires.",
   P(SK,'#343a40',Fp('M17 25 Q17 9 32 9 Q47 9 47 25Z','#f03e3e','#7d1010')+Lp('M13 25 H51','#7d1010',3)+Ci(32,17,3,'#ffd43b','#e67700',1),Lp('M14 56 H50','#ffd43b',3))],
@@ -727,16 +804,16 @@ const NOTE = (x,y,c='#7950f2') => Lp(`M${x} ${y} V${y-10} L${x+6} ${y-12} V${y-3
 const ARROW = (d,c='#2f9e44') => Lp(d,c,3);
 
 mkSet("colours","Colores","🎨",[
- ["red","rojo","🔴","The colour of a tomato.",SPLASH('#f03e3e','#a61e1e')],
- ["blue","azul","🔵","The colour of the sky on a sunny day.",SPLASH('#339af0','#1864ab')],
- ["green","verde","🟢","The colour of grass and leaves in summer.",SPLASH('#40c057','#2b8a3e')],
- ["yellow","amarillo","🟡","The colour of a banana and of the sun.",SPLASH('#ffd43b','#e67700')],
- ["orange","naranja","🟠","The colour of a carrot; it is also the name of a fruit.",SPLASH('#ff922b','#d9480f')],
- ["black","negro","⚫","The colour of the night sky.",SPLASH('#212529','#000')],
- ["white","blanco","⚪","The colour of snow and milk.",SPLASH('#fff','#adb5bd')],
- ["pink","rosa","🩷","The colour of a pig; a mix of red and white.",SPLASH('#f783ac','#c2255c')],
- ["purple","morado","🟣","The colour of grapes; a mix of red and blue.",SPLASH('#9c36b5','#5f1a7a')],
- ["brown","marrón","🟤","The colour of chocolate and coffee.",SPLASH('#8b5a2b','#4a2a0a')]
+ ["red","rojo","🔴","The color of a tomato.",SPLASH('#f03e3e','#a61e1e')],
+ ["blue","azul","🔵","The color of the sky on a sunny day.",SPLASH('#339af0','#1864ab')],
+ ["green","verde","🟢","The color of grass and leaves in summer.",SPLASH('#40c057','#2b8a3e')],
+ ["yellow","amarillo","🟡","The color of a banana and of the sun.",SPLASH('#ffd43b','#e67700')],
+ ["orange","naranja","🟠","The color of a carrot; it is also the name of a fruit.",SPLASH('#ff922b','#d9480f')],
+ ["black","negro","⚫","The color of the night sky.",SPLASH('#212529','#000')],
+ ["white","blanco","⚪","The color of snow and milk.",SPLASH('#fff','#adb5bd')],
+ ["pink","rosado","🩷","The color of a pig; a mix of red and white.",SPLASH('#f783ac','#c2255c')],
+ ["purple","morado","🟣","The color of grapes; a mix of red and blue.",SPLASH('#9c36b5','#5f1a7a')],
+ ["brown","marrón","🟤","The color of chocolate and coffee.",SPLASH('#8b5a2b','#4a2a0a')]
 ]);
 
 mkSet("feelings","Sentimientos","😊",[
@@ -744,7 +821,7 @@ mkSet("feelings","Sentimientos","😊",[
   FACE()+Lp('M20 29 Q24 24 28 29 M36 29 Q40 24 44 29',K,2.5)+Fp('M18 38 H46 Q44 53 32 53 Q20 53 18 38Z','#c92a2a',K,2)],
  ["sad","triste","😢","How you feel when you lose something you love; you might cry.",
   FACE('#a5d8ff','#1864ab')+dot(25,31,2.5)+dot(39,31,2.5)+Lp('M19 23 L28 26 M45 23 L36 26',K,2)+Lp('M22 49 Q32 40 42 49',K,2.5)+Fp('M23 36 Q27 42 23 45 Q19 42 23 36Z','#4dabf7','#1864ab',1)],
- ["angry","enfadado","😠","How you feel when someone breaks your phone on purpose.",
+ ["angry","molesto, bravo","😠","How you feel when someone breaks your phone on purpose.",
   FACE('#ff8787','#c92a2a')+Lp('M18 23 L29 29 M46 23 L35 29',K,3)+dot(25,33,2.5)+dot(39,33,2.5)+Lp('M22 48 Q32 41 42 48',K,2.5)+Lp('M8 8 L12 14 M56 8 L52 14 M32 2 V7','#c92a2a',2.5)],
  ["tired","cansado","🥱","How you feel after a long day at work; you want to sleep.",
   FACE()+Lp('M19 31 Q24 35 29 31 M35 31 Q40 35 45 31',K,2.5)+El(32,45,5,6,'#5c2b00',K,1.5)+Lp('M46 4 H53 L46 11 H53 M55 13 H60 L55 18 H60','#4dabf7',2)],
@@ -771,7 +848,7 @@ mkSet("verbs1","Verbos 1","🏃",[
   Re(0,36,64,28,'#a5d8ff',0,'none',0)+STK(13,30,'M19 32 L44 34 M26 32 Q30 16 42 20 M44 34 L57 29 M44 34 L57 39')+Lp('M2 37 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0 t10 0 t10 0','#1c7ed6',2.5)],
  ["eat","comer","🍽️","You put food in your mouth and chew it.",
   P(SK,'#74c0fc','',El(32,59,18,4,'#fff','#868e96',1.5)+Lp('M48 58 L40 38 M37 39 L39 35 M40 38 L42 34 M43 37 L44 33','#868e96',2)+dot(40,36,2.5,'#40c057'))],
- ["drink","beber","🥤","You do this with water, milk or juice when you are thirsty.",
+ ["drink","tomar, beber","🥤","You do this with water, milk or juice when you are thirsty.",
   P(SK,'#ffa94d','',Fp('M36 30 L48 28 L50 44 L40 46Z','#d0ebff','#1c7ed6',1.5)+Fp('M38.5 36 L48.8 34.5 L49.8 43 L40.3 44.6Z','#74c0fc','none',0)+Lp('M44 56 Q50 52 46 44',SKL,4))],
  ["sleep","dormir","😴","You do this in bed at night with your eyes closed.",
   Re(4,40,56,12,'#8b5a2b',2)+Lp('M6 52 V58 M58 52 V58','#8b5a2b',3)+El(14,36,8,5,'#fff')+Ci(18,31,7,SK,SKL)+Lp('M15 31 Q17 33 19 31',K,1.5)+Fp('M22 34 H58 Q60 40 58 42 H22Z','#4dabf7','#1864ab')+Lp('M36 8 H43 L36 15 H43 M46 18 H51 L46 23 H51 M30 22 H34 L30 26 H34','#7950f2',2)],
@@ -802,9 +879,9 @@ mkSet("verbs2","Verbos 2","🧗",[
   Ci(30,34,18,SK,SKL)+dot(26,32,2)+Lp('M26 40 Q30 43 34 40',K,1.5)+Lp('M10 34 Q10 10 30 10 Q50 10 50 34','#495057',4)+Re(6,28,9,14,'#e03131',4,'#7d1010',1.5)+Re(45,28,9,14,'#e03131',4,'#7d1010',1.5)+NOTE(56,16)],
  ["throw","lanzar, tirar","🤾","You send a ball through the air with your hand.",
   STK(18,14,'M18 20 L20 38 M19 25 L32 20 L38 12 M19 25 L10 32 M20 38 L12 56 M20 38 L28 56','#1c7ed6')+Ci(52,10,6,'#ff922b','#d9480f')+Lp('M40 18 L44 16 M40 24 L46 20 M42 8 L45 9','#adb5bd',2)],
- ["paint","pintar","🎨","You use a brush and colours to make a picture.",
+ ["paint","pintar","🎨","You use a brush and colors to make a picture.",
   Re(8,6,40,48,'#fff',2,'#8b5a2b',3)+Lp('M14 40 Q22 20 30 34 T44 22','#4dabf7',4)+Ci(22,18,5,'#ffd43b','none',0)+Lp('M14 48 H40','#40c057',4)+G('rotate(35 50 40)',Re(48,26,5,30,'#c92a2a',2,'#7d1010',1.2)+Fp('M47 22 Q50 14 53.5 22 L53 27 H48Z','#e64980','#7d1010',1.2))],
- ["drive","conducir","🚗","You control a car and take it on the road.",
+ ["drive","manejar","🚗","You control a car and take it on the road.",
   Ci(32,34,24,'none','#343a40',6)+Ci(32,34,6,'#495057','#212529',2)+Lp('M26 34 H8 M38 34 H56 M32 40 V58','#343a40',5)+Ci(32,34,2,'#ffd43b','none',0)]
 ]);
 
@@ -817,7 +894,7 @@ mkSet("phrasal","Phrasal verbs","🔁",[
   Lp('M38 34 V60 M18 46 V60 M38 46 H16','#8b5a2b',3)+Re(36,10,5,26,'#b85c1d',2)+Re(14,40,28,6,'#d9822b',2)+STK(28,12,'M30 18 L32 36 M31 24 L22 32 L20 26 M32 36 H18 V58','#1c7ed6')+ARROW('M50 8 V22 M45 17 L50 22 L55 17','#e8590c')],
  ["stand up","ponerse de pie","🧍","You get on your feet after sitting on a chair.",
   Lp('M50 36 V58 M34 46 V58 M50 46 H32','#8b5a2b',3)+Re(48,18,5,30,'#b85c1d',2)+Re(30,40,26,6,'#d9822b',2)+STK(18,10,'M18 16 V36 M18 22 L12 32 M18 22 L24 32 M18 36 L13 58 M18 36 L23 58','#1c7ed6')+ARROW('M4 24 V8 M0 12 L4 8 L8 12')],
- ["lie down","tumbarse","🛌","You put your body flat on a bed or on the floor to rest.",
+ ["lie down","acostarse","🛌","You put your body flat on a bed or on the floor to rest.",
   Re(2,44,60,8,'#e64980',3,'#a61e4d')+STK(10,37,'M16 39 H40 M24 39 L32 31 M40 39 L56 37 M40 39 L56 42','#2f9e44')+dot(9,36,1.5)+ARROW('M32 4 V20 M27 15 L32 20 L37 15','#e8590c')],
  ["turn on","encender","💡","You press the button so the TV or the light starts working.",
   Ci(26,24,20,'#fff3bf','none',0)+Lp('M26 2 V0 M8 10 L5 7 M44 10 L47 7 M4 26 H1 M48 26 H51','#fab005',2.5)+Fp('M18 34 Q10 28 12 18 Q16 8 26 8 Q36 8 40 18 Q42 28 34 34 L33 40 H19Z','#ffe066','#e67700')+Re(19,40,14,8,'#adb5bd',2)+Re(46,32,14,24,'#fff',2,'#495057')+Re(50,36,6,8,'#2f9e44',1.5,'#1b5e20',1)],
@@ -832,7 +909,7 @@ mkSet("phrasal","Phrasal verbs","🔁",[
 ]);
 
 mkSet("falsefriends","Falsos amigos","⚠️",[
- ["pie","tarta (¡no «pie»!)","🥧","A sweet food with fruit inside, baked in the oven.",
+ ["pie","pastel, torta (¡no «pie»!)","🥧","A sweet food with fruit inside, baked in the oven.",
   Lp('M22 14 q-4 -5 0 -10 M32 14 q-4 -5 0 -10 M42 14 q-4 -5 0 -10','#adb5bd',2)+Fp('M4 34 H60 L54 50 H10Z','#adb5bd','#495057')+El(32,32,28,10,'#e8a85a','#8b5a2b')+Lp('M14 28 L22 38 M26 24 L36 40 M40 24 L48 38 M12 34 L46 24 M18 40 L52 30','#b07a3f',2)+dot(24,32,2,'#c92a2a')+dot(38,30,2,'#c92a2a')],
  ["rope","cuerda (¡no «ropa»!)","🪢","A long, thick string that you use to tie or pull things.",
   Ci(30,30,22,'none','#b07a3f',6)+Ci(30,30,14,'none','#b07a3f',6)+Ci(30,30,6,'#b07a3f','none',0)+Lp('M52 30 Q58 48 48 60','#b07a3f',6)+Lp('M14 16 L18 20 M40 10 L42 15 M46 40 L42 42 M20 46 L22 42','#7a4f1e',1.5)],
@@ -840,7 +917,7 @@ mkSet("falsefriends","Falsos amigos","⚠️",[
   G('rotate(-20 32 32)',Re(42,30,22,6,'#212529',3,'none',0))+Ci(26,36,20,'#495057','#212529')+Ci(26,36,15,'#343a40','none',0)+Fp('M16 34 Q18 26 26 28 Q34 26 34 34 Q32 44 24 42 Q16 42 16 34Z','#fff','#ced4da',1)+Ci(25,35,4.5,'#fcc419','#e67700',1)],
  ["fabric","tela (¡no «fábrica»!)","🧵","Material like cotton or wool that clothes are made of.",
   Re(8,42,48,12,'#4dabf7',3,'#1864ab')+Re(10,30,44,12,'#f783ac',3,'#c2255c')+Re(12,18,40,12,'#ffd43b',3,'#e67700')+[[16,48],[26,48],[36,48],[46,48]].map(([x,y])=>dot(x,y,1.8,'#fff')).join('')+Lp('M14 36 H50','#fff',1.5)+Lp('M16 24 L22 21 L28 24 L34 21 L40 24 L46 21','#e67700',1.5)+Lp('M44 6 L58 16','#868e96',2)],
- ["tuna","atún (¡no «tuna»!)","🐟","A big sea fish; we often eat it from a tin in salads.",
+ ["tuna","atún (¡no «tuna»!)","🐟","A big sea fish; we often eat it from a can in salads.",
   Fp('M4 30 Q22 12 44 22 L60 12 L54 30 L60 48 L44 38 Q22 48 4 30Z','#364fc7','#1c2f8a')+Fp('M8 31 Q24 42 44 36 L44 30 Q24 36 8 31Z','#d0ebff','none',0)+Fp('M28 17 L34 8 L38 19Z','#364fc7','#1c2f8a',1.5)+[30,35,40].map(x=>Fp(`M${x} 41 l2 4 l2 -4Z`,'#fab005','none',0)).join('')+Ci(12,27,2.5,'#fff',K,1)+dot(12,27,1.2)],
  ["exit","salida (¡no «éxito»!)","🚪","The door you use to leave a building.",
   Re(4,14,56,36,'#2f9e44',4,'#1b5e20')+Re(40,20,14,24,'#fff',1,'none',0)+Re(43,23,8,21,'#2f9e44',0,'none',0)+STK(24,24,'M24 29 L22 38 M23 31 L30 34 M23 31 L16 35 M22 38 L28 44 M22 38 L16 44','#fff')+ARROW('M8 50 H0','#fff')],
@@ -848,26 +925,26 @@ mkSet("falsefriends","Falsos amigos","⚠️",[
   FACE()+El(18,40,6,4,'#ff8787','none',0)+El(46,40,6,4,'#ff8787','none',0)+Ci(25,30,4,'#fff',K,1.5)+Ci(39,30,4,'#fff',K,1.5)+dot(27,31,1.8)+dot(41,31,1.8)+Lp('M26 46 Q29 44 32 46 T38 46',K,2)+Lp('M14 16 L18 20 M50 16 L46 20','#e8590c',2)],
  ["parents","padres (¡no «parientes»!)","👪","Your mother and your father.",
   G('translate(-12 4) scale(.8)',P(SK,'#4dabf7','','','#5c3b1e'))+G('translate(25 4) scale(.8)',P('#e0ac69','#e64980','',Fp('M17 27 Q15 46 22 50 L22 30Z M47 27 Q49 46 42 50 L42 30Z','#8b5a2b','none',0),'#8b5a2b'))+HRT(32,12,0.7)],
- ["card","tarjeta (¡no «carta»!)","💳","A small piece of plastic you use to pay in shops.",
+ ["card","tarjeta (¡no «carta»!)","💳","A small piece of plastic you use to pay in stores.",
   Re(4,14,56,36,'#4263eb',5,'#1c2f8a')+Re(4,22,56,6,'#1c2f8a',0,'none',0)+Re(10,32,12,9,'#fcc419',2,'#e67700',1)+Lp('M26 44 H34 M38 44 H46','#d0ebff',2)+Ci(48,38,4,'#f03e3e','none',0)+Ci(53,38,4,'#fab005','none',0)],
  ["disgusted","asqueado (¡no «disgustado»!)","🤢","How you feel when you smell or taste something horrible.",
   FACE('#b2f2bb','#2b8a3e')+Lp('M19 28 L28 31 L19 34 M45 28 L36 31 L45 34',K,2.5)+Fp('M22 44 Q32 38 42 44 Q32 46 22 44Z','#5c2b00',K,1.5)+Fp('M28 44 H36 Q37 54 32 55 Q27 54 28 44Z','#ff8787','#c92a2a',1.5)+Lp('M8 10 q4 -3 0 -6 M56 10 q-4 -3 0 -6','#2b8a3e',2)]
 ]);
 
 mkSet("food3","Comida 3","🥗",[
- ["water","agua","💧","A clear liquid with no colour; you drink it when you are thirsty.",
+ ["water","agua","💧","A clear liquid with no color; you drink it when you are thirsty.",
   Fp('M16 12 H48 L44 58 H20Z','#f1f3f5','#868e96')+Fp('M17.7 26 H46.3 L44 56 H20Z','#74c0fc','none',0)+El(32,26,14.3,2,'#a5d8ff','none',0)+Lp('M22 32 V48','#fff',2)+Fp('M54 4 Q60 13 60 16 a6 6 0 0 1 -12 0 Q48 13 54 4Z','#4dabf7','#1864ab',1)],
  ["meat","carne","🥩","Food that comes from animals, like a steak.",
   Fp('M8 30 Q8 12 30 12 Q54 12 56 30 Q58 48 38 52 Q30 54 22 50 Q8 46 8 30Z','#fff','#adb5bd')+Fp('M12 30 Q12 16 30 16 Q50 16 52 30 Q54 44 38 48 Q24 50 18 44 Q12 40 12 30Z','#e03131','#a61e1e',1.5)+Lp('M20 26 Q30 30 40 24 M24 38 Q34 40 44 34','#ffa8a8',2)+Ci(34,32,4,'#fff','#adb5bd',1)],
  ["salt","sal","🧂","A white powder that makes food taste better; the sea has a lot of it.",
   Fp('M20 20 H44 L48 58 H16Z','#f8f9fa','#868e96')+Fp('M20 20 Q20 8 32 8 Q44 8 44 20Z','#adb5bd','#495057')+dot(28,13,1.4)+dot(32,11,1.4)+dot(36,13,1.4)+Re(18,32,28,14,'#e9ecef',1,'none',0)+[[52,40],[56,48],[50,54],[58,58]].map(([x,y])=>Re(x,y,2.5,2.5,'#fff',0,'#adb5bd',.8)).join('')],
- ["orange","naranja","🍊","A round fruit; its name is also a colour.",
+ ["orange","naranja","🍊","A round fruit; its name is also a color.",
   Ci(32,36,22,'#ff922b','#d9480f')+Fp('M32 14 Q40 4 50 8 Q44 16 32 14Z','#40c057','#2b8a3e',1.5)+[[24,30],[38,28],[30,42],[42,42],[22,44]].map(([x,y])=>dot(x,y,1,'#d9480f')).join('')+El(22,28,3,5,'#ffc078','none',0)],
  ["onion","cebolla","🧅","A vegetable that can make you cry when you cut it.",
   Fp('M32 8 Q30 16 26 20 Q8 28 10 44 Q14 58 32 58 Q50 58 54 44 Q56 28 38 20 Q34 16 32 8Z','#e599f7','#862e9c')+Lp('M32 20 Q22 34 26 56 M32 20 Q42 34 38 56 M32 20 V56','#be4bdb',1.5)+Lp('M26 58 L24 62 M32 58 V62 M38 58 L40 62','#d9a066',1.5)],
  ["chocolate","chocolate","🍫","A sweet brown food made from cocoa.",
   Re(12,6,40,52,'#6b3e1f',3,'#3b1d00')+Lp('M12 19 H52 M12 32 H52 M12 45 H52 M32 6 V58','#3b1d00',1.5)+Fp('M10 36 H54 V60 H10Z','#ced4da','#868e96')+Fp('M10 36 L18 32 L26 37 L34 31 L42 37 L50 32 L54 36Z','#ced4da','#868e96',1.5)+Re(14,44,36,8,'#e03131',1,'none',0)],
- ["juice","zumo","🧃","A drink made from fruit, like orange or apple.",
+ ["juice","jugo","🧃","A drink made from fruit, like orange or apple.",
   Lp('M38 14 L44 2 H52','#f03e3e',2.5)+Fp('M14 14 H44 V58 H14Z','#ffd43b','#e67700')+Fp('M14 14 L20 8 H50 L44 14Z','#fcc419','#e67700')+Fp('M44 14 L50 8 V52 L44 58Z','#fab005','#e67700')+Ci(29,38,9,'#ff922b','#d9480f',1.5)+Fp('M29 29 Q34 24 38 27 Q33 31 29 29Z','#40c057','none',0)],
  ["butter","mantequilla","🧈","A soft yellow food made from milk; you put it on bread.",
   El(32,46,28,8,'#e9ecef','#868e96')+Fp('M12 42 V28 L22 20 H54 V34 L44 42Z','#ffe066','#e67700')+Lp('M12 28 H44 V42 M44 28 L54 20',`#e67700`,1.5)+Fp('M44 30 Q50 26 54 28','none','#fff9db',2)],
@@ -892,40 +969,102 @@ mkSet("house3","La casa 3","🍴",[
   Fp('M27 4 H37 V16 Q48 22 48 34 V58 Q48 62 44 62 H20 Q16 62 16 58 V34 Q16 22 27 16Z','#2f9e44','#1b5e20')+Re(26,2,12,7,'#c92a2a',1.5,'#7d1010',1.5)+Re(18,36,28,14,'#fff3bf',2,'#e67700',1.5)+Lp('M22 40 V58','#69db7c',2)],
  ["scissors","tijeras","✂️","You use them to cut paper.",
   Lp('M24 40 L50 8 M40 40 L14 8','#adb5bd',4.5)+Lp('M24 40 L50 8 M40 40 L14 8','#495057',1)+Ci(20,48,8,'none','#e03131',4)+Ci(44,48,8,'none','#e03131',4)+dot(32,30,2,'#495057')],
- ["bin","cubo de basura","🗑️","You put your rubbish in it.",
+ ["trash can","papelera, pipote","🗑️","You put your trash in it.",
   Re(14,18,36,42,'#868e96',3,'#495057')+Re(10,12,44,7,'#adb5bd',2,'#495057')+Re(27,6,10,6,'#adb5bd',2,'#495057',1.5)+Lp('M22 26 V52 M32 26 V52 M42 26 V52','#495057',2)],
- ["phone","móvil","📱","You use it to call people and send messages.",
+ ["phone","celular","📱","You use it to call people and send messages.",
   Re(18,4,28,56,'#343a40',5,'#212529')+Re(21,10,22,42,'#74c0fc',2,'none',0)+[[24,14],[32,14],[24,22],[32,22]].map(([x,y])=>Re(x,y,6,6,['#ff922b','#40c057','#fcc419','#e64980'][((x+y)/8)%4|0],1.5,'none',0)).join('')+Ci(32,56,2,'#868e96','none',0)],
  ["box","caja","📦","A container made of cardboard to keep or send things.",
   Fp('M8 22 L32 12 L56 22 L32 32Z','#e8b04a','#9c6b14')+Fp('M8 22 V48 L32 58 V32Z','#d9a066','#9c6b14')+Fp('M56 22 V48 L32 58 V32Z','#c58a4a','#9c6b14')+Lp('M20 17 L44 27 V36','#fff3bf',4)]
 ]);
 
+// ---------- pronunciation (minimal pairs) ----------
+const SV = (tp,w) => { const it = TOPICS[tp].items.find(i=>i[0]===w); return it ? it[4] : ""; };
+// [word, spanish, emoji, svg]
+const PRON_RAW = [
+ {id:"p-ee", title:"ship / sheep", emoji:"🚢", level:2,
+  tip:"La «i» de <b>ship</b> es corta y relajada. La de <b>sheep</b> es larga, como sonriendo: «iiii».",
+  pairs:[
+   [["ship","barco","🚢",SV("travel","ship")],["sheep","oveja","🐑",SV("animals","sheep")]],
+   [["hill","colina","⛰️",Ci(50,14,6,'#ffd43b','none',0)+Fp('M2 58 Q32 10 62 58Z','#69db7c','#2b8a3e')+Lp('M20 34 V26','#8b5a2b',2)+Ci(20,24,5,'#2f9e44','none',0)],
+    ["heel","talón, tacón","👠",Fp('M6 46 Q8 34 20 36 Q32 38 42 28 L50 22 Q58 24 56 32 L54 38 H48 Q40 42 30 46Z','#e03131','#7d1010')+Lp('M50 38 L52 58',K,3.5)+Lp('M4 47 H32',K,3)+Fp('M48 30 Q52 26 54 30Z','#fff','none',0)]],
+   [["chick","pollito","🐥",Fp('M10 50 Q14 60 32 60 Q50 60 54 50 L48 52 L42 47 L36 52 L30 47 L24 52 L18 47Z','#fff','#adb5bd',1.5)+Ci(32,38,13,'#ffe066','#e67700')+Ci(32,20,9,'#ffe066','#e67700')+Fp('M40 20 L47 22 L40 24Z','#fd7e14','none',0)+dot(35,18,1.8)+Fp('M20 38 Q14 32 22 30','#fcc419','#e67700',1.5)],
+    ["cheek","mejilla","☺️",Ci(30,32,22,SK,SKL)+Ci(19,40,7,'#ff8787','none',0)+dot(24,28,2)+dot(38,28,2)+Lp('M26 42 Q32 46 38 42',K,1.5)+Lp('M4 58 L14 46','#e8590c',3)+Lp('M14 46 L8 47 M14 46 L13 52','#e8590c',3)]],
+   [["pill","pastilla","💊",G('rotate(-35 32 32)',Re(10,24,44,16,'#fff',8,'#495057')+Fp('M32 24 H46 A8 8 0 0 1 46 40 H32Z','#e03131','none',0)+Re(10,24,44,16,'none',8,'#495057'))],
+    ["peel","concha","🍌",Fp('M32 30 Q18 30 12 56 Q22 46 30 40Z','#ffd43b','#e67700')+Fp('M32 30 Q46 30 52 56 Q42 46 34 40Z','#ffd43b','#e67700')+Fp('M32 30 Q30 46 32 60 Q34 46 32 30Z','#fcc419','#e67700')+Re(29,20,6,11,'#8b5a2b',2,'#5c3b1e',1.5)]]
+  ]},
+ {id:"p-au", title:"cap / cup", emoji:"🧢", level:2,
+  tip:"<b>cap</b>: abre mucho la boca, un sonido entre «a» y «e». <b>cup</b>: una «a» corta y relajada.",
+  pairs:[
+   [["cap","gorra","🧢",SV("clothes","cap")],["cup","taza","☕",SV("house3","cup")]],
+   [["hat","sombrero","👒",SV("clothes","hat")],
+    ["hut","choza","🛖",Fp('M10 56 V36 H54 V56Z','#d9a066','#8b5a2b')+Fp('M4 38 L32 8 L60 38Z','#fab005','#e67700')+Lp('M14 30 L22 26 M20 24 L28 20 M36 20 L44 24 M42 26 L50 30','#e67700',1.5)+Fp('M26 56 V44 Q32 38 38 44 V56Z','#5c3b1e')]],
+   [["bag","bolsa","🛍️",Lp('M24 22 Q24 8 32 8 Q40 8 40 22','#8b5a2b',3)+Fp('M12 20 H52 L48 58 H16Z','#d9a066','#8b5a2b')+Lp('M12 20 L18 26 L24 20 M40 20 L46 26 L52 20','#8b5a2b',1.5)],
+    ["bug","bicho","🐞",Lp('M18 30 L8 24 M16 40 L6 40 M18 50 L8 56 M46 30 L56 24 M48 40 L58 40 M46 50 L56 56',K,2.5)+El(32,40,16,18,'#e03131','#7d1010')+Lp('M32 24 V58','#7d1010',2)+Ci(32,20,8,'#212529')+[[24,34],[40,34],[24,48],[40,48]].map(([x,y])=>dot(x,y,3.5,'#212529')).join('')+Lp('M28 13 L24 6 M36 13 L40 6',K,1.5)]],
+   [["cat","gato","🐈",SV("animals","cat")],
+    ["cut","cortada","🩹",Fp('M22 62 V22 Q22 8 32 8 Q42 8 42 22 V62Z',SK,SKL)+Lp('M26 30 L38 26','#c92a2a',3)+Fp('M33 32 Q36 38 33 40 Q30 38 33 32Z','#e03131','none',0)+Re(26,10,12,8,'#ffe3e3',3,SKL,1)]]
+  ]},
+ {id:"p-ae", title:"pan / pen", emoji:"🖊️", level:3,
+  tip:"<b>pan</b>: boca bien abierta, casi una «a». <b>pen</b>: una «e» como en español.",
+  pairs:[
+   [["pan","sartén","🍳",SV("falsefriends","pan")],
+    ["pen","bolígrafo","🖊️",G('rotate(40 32 32)',Re(27,4,10,44,'#1c7ed6',3,'#0b4a8a')+Fp('M27 48 H37 L32 60Z','#ffd8a8','#0b4a8a',1.5)+dot(32,58,1.5)+Re(35,8,3,18,'#adb5bd',1,'none',0))]],
+   [["man","hombre","👨",P(SK,'#1c7ed6','','','#5c3b1e')],
+    ["men","hombres","👥",G('translate(-14 10) scale(.7)',P(SK,'#2f9e44','','','#3b2510'))+G('translate(32 10) scale(.7)',P('#c68642','#e8590c','','','#212529'))+G('translate(9 2) scale(.75)',P('#e0ac69','#1c7ed6','','','#5c3b1e'))]],
+   [["sand","arena","🏝️",Fp('M2 58 Q16 30 34 38 Q50 28 62 58Z','#ffd8a8','#e8590c',1.5)+[[18,48],[28,44],[40,46],[48,52],[24,54]].map(([x,y])=>dot(x,y,1.3,'#d9480f')).join('')+Lp('M46 14 L42 40','#8b5a2b',3)+Fp('M38 38 L46 38 L44 48 L40 48Z','#4dabf7','#1864ab',1.5)],
+    ["send","enviar","📤",Re(6,18,38,28,'#fff',2,'#495057')+Lp('M6 18 L25 34 L44 18','#495057',2)+ARROW('M46 32 H60 M54 26 L60 32 L54 38','#1c7ed6')+Lp('M48 20 H56 M50 44 H58','#a5d8ff',2)]],
+   [["ten","diez","🔟",Re(4,10,56,44,'#4263eb',8,'#1c2f8a')+`<text x="32" y="44" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="30" fill="#fff">10</text>`],
+    ["tan","marrón claro","🟫",SPLASH('#d2b48c','#8b5a2b')]]
+  ]},
+ {id:"p-bv", title:"b / v", emoji:"🚐", level:2,
+  tip:"<b>b</b>: junta los labios. <b>v</b>: pon los dientes de arriba sobre el labio de abajo y deja vibrar el sonido.",
+  pairs:[
+   [["boat","bote","🛶",Lp('M2 52 q5 -4 10 0 t10 0 t10 0 t10 0 t10 0 t10 0','#1c7ed6',2.5)+Fp('M6 38 H58 L50 50 H14Z','#a0522d','#5c2b00')+Lp('M18 24 L46 44','#8b5a2b',2.5)+Ci(30,30,5,SK,SKL,1.5)+Lp('M30 35 V40',K,3)],
+    ["vote","votar","🗳️",Re(10,30,44,28,'#4dabf7',2,'#1864ab')+Re(22,30,20,4,'#1864ab',1,'none',0)+G('rotate(-8 32 18)',Re(22,6,20,24,'#fff',1,'#495057',1.5)+Lp('M26 18 L30 23 L38 12','#2f9e44',2.5))]],
+   [["best","el mejor","🏆",Fp('M18 8 H46 V22 Q46 38 32 40 Q18 38 18 22Z','#fcc419','#e67700')+Lp('M18 14 Q6 14 8 24 Q10 30 18 30 M46 14 Q58 14 56 24 Q54 30 46 30','#e67700',2.5)+Re(28,40,8,8,'#fab005',0,'#e67700',1.5)+Re(18,48,28,8,'#8b5a2b',2,'#5c3b1e')+`<text x="32" y="30" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="16" fill="#e67700">1</text>`],
+    ["vest","chaleco","🦺",Fp('M16 8 L26 8 L32 20 L38 8 L48 8 L52 20 L50 58 H14 L12 20Z','#fd7e14','#d9480f')+Lp('M32 20 V58','#d9480f',1.5)+Lp('M14 36 H50 M14 44 H50','#ffe066',3)]],
+   [["ban","prohibido","🚫",Ci(32,32,24,'#fff','#e03131',6)+Lp('M15 15 L49 49','#e03131',6)],
+    ["van","camioneta","🚐",Fp('M4 46 V20 Q4 14 10 14 H42 Q48 14 52 22 L60 32 V46Z','#fff','#495057')+Fp('M44 18 L52 30 H44Z','#a5d8ff','#495057',1.5)+Re(10,20,28,12,'#a5d8ff',2,'#495057',1.5)+Lp('M4 38 H60','#4dabf7',3)+Ci(16,47,6,'#343a40')+Ci(48,47,6,'#343a40')]],
+   [["bale","paca","🌾",Re(8,20,48,32,'#ffd43b',4,'#e67700')+Lp('M8 28 H56 M8 36 H56 M8 44 H56','#fab005',1.5)+Lp('M22 20 V52 M42 20 V52','#c92a2a',2.5)+Lp('M12 20 L10 14 M30 20 L32 13 M50 20 L53 15','#e67700',1.5)],
+    ["veil","velo","👰",Fp('M14 20 Q32 2 50 20 L58 60 H6Z','#f8f9fa','#ced4da',1.5)+Ci(32,30,11,SK,SKL)+dot(28,29,1.5)+dot(36,29,1.5)+Lp('M29 34 Q32 36 35 34',K,1.2)+[22,27,32,37,42].map(x=>Ci(x,18,2.5,'#f783ac','none',0)).join('')]]
+  ]},
+ {id:"p-th", title:"th", emoji:"👅", level:3,
+  tip:"<b>th</b>: pon la punta de la lengua entre los dientes y sopla. Para <b>t</b> y <b>s</b>, la lengua queda detrás de los dientes.",
+  pairs:[
+   [["three","tres","3️⃣",Re(4,8,56,48,'#7950f2',8,'#4c2fa0')+`<text x="32" y="46" text-anchor="middle" font-family="Fredoka,Arial,sans-serif" font-weight="700" font-size="36" fill="#fff">3</text>`],
+    ["tree","árbol","🌳",SV("weather","tree")]],
+   [["mouth","boca","👄",SV("body","mouth")],["mouse","ratón","🐁",SV("animals","mouse")]],
+   [["thin","delgado","🧍",STK(32,10,'M32 16 V40 M32 22 L29 38 M32 22 L35 38 M32 40 L30 60 M32 40 L34 60','#1c7ed6')+ARROW('M10 32 H20 M16 28 L20 32 L16 36','#e8590c')+ARROW('M54 32 H44 M48 28 L44 32 L48 36','#e8590c')],
+    ["tin","lata","🥫",El(32,12,16,5,'#dee2e6','#495057')+Fp('M16 12 V52 Q32 60 48 52 V12','#adb5bd','#495057')+Re(16,22,32,22,'#e03131',0,'none',0)+El(32,33,8,5,'#ffd43b','none',0)+El(32,12,16,5,'#dee2e6','#495057')]],
+   [["bath","bañera","🛁",SV("house","bathtub")],["bat","murciélago","🦇",TOPICS.halloween.items.find(i=>i[0]==="bat")[4]]]
+  ]}
+];
+
 // English key words in the sentences -> Spanish (tap to reveal)
 const GLOSS = {
-"apple":"manzana","arms":"brazos","attention":"atención","pay attention":"prestar atención","baked":"horneado","banana":"plátano","bed":"cama","breaks":"rompe","brush":"pincel","button":"botón","call":"llamar","cardboard":"cartón","carrot":"zanahoria","chair":"silla","chew":"masticar","chocolate":"chocolate","clear":"transparente","closed":"cerrado","coat":"abrigo","cocoa":"cacao","coffee":"café","colour":"color","container":"recipiente","control":"controlar","cry":"llorar","dish":"plato","eaten":"comido","expect":"esperar","fast":"rápido","faster":"más rápido","father":"padre","mother":"madre","feel":"sentir(se)","fever":"fiebre","find":"encontrar","four":"cuatro","friends":"amigos","frying":"freír","funny":"gracioso","grapes":"uvas","grass":"hierba","handle":"asa, mango","happens":"pasa, ocurre","horrible":"horrible","hours":"horas","italian":"italiano","juice":"zumo","leave":"salir de","lettuce":"lechuga","lose":"perder","lost":"perdido","love":"querer, amar","macaroni":"macarrones","material":"material","messages":"mensajes","mix":"mezcla","music":"música","name":"nombre","newspaper":"periódico","noise":"ruido","normal":"normal","nothing":"nada","oven":"horno","pan":"sartén","pen":"bolígrafo","picture":"dibujo, cuadro","pig":"cerdo","plane":"avión","plastic":"plástico","points":"puntas","powder":"polvo","prepare":"preparar","press":"pulsar","pull":"tirar de","on purpose":"a propósito","push":"empujar","rest":"descansar","road":"carretera","rubbish":"basura","sad":"triste","sharp":"afilado","shops":"tiendas","silly":"tonto","sitting":"sentado","sleeping":"dormir","soap":"jabón","soup":"sopa","spaghetti":"espaguetis","speed":"velocidad","steak":"filete","strange":"extraño","string":"cuerda, cordel","sunny":"soleado","tea":"té","tears":"lágrimas","thirsty":"con sed","throw":"lanzar","tie":"atar","tin":"lata","try":"intentar","tv":"televisión","vegetables":"verduras","voice":"voz","walking":"caminar","wearing":"llevar puesto","working":"funcionar","in front of":"delante de","dark":"oscuridad; oscuro",
+"apple":"manzana","arms":"brazos","attention":"atención","pay attention":"prestar atención","baked":"horneado","banana":"cambur","bed":"cama","breaks":"rompe","brush":"pincel","button":"botón","call":"llamar","cardboard":"cartón","carrot":"zanahoria","chair":"silla","chew":"masticar","chocolate":"chocolate","clear":"transparente","closed":"cerrado","coat":"abrigo","cocoa":"cacao","coffee":"café","color":"color","colors":"colores","colorful":"de colores","container":"recipiente","control":"controlar","cry":"llorar","dish":"plato","eaten":"comido","expect":"esperar","fast":"rápido","faster":"más rápido","father":"padre","mother":"madre","feel":"sentir(se)","fever":"fiebre","find":"encontrar","four":"cuatro","friends":"amigos","frying":"freír","funny":"gracioso","grapes":"uvas","grass":"hierba","handle":"asa, mango","happens":"pasa, ocurre","horrible":"horrible","hours":"horas","italian":"italiano","juice":"jugo","leave":"salir de","lettuce":"lechuga","lose":"perder","lost":"perdido","love":"querer, amar","macaroni":"macarrones","material":"material","messages":"mensajes","mix":"mezcla","music":"música","name":"nombre","newspaper":"periódico","noise":"ruido","normal":"normal","nothing":"nada","oven":"horno","pan":"sartén","pen":"bolígrafo, lapicero","picture":"dibujo, cuadro","pig":"cochino","plane":"avión","plastic":"plástico","points":"puntas","powder":"polvo","prepare":"preparar","press":"pulsar","pull":"tirar de","on purpose":"a propósito","push":"empujar","rest":"descansar","road":"carretera","trash":"basura","sad":"triste","sharp":"afilado","shops":"tiendas","silly":"tonto","sitting":"sentado","sleeping":"dormir","soap":"jabón","soup":"sopa","spaghetti":"espaguetis","speed":"velocidad","steak":"filete","strange":"extraño","string":"cuerda, cordel","sunny":"soleado","tea":"té","tears":"lágrimas","thirsty":"con sed","throw":"lanzar","tie":"atar","pants":"pantalones","stores":"tiendas","store":"tienda","hair salon":"peluquería","try":"intentar","tv":"televisión","vegetables":"verduras","voice":"voz","walking":"caminar","wearing":"llevar puesto","working":"funcionar","in front of":"delante de","dark":"oscuridad; oscuro",
 "above":"encima, arriba","across":"a través de","active":"activo","aircraft":"aeronave","air":"aire","animal":"animal","animals":"animales",
-"arc":"arco","arm":"brazo","around":"alrededor de","autumn":"otoño","back":"espalda","bag":"bolsa","bakery":"panadería","ball":"pelota",
-"bananas":"plátanos","bandages":"vendas","barks":"ladra","basic":"básico","bathroom":"cuarto de baño","beach":"playa","bees":"abejas",
+"arc":"arco","arm":"brazo","around":"alrededor de","in the fall":"en otoño","comes down":"baja, cae","back":"espalda","bag":"bolsa","bakery":"panadería","ball":"pelota",
+"bananas":"cambures","bandages":"vendas","barks":"ladra","basic":"básico","bathroom":"cuarto de baño","beach":"playa","bees":"abejas",
 "better":"mejor","between":"entre","big":"grande","bird":"pájaro","birthday":"cumpleaños","bite":"morder","black":"negro","blades":"aspas",
 "blood":"sangre","blows":"sopla","blue":"azul","boat":"barco","body":"cuerpo","bones":"huesos","book":"libro","books":"libros",
 "borrow":"tomar prestado","branches":"ramas","bread":"pan","breathe":"respirar","bright":"brillante","bring":"traer","brings":"trae",
-"brown":"marrón","build":"construir","building":"edificio","builds":"construye","bunches":"racimos","buried":"enterrado","bus":"autobús",
-"buttons":"botones","buy":"comprar","cake":"tarta","cakes":"pasteles","camping":"acampada","car":"coche","careful":"¡cuidado!",
-"carries":"lleva","carry":"llevar","cars":"coches","carve":"tallar","cat":"gato","catches":"atrapa","cheese":"queso","chickens":"gallinas",
+"brown":"marrón","build":"construir","building":"edificio","builds":"construye","bunches":"racimos","buried":"enterrado","bus":"autobús, buseta",
+"buttons":"botones","buy":"comprar","cake":"torta","cakes":"tortas","camping":"acampada","car":"carro","careful":"¡cuidado!",
+"carries":"lleva","carry":"llevar","cars":"carros","carve":"tallar","cat":"gato","catches":"atrapa","cheese":"queso","chickens":"gallinas",
 "children":"niños","chin":"barbilla","christians":"cristianos","circle":"círculo","city":"ciudad","clean":"limpiar","cleaning":"limpiar",
 "clever":"listo","climb":"subir","cloth":"tela","clothes":"ropa","clothing":"ropa","cloud":"nube","clouds":"nubes","clues":"pistas",
-"code":"código","coffin":"ataúd","cold":"frío","collar":"cuello (de camisa)","colourful":"de colores","colours":"colores",
-"computers":"ordenadores","connected":"relacionado","considered":"considerado","cook":"cocinar","cooks":"cocina","cotton":"algodón",
+"code":"código","coffin":"ataúd","cold":"frío","collar":"cuello (de camisa)",
+"computers":"computadoras","connected":"relacionado","considered":"considerado","cook":"cocinar","cooks":"cocina","cotton":"algodón",
 "countries":"países","court":"tribunal","cover":"cubrir","covers":"cubre","cows":"vacas","creature":"criatura","cut":"cortar",
 "cuts":"corta","day":"día","dead":"muerto","decides":"decide","desk":"escritorio","dirty":"sucio","dishes":"platos",
 "doctors":"médicos","door":"puerta","drawing":"dibujo","drink":"bebida","drinks":"bebe","dry":"seco","during":"durante","ears":"orejas",
-"eat":"comer","eight":"ocho","end":"final","engine":"motor","engines":"camiones","experiments":"experimentos","eyes":"ojos","face":"cara",
+"eat":"comer","eight":"ocho","end":"final","engine":"motor","trucks":"camiones","experiments":"experimentos","eyes":"ojos","face":"cara",
 "fall":"caer","falls":"cae","farm":"granja","fear":"miedo","feathers":"plumas","feeling":"sentimiento","feet":"pies","fill":"llenar",
-"film":"película","films":"películas","finger":"dedo","fingers":"dedos","fire":"fuego","fires":"incendios","fish":"peces","five":"cinco",
+"movie":"película","movies":"películas","finger":"dedo","fingers":"dedos","fire":"fuego","fires":"incendios","fish":"peces","five":"cinco",
 "flakes":"copos","flash":"destello","flat":"plano","flies":"vuela","floor":"suelo","flour":"harina","flows":"fluye","flush":"tirar de la cadena",
-"fly":"volar","flying":"volador","food":"comida","football":"fútbol","fries":"patatas fritas","front":"parte delantera","fruit":"fruta",
-"fruits":"frutas","ghosts":"fantasmas","girls":"chicas","gives":"da","glass":"cristal, vidrio","glasses":"gafas","gold":"oro",
-"golden":"dorado","grains":"granos","great":"gran","green":"verde","grey":"gris","ground":"suelo, tierra","grow":"crecer","grows":"crece",
+"fly":"volar","flying":"volador","food":"comida","soccer":"fútbol","fries":"papas fritas","front":"parte delantera","fruit":"fruta",
+"fruits":"frutas","ghosts":"fantasmas","girls":"chicas","gives":"da","glass":"cristal, vidrio","glasses":"lentes","gold":"oro",
+"golden":"dorado","grains":"granos","great":"gran","green":"verde","gray":"gris","ground":"suelo, tierra","grow":"crecer","grows":"crece",
 "hair":"pelo","hairdresser's":"peluquería","hand":"mano","hands":"manos","hard":"duro","hat":"sombrero","head":"cabeza","hear":"oír",
 "help":"ayudar","helps":"ayuda","high":"alto","hill":"colina","hold":"sostener","hole":"agujero","holes":"agujeros","hot":"caliente",
 "house":"casa","houses":"casas","injury":"herida","inside":"dentro","interesting":"interesante","jacket":"chaqueta","jumps":"salta",
@@ -933,13 +1072,13 @@ const GLOSS = {
 "land":"tierra; aterrizar","large":"grande","lay":"poner (huevos)","lays":"pone (huevos)","learn":"aprender","leaves":"hojas","leg":"pierna",
 "legs":"piernas","letters":"cartas","light":"luz","liquid":"líquido","live":"vivir","lived":"vivían","lives":"vive","living":"vivo",
 "lock":"cerrar con llave","long":"largo","look":"mirar","looks after":"cuida","lucky":"de buena suerte","machines":"máquinas","magic":"magia",
-"magical":"mágico","man":"hombre","man's":"de un hombre","matches":"partidos","meal":"comida","medicine":"medicina","metal":"metal",
+"magical":"mágico","man":"hombre","man's":"de un hombre","games":"partidos","meal":"comida","medicine":"medicina","metal":"metal",
 "middle":"centro, medio","milk":"leche","millions":"millones","mixtures":"mezclas","money":"dinero","monkeys":"monos","morning":"mañana",
 "mountain":"montaña","mouth":"boca","move":"mover","moves":"se mueve","moving":"en movimiento","mysteries":"misterios","mysterious":"misterioso",
 "near":"cerca de","neck":"cuello","news":"noticias","nice":"agradable","night":"noche","north":"norte","nose":"nariz","object":"objeto",
 "office":"oficina","officers":"agentes","often":"a menudo","old":"viejo","open":"abrir","orange":"naranja","outside":"fuera","paint":"pintar",
-"paints":"pinta","paper":"papel","parcels":"paquetes","part":"parte","parties":"fiestas","party":"fiesta","pay":"pagar","people":"gente",
-"person":"persona","pet":"mascota","phone":"móvil","photo":"foto","photos":"fotos","pick up":"recoger","pictures":"cuadros","piece":"trozo",
+"paints":"pinta","paper":"papel","packages":"paquetes","part":"parte","parties":"fiestas","party":"fiesta","pay":"pagar","people":"gente",
+"person":"persona","pet":"mascota","phone":"celular","photo":"foto","photos":"fotos","pick up":"recoger","pictures":"cuadros","piece":"trozo",
 "pieces":"trozos","pink":"rosa","place":"lugar","places":"lugares","planes":"aviones","plant":"planta","play":"jugar","pointed":"puntiagudo",
 "police":"policía","pool":"piscina","pot":"olla; maceta","powers":"poderes","pray":"rezar","protect":"proteger","pumps":"bombea",
 "rabbits":"conejos","rails":"vías","rain":"lluvia","reach":"alcanzar","red":"rojo","repairs":"repara","restaurant":"restaurante",
@@ -1037,13 +1176,13 @@ const TTS = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
 let voices = [];
 function loadVoices(){ try{ voices = speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang)); }catch(e){} }
 if(TTS){ loadVoices(); try{ speechSynthesis.onvoiceschanged = loadVoices; }catch(e){} } else document.body.classList.add("no-tts");
-function say(text){
+function say(text, rate=0.85){
   if(!TTS) return;
   try{
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    const v = voices.find(v=>/en[-_]GB/i.test(v.lang)) || voices.find(v=>/en[-_]US/i.test(v.lang)) || voices[0];
-    if(v) u.voice = v; u.lang = v ? v.lang : "en-GB"; u.rate = 0.85;
+    const v = voices.find(v=>/en[-_]US/i.test(v.lang)) || voices.find(v=>/en[-_]GB/i.test(v.lang)) || voices[0];
+    if(v) u.voice = v; u.lang = v ? v.lang : "en-US"; u.rate = rate;
     speechSynthesis.speak(u);
   }catch(e){}
 }
@@ -1068,60 +1207,141 @@ document.addEventListener("click", e=>{
 }, true);
 addEventListener("scroll", hideTip, {passive:true}); addEventListener("resize", hideTip);
 
-// ================= progress memory (device + shared) =================
+
+// ================= listening lessons =================
+const LISTEN = [];
+LESSONS.forEach(l=>{
+  const items = Object.values(l.words).map(w=>({...w}));
+  const sentOf = Object.fromEntries(l.descs.map(([t,k])=>[l.words[k].w, t]));
+  LISTEN.push({id:"w-"+l.id, kind:"w", title:l.title, emoji:l.emoji, level:l.level, cat:l.cat,
+               items: items.map(w=>({...w, say:w.w}))});
+  LISTEN.push({id:"s-"+l.id, kind:"s", title:l.title, emoji:l.emoji, level:Math.min(3,l.level+1), cat:l.cat,
+               items: items.map(w=>({...w, say:sentOf[w.w]}))});
+});
+PRON_RAW.forEach(p=>{
+  const items = [];
+  p.pairs.forEach(([a,b])=>{
+    items.push({w:a[0],es:a[1],e:a[2],s:a[3],say:a[0],partner:b[0]});
+    items.push({w:b[0],es:b[1],e:b[2],s:b[3],say:b[0],partner:a[0]});
+  });
+  LISTEN.push({id:p.id, kind:"p", title:p.title, emoji:p.emoji, level:p.level, tip:p.tip, items});
+});
+const XBYID = Object.fromEntries(LISTEN.map(l=>[l.id,l]));
+const KIND = { w:["Palabras","🔤"], s:["Frases","💬"], p:["Pronunciación","🗣️"] };
+
+// ================= profile, progress, days =================
+const todayKey = (d=new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const dayAdd = (key,n) => { const [y,m,d]=key.split("-").map(Number); return todayKey(new Date(y,m-1,d+n)); };
+const weekStart = key => { const [y,m,d]=key.split("-").map(Number); const dt=new Date(y,m-1,d); const wd=(dt.getDay()+6)%7; return todayKey(new Date(y,m-1,d-wd)); };
+
+let profile = LS.get("hv-profile", {name:"Ariagni", goal:2, onboarded:false});
 let progress = LS.get("hv-progress", {done:{}, resetAt:0});
-let shared = { ref:null, writable:true, status:"local", writing:false, again:false };
-function better(a,b){ if(!a) return b; if(!b) return a; return (b.m<a.m || (b.m===a.m && b.t<a.t)) ? {...b, at:Math.max(a.at,b.at)} : {...a, at:Math.max(a.at,b.at)}; }
-function mergeIn(other){
-  if(!other || typeof other !== "object") return false;
-  let changed = false;
-  const resetAt = Math.max(progress.resetAt||0, +other.resetAt||0);
-  if(resetAt !== progress.resetAt){ progress.resetAt = resetAt; changed = true;
-    for(const k in progress.done) if((progress.done[k].at||0) < resetAt){ delete progress.done[k]; } }
-  const od = other.done && typeof other.done === "object" ? other.done : {};
-  for(const k in od){
-    const r = od[k]; if(!LBYID[k] || !r || typeof r.m !== "number" || typeof r.t !== "number") continue;
-    if((+r.at||0) < resetAt) continue;
-    const before = JSON.stringify(progress.done[k]);
-    progress.done[k] = better(progress.done[k], {m:r.m, t:r.t, at:+r.at||0});
-    if(JSON.stringify(progress.done[k]) !== before) changed = true;
+let days = LS.get("hv-days", {});     // { "2026-11-03": count }
+function saveAll(){ LS.set("hv-profile",profile); LS.set("hv-progress",progress); LS.set("hv-days",days); }
+const met = k => (days[k]||0) >= profile.goal;
+
+// streak: consecutive met days ending today (today counts if met, never breaks it if not yet met);
+// one missed day per Mon–Sun week is covered by a free pass.
+function streakInfo(){
+  const t = todayKey(); let n = 0; let k = met(t) ? t : dayAdd(t,-1);
+  const passes = {}; const passDays = new Set();
+  if(met(t)) n = 1, k = dayAdd(t,-1);
+  for(let i=0;i<800;i++){
+    if(met(k)){ n++; k = dayAdd(k,-1); continue; }
+    const wk = weekStart(k);
+    const prev = dayAdd(k,-1);
+    if(!passes[wk] && n>0 && met(prev)){ passes[wk]=true; passDays.add(k); k = prev; continue; }
+    break;
   }
-  return changed;
+  const thisWeekPassUsed = [...passDays].some(d=>weekStart(d)===weekStart(t));
+  return {n, passDays, thisWeekPassUsed};
 }
-function sameAs(other){ return JSON.stringify({done:progress.done,resetAt:progress.resetAt}) === JSON.stringify({done:(other&&other.done)||{},resetAt:(other&&+other.resetAt)||0}); }
-async function pushShared(){
-  if(!shared.ref || !shared.writable) return;
-  if(shared.writing){ shared.again = true; return; }
-  shared.writing = true;
-  try{ await shared.ref.set({done:progress.done, resetAt:progress.resetAt||0}); }
-  catch(e){ if(e && e.code === "invalid_argument"){ shared.writable = false; shared.status = "readonly"; renderStatus(); } }
-  shared.writing = false;
-  if(shared.again){ shared.again = false; pushShared(); }
+function lastActiveBefore(t){ const ks = Object.keys(days).filter(k=>k<t && days[k]>0).sort(); return ks.length ? ks[ks.length-1] : null; }
+const daysBetween = (a,b) => Math.round((new Date(b)-new Date(a))/86400000);
+
+// ================= messages =================
+const pick = arr => { const last = pick.last||""; let c = arr.filter(x=>x!==last); if(!c.length) c=arr; const m = c[Math.floor(Math.random()*c.length)]; pick.last=m; return m; };
+const N = () => profile.name ? profile.name : "";
+const nm = (s) => s.replace(/\{n\}/g, N()).replace(/,\s*!/g,"!").replace(/\s+,/g,",").replace(/ {2,}/g," ").replace(/¡,\s*/g,"¡").replace(/^\s*,\s*/,"").replace(/,\s*\./g,".");
+const MSG = {
+  morning:["¡Buenos días, {n}! ☀️ ¿Una lección con el café? *Good morning!*","¡Buenos días, {n}! Empezar el día con inglés es una gran idea. 💪","*Good morning*, {n}! ☀️ Unos minutos de inglés y listo."],
+  afternoon:["¡Buenas tardes, {n}! 👋 ¿Practicamos un poquito? *Let's go!*","¡Hola, {n}! Una pausa perfecta para aprender palabras nuevas. 🌤️","*Good afternoon*, {n}! ¿Qué tema toca hoy?"],
+  evening:["¡Buenas noches, {n}! 🌙 Cinco minutos de inglés antes de dormir.","*Good evening*, {n}! Lo que repasas de noche se recuerda mejor. 🌙","¡Hola, {n}! Una lección rápida y a descansar. 😴"],
+  risk:["{n}, tu racha de 🔥 {s} días te espera. ¡Una lección más y está salvada!","🔥 {s} días seguidos, {n}. ¡No la dejes escapar hoy! *You can do it!*"],
+  back:["¡Qué alegría verte, {n}! 🤗 Volver es lo más importante. *Welcome back!*","¡Hola otra vez, {n}! Lo importante no es parar, es volver. 💪"],
+  perfect:["¡Perfecto! *Perfect!* 🌟 Ni un solo error, {n}.","¡Impecable, {n}! 0 errores. *Excellent!* 🏅","*Wow!* {n}, ¡sin ningún error! 🌟"],
+  good:["¡Muy bien, {n}! *Well done!* Solo {m} {err}. 👏","¡Buen trabajo! *Good job!* {m} {err} nada más. 💪","¡Bien hecho, {n}! Cada vez mejor. *Great!* 👍"],
+  many:["¡Terminada, {n}! Los errores también enseñan. *Practice makes perfect.* 💡","¡Lo lograste! Repite esta lección otro día y verás la diferencia. *Keep going!* 🚀","¡Hecho! Equivocarse es parte de aprender. *Don't give up!* 💪"],
+  fast:["⚡ ¡Nuevo récord! {t} — tu mejor tiempo en esta lección.","⚡ *So fast!* {t}, más rápido que nunca."],
+  goal:["🎯 ¡Objetivo de hoy cumplido, {n}! *See you tomorrow!*","🎯 ¡Meta del día lograda! *Great job today!*"],
+  firstListen:["🎧 ¡Primera lección de escucha! Tus oídos están aprendiendo inglés."],
+  firstEver:["🎉 ¡Tu primera lección, {n}! *The first step is the most important.*"]
+};
+const MILESTONE = {3:"🔥 ¡3 días seguidos! Ya es un hábito que empieza. *Nice!*",7:"🔥 ¡7 días seguidos! Una semana entera de inglés. *Amazing!*",14:"🔥 ¡14 días! Dos semanas sin parar, {n}. *Incredible!*",30:"🏆 ¡30 días seguidos! Un mes de inglés. *You're a star!* ⭐",50:"🏆 ¡50 días! {n}, eres imparable. *Unstoppable!*",100:"👑 ¡100 días seguidos! *Legendary!* Qué orgullo, {n}."};
+const fmtMsg = (s, v={}) => nm(s.replace(/\{s\}/g,v.s??"").replace(/\{m\}/g,v.m??"").replace(/\{t\}/g,v.t??"").replace(/\{err\}/g, v.m===1?"error":"errores"))
+  .replace(/\*([^*]+)\*/g,"<i>$1</i>");
+
+// toast
+let toastQ = [], toastOn = false;
+function toast(html, ms=4800){ toastQ.push([html,ms]); if(!toastOn) nextToast(); }
+function nextToast(){
+  const t = toastQ.shift(); if(!t){ toastOn=false; return; }
+  toastOn = true; const el = $("#toast"); el.innerHTML = t[0]; el.classList.add("show");
+  clearTimeout(nextToast.tm); nextToast.tm = setTimeout(()=>{ el.classList.remove("show"); setTimeout(nextToast, 350); }, t[1]);
 }
-function saveProgress(push=true){ LS.set("hv-progress", progress); if(push) pushShared(); renderMenu(); }
-function recordDone(id, m, t){ progress.done[id] = better(progress.done[id], {m, t, at:Date.now()}); saveProgress(); }
-(async()=>{
-  try{
-    if(!window.claude || typeof claude.use !== "function") return;
-    const db = await claude.use("db"); if(!db) return;
-    shared.ref = db.doc("progress/shared"); shared.status = "loading"; renderStatus();
-    const timer = setTimeout(()=>{ if(shared.status==="loading"){ shared.status="slow"; renderStatus(); } }, 10000);
-    shared.ref.onSnapshot(snap=>{
-      if(!snap.metadata.fromCache){ clearTimeout(timer); if(shared.status!=="readonly") shared.status = "shared"; renderStatus(); }
-      const d = snap.exists ? snap.data() : null;
-      if(mergeIn(d)) saveProgress(false);
-      if(!snap.metadata.fromCache && !snap.metadata.hasPendingWrites && !sameAs(d)) pushShared();
-    }, err=>{ clearTimeout(timer); shared.ref = null; shared.status = "local"; renderStatus(); });
-  }catch(e){}
-})();
-function renderStatus(){
-  const m = { local:"💾 El progreso se guarda en este dispositivo.",
-              loading:"⏳ Cargando el progreso compartido…",
-              slow:"⚠️ No se puede cargar el progreso compartido; se guarda en este dispositivo.",
-              shared:"☁️ El progreso se guarda para todos los que abren este enlace.",
-              readonly:"👀 Puedes ver el progreso compartido, pero el tuyo se guarda solo en este dispositivo." }[shared.status];
-  $("#saveStatus").textContent = m;
+$("#toast").addEventListener("click", ()=>{ clearTimeout(nextToast.tm); $("#toast").classList.remove("show"); setTimeout(nextToast, 250); });
+
+function greet(){
+  const t = todayKey(), h = new Date().getHours(), st = streakInfo();
+  const last = lastActiveBefore(t);
+  if(last && daysBetween(last,t) >= 3 && !(days[t]>0)) return toast(fmtMsg(pick(MSG.back)));
+  if(st.n > 0 && !met(t) && h >= 17) return toast(fmtMsg(pick(MSG.risk),{s:st.n}));
+  toast(fmtMsg(pick(h>=5&&h<12 ? MSG.morning : h>=12&&h<19 ? MSG.afternoon : MSG.evening)));
 }
+
+// ================= finishing an activity =================
+const isMatch = id => !!LBYID[id];
+function groupDone(pred){ return pred.every(id=>progress.done[id]); }
+function finishActivity(lesson, misses, ms){
+  const id = lesson.id, t = todayKey();
+  const prev = progress.done[id];
+  const everBefore = Object.keys(progress.done).length;
+  const listenBefore = Object.keys(progress.done).some(k=>XBYID[k]);
+  const streakBefore = streakInfo().n, metBefore = met(t);
+  const catDoneBefore = catStates(), lvlDoneBefore = levelStates();
+  progress.done[id] = better(prev, {m:misses, t:ms, at:Date.now()});
+  days[t] = (days[t]||0) + 1;
+  saveAll();
+  const lines = [];
+  lines.push(fmtMsg(pick(misses===0 ? MSG.perfect : misses<=2 ? MSG.good : MSG.many), {m:misses}));
+  if(prev && ms < prev.t) lines.push(fmtMsg(pick(MSG.fast),{t:fmt(ms)}));
+  if(!everBefore) lines.push(fmtMsg(MSG.firstEver[0]));
+  if(XBYID[id] && !listenBefore) lines.push(fmtMsg(MSG.firstListen[0]));
+  if(!metBefore && met(t)) lines.push(fmtMsg(pick(MSG.goal)));
+  const sAfter = streakInfo().n;
+  if(sAfter > streakBefore && MILESTONE[sAfter]) lines.push(fmtMsg(MILESTONE[sAfter]));
+  const catAfter = catStates(), lvlAfter = levelStates();
+  for(const k in catAfter) if(catAfter[k].done && !catDoneBefore[k].done) lines.push(fmtMsg(`🏅 ¡Has terminado todo «${catAfter[k].name}», {n}! *Fantastic!*`));
+  for(const k in lvlAfter) if(lvlAfter[k] && !lvlDoneBefore[k]) lines.push(fmtMsg(`🏆 ¡Nivel ${LEVELS[k][0]} completo en Parejas, {n}! ¿Te atreves con el siguiente?`));
+  $("#winTitle").textContent = `${lesson.emoji} ${lesson.title}${lesson.kind?" · "+KIND[lesson.kind][0]:""}`;
+  $("#winText").innerHTML = `Tiempo: ${fmt(ms)} · Errores: ${misses}`;
+  $("#winMsgs").innerHTML = lines.map(l=>`<p>${l}</p>`).join("");
+  setTimeout(()=>$("#win").classList.add("show"), 500);
+  renderMenu();
+}
+function catStates(){
+  const o = {};
+  CATS.forEach(([cid,cname])=>{ o["m-"+cid] = {name:cname, done: groupDone(LESSONS.filter(l=>l.cat===cid).map(l=>l.id))}; });
+  Object.entries(KIND).forEach(([k,[kn]])=>{ o["x-"+k] = {name:"Escucha · "+kn, done: groupDone(LISTEN.filter(l=>l.kind===k).map(l=>l.id))}; });
+  return o;
+}
+function levelStates(){
+  const o = {};
+  [1,2,3].forEach(lv=>{ o[lv] = groupDone(LESSONS.filter(l=>l.level===lv).map(l=>l.id)); });
+  return o;
+}
+function better(a,b){ if(!a) return b; if(!b) return a; return (b.m<a.m || (b.m===a.m && b.t<a.t)) ? {...b, at:Math.max(a.at,b.at)} : {...a, at:Math.max(a.at,b.at)}; }
+
 
 // ================= game =================
 const games = {}; let active = null;
@@ -1181,10 +1401,7 @@ function makeGame(lesson){
       g.matched.add(k); g.sel={d:null,w:null,p:null}; stats();
       if(g.matched.size === g.N){
         g.pause(); g.done = true; stats();
-        recordDone(lesson.id, g.misses, g.time());
-        $("#winTitle").textContent = `${lesson.emoji} ¡${lesson.title}: completada!`;
-        $("#winText").textContent = `Tiempo: ${fmt(g.time())} · Errores: ${g.misses}` + (g.misses===0 ? " — ¡perfecto! 🌟" : "");
-        setTimeout(()=>$("#win").classList.add("show"), 500);
+        finishActivity(lesson, g.misses, g.time());
       }
     }
   };
@@ -1199,42 +1416,168 @@ function stats(){
 }
 setInterval(()=>{ if(active && active.startedAt && !$("#game").hidden) $("#time").textContent = fmt(active.time()); }, 1000);
 
+
+// ================= listening game =================
+function makeListen(lesson){
+  const root = $("#listenView");
+  const g = { lesson, root, N: lesson.items.length, listen:true };
+  const byW = Object.fromEntries(lesson.items.map(it=>[it.w,it]));
+  g.build = () => {
+    Object.assign(g, {matched:new Set(), misses:0, elapsed:0, startedAt:null, done:false, busy:false, started:false,
+                      queue: shuffle(lesson.items.map(it=>it.w)), cur:null, wrongOnce:new Set()});
+    render(); stats();
+  };
+  g.time = () => g.elapsed + (g.startedAt ? Date.now()-g.startedAt : 0);
+  g.pause = () => { if(g.startedAt){ g.elapsed += Date.now()-g.startedAt; g.startedAt=null; } if(TTS) try{ speechSynthesis.cancel(); }catch(e){} };
+  g.resume = () => { if(g.started && !g.done && !g.startedAt) g.startedAt = Date.now(); };
+  g.renderArt = () => render();
+  function choicesFor(w){
+    const it = byW[w]; const others = lesson.items.map(x=>x.w).filter(x=>x!==w);
+    let pickd = [];
+    if(it.partner) pickd.push(it.partner);
+    shuffle(others.filter(x=>!pickd.includes(x))).slice(0, 3-pickd.length).forEach(x=>pickd.push(x));
+    return shuffle([w, ...pickd]);
+  }
+  function play(slow){ if(g.cur) say(byW[g.cur].say, slow ? 0.55 : (lesson.kind==="s" ? 0.85 : 0.8)); }
+  function next(){
+    if(!g.queue.length){ g.done = true; g.pause(); stats(); finishActivity(lesson, g.misses, g.time()); render(); return; }
+    g.cur = g.queue.shift(); g.opts = choicesFor(g.cur); g.feedback = null; g.busy = false;
+    render(); setTimeout(()=>play(false), 250);
+  }
+  function render(){
+    const tipHtml = lesson.tip ? `<div class="ltip">💡 ${lesson.tip}</div>` : "";
+    const kindTxt = lesson.kind==="s" ? "Escucha la frase y toca la imagen correcta." : "Escucha la palabra y toca la imagen correcta.";
+    if(!g.started){
+      root.innerHTML = `${tipHtml}<div class="lstart"><p>${kindTxt}</p><p class="small">Sube el volumen 🔊. Si fallas, la palabra vuelve al final.</p><button class="btn big" id="lgo">▶ Empezar</button></div>`;
+      return;
+    }
+    if(g.done){
+      root.innerHTML = `${tipHtml}<div class="lstart"><p>✅ ¡Lección terminada!</p><button class="btn" id="lagain">Otra vez</button></div>`;
+      return;
+    }
+    const fb = g.feedback;
+    root.innerHTML = `${tipHtml}
+      <div class="lhead"><span class="chip">Quedan <b>${g.queue.length+1}</b></span></div>
+      <div class="lplay"><button class="playbtn" id="lplay" aria-label="Escuchar otra vez">🔊</button><button class="playbtn slow" id="lslow" aria-label="Más lento">🐢</button></div>
+      <div class="lfb ${fb?fb.cls:""}">${fb?fb.html:"&nbsp;"}</div>
+      <div class="lgrid">${g.opts.map(w=>{ const it=byW[w];
+        let cls = ""; if(fb){ if(w===g.cur) cls="done"; else if(w===fb.wrong) cls="bad"; }
+        return `<button class="item lopt ${cls}" data-w="${esc(w)}" aria-label="Opción"><span class="art">${art(it)}</span>${fb && (w===g.cur||w===fb.wrong) ? `<span class="lname">${it.w}<small>${it.es}</small></span>`:""}</button>`; }).join("")}</div>`;
+  }
+  g.onclick = e => {
+    if(active !== g) return;
+    if(e.target.closest("#lgo")){ g.started = true; g.startedAt = Date.now(); say(" ",1); next(); return; }
+    if(e.target.closest("#lagain")){ g.build(); return; }
+    if(e.target.closest("#lplay")){ play(false); return; }
+    if(e.target.closest("#lslow")){ play(true); return; }
+    const b = e.target.closest(".lopt"); if(!b || g.busy || !g.cur) return;
+    const w = b.dataset.w, it = byW[g.cur];
+    g.busy = true;
+    if(w === g.cur){
+      g.matched.add(w);
+      g.feedback = {cls:"ok", html:`✅ <b>${it.w}</b> = ${it.es}`};
+      render(); stats(); say(it.w, 0.85);
+      setTimeout(next, 1300);
+    } else {
+      g.misses++; g.queue.push(g.cur); g.matched.delete(g.cur);
+      g.feedback = {cls:"no", wrong:w, html:`❌ Era <b>${it.w}</b> (${it.es}), no <b>${byW[w].w}</b>.`};
+      render(); stats(); say(it.w, 0.8);
+      setTimeout(next, 2300);
+    }
+  };
+  root.onclick = g.onclick;
+  g.build();
+  return g;
+}
+
 // ================= menu =================
+function card(l, isListen){
+  const d = progress.done[l.id], [lvName,lvCol] = LEVELS[l.level];
+  const g = games[l.id];
+  const inprog = !d && g && g.matched && g.matched.size>0 && !g.done ? `<span class="st prog">En curso ${g.matched.size}/${g.N}</span>` : "";
+  const cnt = isListen ? l.items.length : Object.keys(l.words).length;
+  const st = d ? `<span class="st ok">✓ ${d.m===0?"¡Perfecta! ":""}${d.m} err. · ${fmt(d.t)}</span>` : inprog || `<span class="st">${cnt} palabras</span>`;
+  return `<button class="lcard${d?" done":""}${isListen?" lis":""}" data-id="${l.id}"><span class="lemo">${l.emoji}</span><span class="ltxt"><b>${l.title}</b><span class="lv" style="--lv:${lvCol}">${"●".repeat(l.level)}${"○".repeat(3-l.level)} ${lvName}</span>${st}</span>${d?'<span class="tick">✓</span>':""}</button>`;
+}
 function renderMenu(){
-  const total = LESSONS.length, doneN = LESSONS.filter(l=>progress.done[l.id]).length;
-  $("#doneCount").textContent = `${doneN} de ${total} lecciones completadas`;
-  $("#menuProg").style.width = (doneN/total*100)+"%";
+  const mDone = LESSONS.filter(l=>progress.done[l.id]).length, xDone = LISTEN.filter(l=>progress.done[l.id]).length;
+  $("#doneCount").innerHTML = `🔗 Parejas <b>${mDone}/${LESSONS.length}</b> · 🎧 Escucha <b>${xDone}/${LISTEN.length}</b>`;
+  $("#menuProg").style.width = ((mDone+xDone)/(LESSONS.length+LISTEN.length)*100)+"%";
   document.querySelectorAll("#levelChips button").forEach(b=>b.classList.toggle("on", +b.dataset.lv===levelFilter));
+  const lf = l => !levelFilter || l.level===levelFilter;
   $("#cats").innerHTML = CATS.map(([cid,cname,cemo])=>{
-    const ls = LESSONS.filter(l=>l.cat===cid && (!levelFilter || l.level===levelFilter));
-    if(!ls.length) return "";
+    const ls = LESSONS.filter(l=>l.cat===cid && lf(l)); if(!ls.length) return "";
     const dn = ls.filter(l=>progress.done[l.id]).length;
-    return `<section class="cat"><h3>${cemo} ${cname} <small>${dn}/${ls.length}</small></h3><div class="cards">${ls.map(l=>{
-      const d = progress.done[l.id], g = games[l.id], [lvName,lvCol] = LEVELS[l.level];
-      const inprog = !d && g && g.matched.size>0 ? `<span class="st prog">En curso ${g.matched.size}/${g.N}</span>` : "";
-      const st = d ? `<span class="st ok">✓ ${d.m===0?"¡Perfecta! ":""}${d.m} err. · ${fmt(d.t)}</span>` : inprog || `<span class="st">${Object.keys(l.words).length} palabras</span>`;
-      return `<button class="lcard${d?" done":""}" data-id="${l.id}"><span class="lemo">${l.emoji}</span><span class="ltxt"><b>${l.title}</b><span class="lv" style="--lv:${lvCol}">${"●".repeat(l.level)}${"○".repeat(3-l.level)} ${lvName}</span>${st}</span>${d?'<span class="tick">✓</span>':""}</button>`;
-    }).join("")}</div></section>`;
+    return `<section class="cat"><h3>${cemo} ${cname} <small>${dn}/${ls.length}</small></h3><div class="cards">${ls.map(l=>card(l,false)).join("")}</div></section>`;
+  }).join("");
+  $("#listenCats").innerHTML = ["w","s","p"].map(k=>{
+    const ls = LISTEN.filter(l=>l.kind===k && lf(l)); if(!ls.length) return "";
+    const dn = ls.filter(l=>progress.done[l.id]).length;
+    const sub = {w:"Escucha una palabra y elige la imagen.", s:"Escucha una frase y elige la imagen.", p:"Sonidos que se parecen: entrena el oído."}[k];
+    return `<section class="cat"><h3>${KIND[k][1]} ${KIND[k][0]} <small>${dn}/${ls.length}</small></h3><p class="catsub">${sub}</p><div class="cards">${ls.map(l=>card(l,true)).join("")}</div></section>`;
+  }).join("");
+  renderStreak();
+}
+function renderStreak(){
+  const st = streakInfo(), t = todayKey(), n = days[t]||0;
+  $("#hello").innerHTML = profile.name ? `¡Hola, <b>${esc(profile.name)}</b>! 👋` : "¡Hola! 👋";
+  $("#streak").innerHTML = `<span class="fire${st.n?"":" off"}">🔥 ${st.n} ${st.n===1?"día":"días"}</span><span class="today${n>=profile.goal?" ok":""}">Hoy ${Math.min(n,profile.goal)}/${profile.goal}${n>=profile.goal?" ✓":""}</span><span class="pass" title="Comodín semanal">🛟 ${st.thisWeekPassUsed?"usado":"disponible"}</span>`;
+  const ws = weekStart(t), labels = ["L","M","X","J","V","S","D"];
+  $("#week").innerHTML = labels.map((lab,i)=>{
+    const k = dayAdd(ws,i); let cls = "", sym = "";
+    if(k > t){ cls = "fut"; }
+    else if(met(k)){ cls = "ok"; sym = "✓"; }
+    else if(st.passDays.has(k)){ cls = "pass"; sym = "🛟"; }
+    else if((days[k]||0) > 0){ cls = "part"; sym = "·"; }
+    else if(k < t){ cls = "miss"; }
+    if(k === t) cls += " today";
+    return `<span class="wd ${cls}"><small>${lab}</small><b>${sym}</b></span>`;
   }).join("");
 }
-$("#cats").addEventListener("click", e=>{ const c=e.target.closest(".lcard"); if(c) go(c.dataset.id); });
+document.addEventListener("click", e=>{ const c=e.target.closest(".lcard"); if(c) go(c.dataset.id); });
 $("#levelChips").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return; levelFilter=+b.dataset.lv; LS.set("hv-filter",levelFilter); renderMenu(); });
+$("#jumpListen").addEventListener("click", ()=>$("#listenTop").scrollIntoView({behavior:"smooth"}));
+$("#jumpMatch").addEventListener("click", ()=>$("#matchTop").scrollIntoView({behavior:"smooth"}));
 $("#resetBtn").addEventListener("click", ()=>{ $("#resetConfirm").hidden = false; $("#resetBtn").hidden = true; });
 $("#resetNo").addEventListener("click", ()=>{ $("#resetConfirm").hidden = true; $("#resetBtn").hidden = false; });
-$("#resetYes").addEventListener("click", ()=>{ progress = {done:{}, resetAt:Date.now()}; saveProgress(); $("#resetConfirm").hidden = true; $("#resetBtn").hidden = false; });
+$("#resetYes").addEventListener("click", ()=>{ progress = {done:{}, resetAt:Date.now()}; days = {}; saveAll(); $("#resetConfirm").hidden = true; $("#resetBtn").hidden = false; renderMenu(); });
+
+// ================= settings + welcome =================
+function openSettings(first){
+  $("#setTitle").textContent = first ? `¡Hola, ${profile.name || "bienvenida"}! 👋` : "⚙️ Ajustes";
+  $("#setIntro").innerHTML = first ? "Bienvenida a tu juego de inglés. Antes de empezar: ¿cuántas actividades quieres hacer cada día? (Una lección de parejas o de escucha cuenta como una.)" : "";
+  $("#setName").value = profile.name || "";
+  document.querySelectorAll("#goalSeg button").forEach(b=>b.classList.toggle("on", +b.dataset.g===profile.goal));
+  $("#settings").classList.add("show");
+}
+document.querySelectorAll("#goalSeg button").forEach(b=>b.addEventListener("click",()=>{ document.querySelectorAll("#goalSeg button").forEach(x=>x.classList.toggle("on", x===b)); }));
+$("#setSave").addEventListener("click", ()=>{
+  const g = document.querySelector("#goalSeg button.on");
+  const wasNew = !profile.onboarded;
+  profile.name = $("#setName").value.trim().slice(0,30);
+  profile.goal = g ? +g.dataset.g : 2; profile.onboarded = true; saveAll();
+  $("#settings").classList.remove("show"); renderMenu();
+  if(wasNew) toast(fmtMsg(`🎯 ¡Perfecto, {n}! Tu meta: ${profile.goal} ${profile.goal===1?"actividad":"actividades"} al día. *Let's start!*`));
+});
+$("#gear").addEventListener("click", ()=>openSettings(false));
 
 // ================= routing =================
 function route(id){
   $("#win").classList.remove("show"); hideTip();
-  if(active){ active.pause(); active.root.hidden = true; }
-  const lesson = LBYID[id];
-  if(!lesson){ active = null; $("#game").hidden = true; $("#menu").hidden = false; renderMenu(); return; }
+  if(active){ active.pause(); if(active.root && !active.listen) active.root.hidden = true; }
+  const ml = LBYID[id], xl = XBYID[id];
+  $("#listenView").hidden = true;
+  if(!ml && !xl){ active = null; $("#game").hidden = true; $("#menu").hidden = false; renderMenu(); return; }
   $("#menu").hidden = true; $("#game").hidden = false;
-  active = games[id] || (games[id] = makeGame(lesson));
-  active.root.hidden = false; active.resume();
-  $("#lessonTitle").textContent = `${lesson.emoji} ${lesson.title}`;
-  const [lvName,lvCol] = LEVELS[lesson.level]; $("#lessonLevel").textContent = lvName; $("#lessonLevel").style.background = lvCol;
-  $("#credit").hidden = !id.startsWith("halloween");
+  document.body.classList.toggle("listening", !!xl);
+  if(ml){ active = games[id] || (games[id] = makeGame(ml)); active.root.hidden = false; }
+  else { $("#listenView").hidden = false; active = games[id] || (games[id] = makeListen(xl)); $("#listenView").onclick = active.onclick; active.renderArt(); }
+  active.resume();
+  const l = ml || xl;
+  $("#lessonTitle").textContent = `${xl?"🎧 ":l.emoji+" "}${l.title}${xl?" · "+KIND[xl.kind][0]:""}`;
+  const [lvName,lvCol] = LEVELS[l.level]; $("#lessonLevel").textContent = lvName; $("#lessonLevel").style.background = lvCol;
+  $("#howto").hidden = !!xl;
+  $("#credit").hidden = !(ml && id.startsWith("halloween"));
   stats(); scrollTo(0,0);
 }
 function go(id){ const h = id || "menu"; if(location.hash.slice(1) !== h){ try{ location.hash = h; }catch(e){} } route(id); }
@@ -1255,14 +1598,16 @@ $("#back").addEventListener("click", ()=>go(null));
 $("#again").addEventListener("click", ()=>{ $("#win").classList.remove("show"); active.build(); });
 $("#toMenu").addEventListener("click", ()=>go(null));
 $("#next").addEventListener("click", ()=>{
-  const i = LESSONS.findIndex(l=>l.id===active.lesson.id);
-  const rest = LESSONS.slice(i+1).concat(LESSONS.slice(0,i+1));
+  const list = active.listen ? LISTEN.filter(l=>l.kind===active.lesson.kind) : LESSONS;
+  const i = list.findIndex(l=>l.id===active.lesson.id);
+  const rest = list.slice(i+1).concat(list.slice(0,i+1));
   const nxt = rest.find(l=>!progress.done[l.id]) || rest[0];
   go(nxt.id);
 });
 
-syncToggles(); renderStatus();
-route(LBYID[location.hash.slice(1)] ? location.hash.slice(1) : null);
+syncToggles();
+route(LBYID[location.hash.slice(1)] || XBYID[location.hash.slice(1)] ? location.hash.slice(1) : null);
+if(!profile.onboarded) openSettings(true); else setTimeout(greet, 700);
 
 </script>
 </body>
